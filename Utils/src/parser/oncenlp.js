@@ -1,12 +1,11 @@
-
 (function(){
 	
+	// in 200ms
+	// in 1 hour and 30 mins
+	
 	include.exports = function(str, dtstart){
-		_str = str.trim();
-		_i = 0;
-		_imax = str.length;
 		
-		
+		_str = str;
 		_date = dtstart == null
 			? new Date
 			: new Date(dtstart)
@@ -22,6 +21,8 @@
 		}
 		return _date;
 	};
+	
+	var _date, _str;
 	
 	var in_parser;
 	(function(){
@@ -69,7 +70,6 @@
 		function months(val){
 			_date.setMonth(_date.getMonth() + val);
 		}
-		
 	}());
 	
 	var parsers = [

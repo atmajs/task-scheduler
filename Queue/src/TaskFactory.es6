@@ -11,8 +11,13 @@ include
 					var dfr = new Class.Deferred;
 					
 					
-					if (task instanceof Task === false) 
-						task = new Task(task);
+					if (task instanceof Task === false) {
+						try {
+							task = new Task(task);
+						} catch(error){
+							return dfr.reject(error);
+						}
+					}
 					
 					if (task._id) 
 						return dfr.resolve();

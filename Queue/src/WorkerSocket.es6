@@ -4,7 +4,7 @@ include
 	.done(function(resp){
 		
 		var WorkerSocket = include.exports = Class({
-			Construct: function(socket, io, port){
+			Construct: function(socket, io){
 				logger.log('Worker Connected'.green.bold);
 				
 				socket

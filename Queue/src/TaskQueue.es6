@@ -6,11 +6,16 @@ include
 		var TaskFactory = resp.TaskFactory,
 			TaskHistory = resp.TaskHistory
 			;
-		var _emitter = new Class.EventEmitter;
+		var QueuedTask = Model.QueuedTask,
+			Tasks = Model.Tasks
+			;
 		
-		include.exports = new (Class.Collection('Queue.TaskQueue', Model.QueuedTask, {
+		include.exports = new (Class.Collection('Queue.TaskQueue', QueuedTask, {
 			
-			Base: Class.Serializable,
+			Extends: [
+				Class.Serializable,
+				Class.EventEmitter
+			],
 			Store: Class.MongoStore.Collection('task-queue'),
 			
 			Construct: function(){
@@ -20,25 +25,23 @@ include
 			Self: {
 				add: function(task){
 					logger.log('TaskQueue| Push `bold<%s>`'.color, task.name);
+					
+					var taskAdded = () => {
+						logger.log(
+							'TaskQueue: Task, ready for execution `bold<%s>`'.color
+							, task.name
+						);
+						this.trigger('hasNewTasks', this);
+					}
+					
 					return this
-						.push(Model.QueuedTask.create(task))
+						.push(QueuedTask.create(task))
 						.last()
 						.save()
-						.always(this.taskAdded)
+						.always(taskAdded)
 						;
-				},
-				
-				taskAdded: function(){
-					logger.log(
-						'TaskQueue: Task, ready for execution `bold<%s>`'.color
-						, this.last()._task.name
-					);
-					_emitter.trigger('hasNewTasks', this);
-				},
+				}
 			},
-			
-			on: _emitter.on.bind(_emitter),
-			off: _emitter.off.bind(_emitter),
 			
 			pluck: function(worker){
 				var dfr = new Class.Deferred;
@@ -61,14 +64,11 @@ include
 			},
 			
 			restore: function(){
-				var queue = this,
-					dfr = new Class.Deferred
-					;
-				this
-					.fetch()
-					.done(function(queuedTasks){
+				var dfr = new Class.Deferred,
+					
+					queuedTasksLoaded = queuedTasks => {
 						if (queuedTasks.length === 0) {
-							dfr.resolve(queue);
+							dfr.resolve(this);
 							return;
 						}
 						
@@ -79,41 +79,34 @@ include
 						
 						var ids = queuedTasks
 							.toArray()
-							.map(function(x){
-								return Class.MongoStore.createId(x.tid);
-							});
+							.map(x => Class.MongoStore.createId(x.tid));
 						
-						Model
-							.Tasks
-							.fetch({
-								_id: {
-									$in: ids
-								}
-							})
-							.done(function(tasks){
-								
-								if (tasks.length !== ids.length) {
-									logger
-										.error('Queue Restore - some tasks were removed')
-										.error('Expected: %d; Got: %d, ', ids.length, tasks.length)
-										;
-								}
-								
-								var queuedTask = Model.QueuedTask.create(task);
-								tasks.each((x) => queue.push(queuedTask));
-								
-								dfr.resolve(queue);
-							})
-							.fail(function(error){
-								logger.error('Queue Restore - get tasks error -', error);
-								dfr.reject(error);
-							})
-					})
-					.fail(function(error){
-						logger.error('Queue Restore - get queue error - ', error);
+						loadTasks(ids);
+					},
+					loadTasks = ids => {
+						Tasks.fetch({
+							_id: { $in: ids }
+						})
+						.done(addTasks)
+						.fail(error => 
+							onError('Queue Restore - get tasks error -', error)
+						);
+					},
+					addTasks = tasks => {
+						tasks.each(x => this.push(QueuedTask.create(x)));
+						dfr.resolve(this);
+					},
+					onError = (message, error) => {
+						logger.error(message, error);
 						dfr.reject(error);
-					});
-				
+					};
+				this
+					.fetch()
+					.done(queuedTasksLoaded)
+					.fail(error => 
+						onError('Queue Restore - get queue error - ', error)
+					);
+					
 				return dfr;
 			}
 		}));

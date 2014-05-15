@@ -8,6 +8,7 @@ Task Scheduler Server to schedule or run scripts/applications/commands which:
 - has web interface
 - has RESTful API
 - has WebSockets
+- has Database persistance
 
 
 #### Time Triggers
@@ -25,16 +26,20 @@ Describe with:
 
 _There are already some tests in project directories_
 
-It is simple as just ensuring that a task exists
+It is simple as just ensuring that the task exists
 ```javascript
 	var client = require('task-scheduler-client');
-	client.ensureTask({
-		name: 'sync data',
-		trigger: 'FREQ=DAILY;BYHOUR=23',
-		exec: {
-			src: '/tasks/sync-data.js'
-		}
-	});
+	client
+		.ensureTask({
+			name: 'sync data',
+			trigger: 'FREQ=DAILY;BYHOUR=23',
+			exec: {
+				src: '/tasks/sync-data.js'
+			}
+		})
+		.done(onSuccess) //> created
+		.fail(onError)   //> task creation failed
+		;
 ```
 
 ----

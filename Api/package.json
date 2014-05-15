@@ -6,7 +6,9 @@
         ],
         
         "settings": {
-            "traceur-extension": ["es6", "test"]
+            "atma-loader-traceur": {
+                "extensions": ["es6", "test"]
+            }
         }
     }
 }
