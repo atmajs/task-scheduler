@@ -1,0 +1,65 @@
+UTest({
+	'run - script': function(done) {
+		
+		var historyTask = Model.HistoryTask.create({
+			
+			// - not relevant for the runner
+			//name: 'test-foo',
+			//trigger: 'in 200ms',
+			
+			exec: {
+				script: 'global.Foo = "test-foo";',
+			}
+		});
+		
+		var source = MockSource(() => {
+			eq_(global.Foo, 'test-foo');
+			done();
+		});
+		
+		var worker = new Worker.Worker(source);
+		source
+			.trigger('task:run', {}, historyTask);
+	},
+	
+	'run - source': function(done){
+		var historyTask = Model.HistoryTask.create({
+			exec: {
+				src: 'test/data/letter.js'
+			}
+		});
+		
+		var source = MockSource(() => {
+			eq_(global.SourceLetter, 'A');
+			done();
+		});
+		
+		var worker = new Worker.Worker(source);
+		source
+			.trigger('task:run', {}, historyTask);
+	},
+	'run - source - 404': function(done){
+		var historyTask = Model.HistoryTask.create({
+			exec: {
+				src: 'test/data/none.js'
+			}
+		});
+		
+		var source = MockSource((historyTask, workerInfo) => {
+			assert(historyTask.error instanceof Error);
+			done();
+		});
+		
+		
+		var worker = new Worker.Worker(source);
+		source
+			.trigger('task:run', {}, historyTask);
+	}
+})
+
+function MockSource(onComplete){
+	return new (Class({
+		Base: Class.EventEmitter,
+		complete: onComplete
+	}))
+}

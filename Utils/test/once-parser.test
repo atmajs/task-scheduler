@@ -1,0 +1,42 @@
+include
+	.inject('../src/parser/oncenlp.js::Parse')
+	.done(function(resp){
+	
+		UTest({
+			'in .. time': function(){
+				
+				var MIN = 60,
+					HOUR = 60 * MIN,
+					DAY = 24 * HOUR,
+					WEEK = DAY * 7;
+					
+				var date = new Date;
+				
+				[
+					['in 10 minutes', 10 * MIN ],
+					['in 1 minute and 2 seconds', MIN + 2],
+					['in 1min and 2s', MIN + 2],
+					['in 1 m and 2min', (function(){
+						var x = new Date(date);
+						x.setMonth(x.getMonth() + 1);
+						x.setMinutes(x.getMinutes() + 2);
+						return (x - date) / 1000;
+					}())],
+					[ 'in 1 h', HOUR ],
+					[ 'in 2 weeks, 2 days, 5 hours and 5 seconds', 2*WEEK + 2*DAY + 5*HOUR + 5]
+				]
+				.forEach(function(row){
+					check(date, row[0], row[1])
+				});
+				
+			}
+		});
+		
+				
+		function check(dtstart, str, diff){
+			var next = resp.Parse(str, dtstart);
+			//-logger.log(next, dtstart);
+			eq_((next - dtstart) / 1000, diff, str + ':' + diff);;
+		}
+	})
+	

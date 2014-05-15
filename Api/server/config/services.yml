@@ -1,0 +1,8 @@
+
+service:
+	location: '/src/service/{0}.es6'
+services:
+	'^/task':
+		controller: Task
+	'^/tasks':
+		controller: Tasks

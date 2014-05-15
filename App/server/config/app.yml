@@ -1,0 +1,6 @@
+mongo:
+	db: task-scheduler
+	
+subapps:	
+	rest:
+		controller: /../Api/index.js

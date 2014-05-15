@@ -1,0 +1,32 @@
+
+
+env:
+	client:
+
+		include:
+			src: '/.reference/atma/include/lib/include.js'
+		
+		routes:
+			
+			
+		scripts:
+			atma:
+				- ruqq/dom/jquery
+				- class
+				- mask
+				- '#if debug':
+					- mask/plugin.reload
+
+				- mask-node/mask.bootstrap
+				- ruta
+				- mask-animation/mask.animation
+				- '#if debug':
+					- include/include.autoreload
+			
+			atma_compo:
+				- prism
+				- tabs
+	
+		styles:
+			- '/.reference/bootstrap/dist/css/bootstrap.min.css'
+		

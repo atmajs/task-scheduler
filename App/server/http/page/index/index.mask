@@ -1,0 +1,8 @@
+layout:view master='default' {
+	@content #body {
+
+		ul {
+			li > a href='/endpoints' > 'Endpoints'
+		}
+	}
+}

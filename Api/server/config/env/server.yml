@@ -1,0 +1,7 @@
+
+env:
+	server:
+		scripts:
+			- '../Utils/index.js::Utils'
+			- '../Model/index.js::Model'
+			- '../Queue/index.js::Queue'

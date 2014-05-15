@@ -1,0 +1,21 @@
+
+env:
+	server:
+
+
+		routes:
+			server : '/server/{0}.js' 
+			server_lib : '/server/lib/{0}.js' 
+			server_compo : '/server/compo/{0}/{1}.js'
+
+			Model: /../Model/src/{0}.js
+			Api: /../Api/src/{0}.js
+			Project: '../{0}/index.js'
+		scripts:
+			
+			Project:
+				- 'Utils::Utils'
+				- 'Model::Model'
+				- 'Queue::Queue'
+				- 'Worker::Worker'
+			

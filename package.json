@@ -1,0 +1,37 @@
+{
+  "name": "task-scheduler",
+  "description": "Task Scheduler Server",
+  "author": {
+      "name": "Alex Kit",
+      "email": "alex.kit@atmajs.com"
+  },
+  "version": "0.0.0",
+  "repository": {
+      "type": "git",
+      "url": "git://github.com/atmajs/task-scheduler.git"
+  },
+  "devDependencies": {
+      "atma": ">0.9.30",
+      "mongodb": ">0.0.0"
+  },
+  "dependencies": {
+    "atma-loader-traceur": ">0.0.0",
+    "atma-loader-package": ">0.0.0",
+    "mongodb": "~1.4.4",
+    "atma-libs": "~0.9.35",
+    "atma-logger": "0.0.82",
+    "atma-io": "~0.1.76",
+    "atma-server": "0.0.97",
+    "socket.io": "~0.9.16",
+    "socket.io-client": "~0.9.16",
+    "connect": "~2.15.0"
+  },
+  "atma": {
+    "plugins": [
+      "atma-loader-traceur",
+      "atma-loader-package"
+    ]
+  },
+  
+  "license": "MIT"
+}
