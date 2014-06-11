@@ -1,0 +1,16 @@
+var request = require('supertest');
+
+UTest({
+	
+	$config: {
+		errorableCallbacks: true
+	},
+	
+	'create': function(done){
+		
+		request(ApiServ)
+			.get('/task')
+			.expect('ONE', done)
+	}
+	
+})

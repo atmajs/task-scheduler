@@ -9,7 +9,6 @@ function initialize(resp, Model, TaskFactory, Utils){
 	
 	include.exports = HttpService({
 		
-		
 		'$post /': {
 			meta: {
 				description: 'Create new task',
@@ -30,17 +29,16 @@ function initialize(resp, Model, TaskFactory, Utils){
 					}
 				},
 				response: {
-					tid: 'string',
-					date: 'Date'
+					tid: 'string: Task id',
+					date: 'Date: Next trigger date'
 				}
 			},
 			process:  function(req, res){
 				var task = new Model.Task(req.body.task);
 				
 				TaskFactory
-					.ensureTask(task)
-					.fail(this.rejectDelegate())
-					.done((task) => this.resolve(task))
+					.ensureTask(req.body.task)
+					.pipe(this)
 					;
 			}
 			

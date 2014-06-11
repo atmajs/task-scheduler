@@ -1,5 +1,6 @@
 module.exports = {
 	
+	
 	exec: 'node',
 	
 	env: [
@@ -7,6 +8,9 @@ module.exports = {
 		'../Model/index.js::Model'
 	],
 	
+	$config: {
+		$before: 'test/before.es6'
+	},
 	
 	tests: 'test/**.test'
 }

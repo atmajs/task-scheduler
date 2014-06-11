@@ -38,7 +38,7 @@ include
 						.push(QueuedTask.create(task))
 						.last()
 						.save()
-						.always(taskAdded)
+						.done(taskAdded)
 						;
 				}
 			},
@@ -48,12 +48,15 @@ include
 				if (this.length === 0) 
 					return dfr.reject('empty');
 				
-				
-				var scheduled = this.shift().del();
+				var scheduled = this
+					.shift()
+					.del()
+					.fail(error =>
+						logger.error('Queuedtask | Del error', error)
+					);
 				TaskHistory
 					.add(scheduled._task, worker)
-					.done(dfr.resolveDelegate())
-					.fail(dfr.rejectDelegate())
+					.pipe(dfr)
 					;
 					
 				return dfr;

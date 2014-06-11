@@ -2,6 +2,7 @@
   "dependencies": {
     "underscore": "~1.5.2",
     "cron-parser": "~0.3.5",
-    "rrule": "~2.0.1"
+    "rrule": "~2.0.1",
+    "spark-md5": "0.0.5"
   }
 }

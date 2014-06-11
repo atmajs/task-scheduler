@@ -1,4 +1,5 @@
 include
+	.setBase(include.location)
 	.js(
 		'../Utils/index.js::Utils',
 		'src/entity/**.es6.package::Entity',

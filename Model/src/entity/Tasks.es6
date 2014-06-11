@@ -9,7 +9,10 @@ include
 			},
 			
 			findSame: function(task){
-				return this.first((x) => task.isEqual(x));
+				if (task instanceof resp.Task === false) 
+					task = new resp.Task(task);
+					
+				return this.first(x => task.isEqual(x));
 			}
 		})
 	})

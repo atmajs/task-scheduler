@@ -4,37 +4,27 @@ include
 		
 		var Queue = resp.Queue;
 		UTest({
+			$config: {
+				timeout: 8000
+			},
 			$before: function(done){
-				UTest.cfg({
-					timeout: 8000
-				});
 				
-				var http = require('http'),
-					server = http.createServer(function(){}),
-					config = {
+				var config = {
 						port: 5889
-					}
+					},
+					
+					httpServer = require('http')
+						.createServer(function(){})
+						.listen(config.port)
 					;
 					
-				server.listen(config.port);
-				Queue.Socket.listen(server);
+				
+				Queue.Server.listen(httpServer);
 				Worker
 					.Worker
 					.connect(config)
 					.always(done)
 					;
-			},
-			'clear-db': function(done){
-								
-				Class.MongoStore.settings({
-					db: 'test-task-scheduler-queue'
-				});
-				
-				
-				Class
-					.MongoStore
-					.resolveDb()
-					.done( (db) => db.dropDatabase(done) );
 			},
 			
 			'schedule (once)': function(done){
@@ -53,21 +43,21 @@ include
 				}, 600)
 			},
 			
-			'repeat many (rrule)': function(done){
+			'!repeat many (rrule)': function(done){
 				global.Many = [];
 				
 				Queue.TaskFactory.ensureTask({
-					name: 'test',
-					trigger: 'FREQ=SECONDLY;COUNT=5',
+					name: 'test - rrule secondly',
+					trigger: 'FREQ=SECONDLY;COUNT=3',
 					exec: {
 						script: 'global.Many.push(new Date)'
 					}
 				});
 				
 				setTimeout(function(){
-					eq_(global.Many.length, 5);
+					eq_(global.Many.length, 3);
 					done();
-				}, 6000)
+				}, 4000)
 			}
 		})
 	});

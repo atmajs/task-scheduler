@@ -3,6 +3,7 @@ include
 		'CronTrigger.es6'
 		, 'OnceTrigger.es6'
 		, 'RRuleTrigger.es6'
+		, 'IntervalTrigger.es6'
 	)
 	.done(function(resp){
 		
@@ -13,7 +14,7 @@ include
 					return new resp[key]({ rule: rule });
 				}
 			}
-			
+			logger.error('Rule is not supported', rule);
 			return null;
 		}
 	})

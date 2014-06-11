@@ -1,8 +1,7 @@
 (function(){
 	
-	
-	
 	include
+		.setBase(include.location)
 		.js(
 			'node_modules/cron-parser/lib/parser.js::CronExpression'
 			, 'node_modules/rrule/lib/rrule.js::RRule'
@@ -13,14 +12,16 @@
 			
 			include.exports = {
 				CronExpression: resp.CronExpression,
-				OnceExpression: resp.Helpers.parser.oncenlp,
 				RRule: resp.RRule.RRule,
+				Parser: {
+					OnceExpression: resp.Helpers.parser.trigger.once,
+					IntervalExpression: resp.Helpers.parser.trigger.interval
+				},
 				
 				obj: resp.Helpers.obj,
 				is: resp.Helpers.is,
 				
 				execScript: resp.Helpers.script.execute
 			};
-		})
-		;
+		});
 }());

@@ -1,14 +1,19 @@
 {
-    "atma": {
-        "plugins": [
-            "atma-loader-traceur",
-            "atma-loader-package"
-        ],
-        
-        "settings": {
-            "atma-loader-traceur": {
-                "extensions": ["es6", "test"]
-            }
-        }
+  "atma": {
+    "plugins": [
+      "atma-loader-traceur",
+      "atma-loader-package"
+    ],
+    "settings": {
+      "atma-loader-traceur": {
+        "extensions": [
+          "es6",
+          "test"
+        ]
+      }
     }
+  },
+  "devDependencies": {
+    "supertest": "~0.13.0"
+  }
 }

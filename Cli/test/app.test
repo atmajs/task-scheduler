@@ -1,0 +1,41 @@
+UTest({
+	'create': function(done){
+		Cli
+			.process('app create -name Foo -password Baz')
+			.fail(assert.avoid())
+			.always(done);
+			
+	},
+	'should fail on dublicate': function(done){
+		Cli
+			.process('app create -name Foo -password Baz')
+			.done(assert.avoid())
+			.always(done);
+			
+	},
+	'list': function(done){
+		
+		Cli
+			.process('app list')
+			.done(arr => {
+				deepEq_(arr, ['Foo']);
+			})
+			.fail(assert.avoid())
+			.always(done);
+	},
+	'remove': function(done){
+		
+		Cli
+			.process('app remove -name Foo')
+			.done(function(){
+				Cli
+					.process('app list')
+					.done(arr => {
+						eq_(arr.length, 0);
+					})
+					.fail(assert.avoid())
+					.always(done);
+			})
+			.fail(assert.avoid())
+	}
+})

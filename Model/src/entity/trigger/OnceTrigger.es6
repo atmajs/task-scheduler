@@ -9,7 +9,7 @@ include
 			Construct: function(){
 				
 				if (this.date == null && typeof this.rule === 'string') 
-					this.date = Utils.OnceExpression(this.rule, this.created);
+					this.date = Utils.Parser.OnceExpression(this.rule, this.created);
 				
 				
 				if (this.date == null && this.rule) 
@@ -29,10 +29,6 @@ include
 					: null
 					;
 			},
-			
-			//setStart: function(date){
-			//	this.date = date;
-			//},
 			
 			Static: {
 				canHandle: function(rule){

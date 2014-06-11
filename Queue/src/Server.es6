@@ -15,7 +15,7 @@ include
 				
 				server_io
 					.of(socket_NAMESPACE)
-					.on('connection', (socket) =>
+					.on('connection', socket =>
 						new resp.WorkerSocket(socket, server_io)
 					);
 			}

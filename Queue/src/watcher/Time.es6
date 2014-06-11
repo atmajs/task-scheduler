@@ -7,12 +7,14 @@ include
 		 * - `watch`, task, timerID
 		 */
 		var _emitter = new Class.EventEmitter,
-			_collection = new Tasks
+			_collection = new Tasks,
+			_timers = {}
 			;
 		
 		include.exports = Class({
 			
 			Static: {
+				collection: _collection,
 				
 				watchRange: function(endTime, startTime = new Date){
 					var current = new Date;
@@ -27,7 +29,12 @@ include
 				},
 				
 				watch: function(task){
-					return _watch(task);
+					return _tryAdd(task);
+				},
+				unwatch: function(task){
+					task = _collection.findSame(task);
+					_timer_clear(task);
+					_collection.remove(task);
 				},
 				
 				on: _emitter.on.bind(_emitter),
@@ -55,7 +62,7 @@ include
 				
 				var added = tasks
 					.toArray()
-					.map((x) => _tryAdd(x))
+					.map(x => _tryAdd(x))
 					;
 					
 				dfr.resolve(added);
@@ -66,7 +73,7 @@ include
 		
 		
 		function _tryAdd(task){
-			if (_collection.contains(x)) 
+			if (_collection.contains(task)) 
 				return false;
 			
 			if (_watch(task) === false) 
@@ -78,7 +85,6 @@ include
 		
 		
 		function _watch(task) {
-			logger.log('Has next', task.trigger.hasNext(), task.trigger._rule);
 			if (task.trigger.hasNext() === false) 
 				return false;
 			
@@ -86,22 +92,46 @@ include
 				span = date - new Date,
 				timer = setTimeout(_fireDelegate(task), span)
 				;
-			logger.log('TaskFactory| Watch `%s` in `%d`ms'
+			logger.log('TaskFactory | Watch `%s` in `%d`ms'
 				, task.name
 				, span
 			);
 			
+			_timer_add(timer, task);
 			_emitter.trigger('watch', task, timer);
 			return true;
 		}
 		
 		function _fireDelegate(task) {
 			return function(){
+				_timer_remove(task);
 				
 				_emitter.trigger('time', task);
+				
+				if (_collection.indexOf(task) === -1) 
+					return;
+				
 				if (_watch(task) === false) 
 					_collection.remove(task);
 			};
 		}
 		
+		function _timer_remove(task) {
+			delete _timers[task._id.toString()];
+		}
+		function _timer_clear(task) {
+			var key = task._id.toString(),
+				data = _timers[key];
+			if (data == null) 
+				return;
+			
+			clearTimeout(data.timer);
+			delete _timers[key];
+		}
+		function _timer_add(timer, task) {
+			_timers[task._id.toString()] = {
+				timer: timer,
+				task: task
+			};
+		}
 	})

@@ -1,18 +1,18 @@
-var resume = include.pause(),
-	resource = include;
-	
+if (typeof atma === 'undefined') 
+	require('atma-server');
+
+
+var resume = include.pause();
 atma
 	.server
 	.Application({
-		base: '/Api/'
+		base: include.location
 	})
 	.done(function(app){
-
+		
 		app.responders([
 			app.responder()
 		]);
 		
-		
-		resource.exports = app;
-		process.nextTick(resume);
-	})
+		resume(app);
+	});

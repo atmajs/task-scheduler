@@ -2,11 +2,7 @@ UTest({
 	'run - script': function(done) {
 		
 		var historyTask = Model.HistoryTask.create({
-			
-			// - not relevant for the runner
-			//name: 'test-foo',
-			//trigger: 'in 200ms',
-			
+			name: 'test-foo',
 			exec: {
 				script: 'global.Foo = "test-foo";',
 			}
@@ -24,6 +20,7 @@ UTest({
 	
 	'run - source': function(done){
 		var historyTask = Model.HistoryTask.create({
+			name: 'source - letter',
 			exec: {
 				src: 'test/data/letter.js'
 			}

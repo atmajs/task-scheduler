@@ -1,5 +1,5 @@
 include
-	.inject('../src/parser/oncenlp.js::Parse')
+	.inject('../src/parser/trigger.js::Parse')
 	.done(function(resp){
 	
 		UTest({
@@ -28,14 +28,22 @@ include
 				.forEach(function(row){
 					check(date, row[0], row[1])
 				});
-				
+			},
+			'interval .. time': function(){
+				[
+					['interval 100ms', 100 ],
+					['interval 2s', 2 * 1000 ],
+					['interval 2s 5ms', 2 * 1000 + 5 ],
+				]
+				.forEach(function(row){
+					eq_(resp.Parse.interval(row[0]), row[1]);
+				});
 			}
 		});
 		
 				
 		function check(dtstart, str, diff){
-			var next = resp.Parse(str, dtstart);
-			//-logger.log(next, dtstart);
+			var next = resp.Parse.once(str, dtstart);
 			eq_((next - dtstart) / 1000, diff, str + ':' + diff);;
 		}
 	})

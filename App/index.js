@@ -1,13 +1,12 @@
-require('atma-libs/globals-dev');
-require('atma-logger/lib/global-dev')
-require('atma-io');
-require('atma-server');
+if (typeof include === 'undefined') {
+	require('atma-libs/globals-dev');
+	require('atma-logger/lib/global-dev')
+	require('atma-io');
+	require('atma-server');
+}
 
 global.app = atma.server.Application({
-		base: '/App/',
-		config: {
-			port: 5888
-		}
+		base: '/App/'
 	})
 	.done(createApp)
 	;

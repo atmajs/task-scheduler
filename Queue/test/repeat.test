@@ -1,0 +1,92 @@
+var TaskQueue = Queue.TaskQueue,
+	TaskFactory = Queue.TaskFactory,
+	TaskHistory = Queue.TaskHistory;
+
+var task = {
+	name: 'foo-interval',
+	trigger: 'interval 200ms',
+	exec: {
+		script: 'global.XX = ++counter;',
+	}
+};
+
+UTest({
+	'queue': function(done) {
+		global.counter = 0;
+		TaskFactory
+			.ensureTask(task)
+			.fail(assert.avoid());
+		
+		start(5, done);
+	},
+	'remove': function(done){
+		var hasNewTasks_ = assert.avoid(hasNewTasks, 1),
+			onNewTask = () => hasNewTasks_();
+			
+		TaskQueue
+			.on('hasNewTasks', onNewTask);
+			
+		function hasNewTasks() {
+			logger.log('hasNewTasks'.green.bold);
+			TaskFactory
+				.removeTask(task);
+				
+			setTimeout(function(){
+				TaskQueue.off('hasNewTasks', onNewTask);
+				done();
+			}, 800);
+		}
+	}
+});
+
+function start(count, done) {
+	TaskQueue
+		.on('hasNewTasks', hasNewTasks);
+	
+	function hasNewTasks(queue){
+		eq_(queue.length, 1);
+			
+		var q/*QueuedTask*/ = queue[0];
+		is_(q._id, 'Object');
+		
+		is_(q._task, 'Object');
+		eq_(q._task.name, task.name);
+		eq_(q.tid, q._task._id.toString());
+		
+		logger.log('interval countdown'.green, count);
+		if (--count < 0) {
+			TaskQueue.off('hasNewTasks', hasNewTasks);
+			done();
+			return;
+		}
+		
+		pluck();
+	}
+	
+	function pluck() {
+		TaskQueue
+			.pluck('foo_workerid')
+			.fail(assert.avoid())
+			.done(function(h/*HistoryTask*/){
+				
+				is_(h.start, 'Date');
+				is_(h._id, 'Object');
+				eq_(h.task.name, task.name);
+				is_(h.task._id, 'Object');
+				
+				eq_(Queue.TaskQueue.length, 0);
+				
+				ensureEmpty()
+			});
+	}
+	
+	function ensureEmpty(){
+		TaskQueue
+			.restore()
+			.fail(assert.avoid())
+			.done(function(queue){
+				eq_(Queue.TaskQueue, queue);
+				eq_(queue.length, 0);
+			});
+	}
+}

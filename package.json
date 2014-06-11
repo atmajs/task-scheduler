@@ -30,7 +30,12 @@
     "plugins": [
       "atma-loader-traceur",
       "atma-loader-package"
-    ]
+    ],
+    "settings": {
+      "atma-loader-traceur": {
+        "extensions": [ "test", "es6" ]
+      }
+    }
   },
   
   "license": "MIT"

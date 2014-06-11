@@ -14,38 +14,45 @@ include
 			
 			_id: null,
 			
+			app: {
+				_id: null,
+				name: ''
+			},
+			
 			name: '',
 			
-			//| Rule string
+			//| Rule
 			trigger: null,
 			
-			//| Exec object { ?src, ?script }
+			//| Exec object { ?src, ?script, ?command }
 			exec: null,
 			data: null,
 			
 			isEqual: function(task){
+				if (task == null) 
+					return false;
 				
-				if (task._id != null
-						&& this._id != null
-						&& this._id.toString() === task._id.toString()) 
+				if (this === task) 
 					return true;
 				
-				if (this.trigger == null && task.trigger != null) 
-					return false;
-				if (this.trigger && this.trigger.isEqual(task.trigger) === false) 
-					return false;
+				if (this._id && areEquivalent(this._id, task._id) === true)
+					return true;
 				
-				if (this.exec == null && task.exec != null) 
-					return false;
-				if (this.exec && this.exec.isEqual(task.exec) === false)
-					return false;
-				
-				if (this.data == null && task.data != null) 
-					return false
-				if (this.data && Utils.obj.isEqual(this.data && task.data) == false) 
-					return false;
-				
-				return true;
+				return areEquivalent(this.app._id, task.app._id)
+					&& areEquivalent(this.trigger, task.trigger)
+					&& areEquivalent(this.exec, task.exec)
+					&& areEquivalent(this.data, task.data)
+					;
 			}
-		})	
+		});
+		
+		function areEquivalent(a, b) {
+			if (null == a || a === '') 
+				return a == b;
+			
+			if (null == a.isEqual) 
+				return Utils.obj.isEqual(a, b);
+			
+			return a.isEqual(b);
+		}
 	})

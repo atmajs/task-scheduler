@@ -1,0 +1,86 @@
+var TaskQueue = Queue.TaskQueue,
+	TaskFactory = Queue.TaskFactory,
+	TaskHistory = Queue.TaskHistory;
+	
+UTest({
+	'queue': function(done) {
+		
+		TaskFactory
+			.ensureTask({
+				name: 'test-foo',
+				
+				trigger: 'in 200ms',
+				exec: {
+					script: 'global.XX = "test-foo";',
+				}
+			});
+		
+		TaskQueue.on('hasNewTasks', hasNewTasks);
+		function hasNewTasks(queue) {
+			eq_(queue.length, 1);
+				
+			var q/*QueuedTask*/ = queue[0];
+			is_(q._id, 'Object');
+			
+			is_(q._task, 'Object');
+			eq_(q._task.name, 'test-foo');
+			eq_(q.tid, q._task._id.toString());
+			
+			TaskQueue.off('hasNewTasks', hasNewTasks);
+			done();
+		}
+	},
+	
+	'pluck': function(done){
+		TaskQueue
+			.pluck('foo_workerid')
+			.fail(assert.avoid())
+			.done(function(h/*HistoryTask*/){
+				
+				is_(h.start, 'Date');
+				is_(h._id, 'Object');
+				eq_(h.task.name, 'test-foo');
+				is_(h.task._id, 'Object');
+				
+				eq_(Queue.TaskQueue.length, 0);
+				done(h);
+			})
+	},
+	'ensure queue is empty': function(done, h/*HistoryTask*/){
+		TaskQueue
+			.restore()
+			.fail(assert.avoid())
+			.done(function(queue){
+				eq_(Queue.TaskQueue, queue);
+				eq_(queue.length, 0);
+				done(h);
+			})
+	},
+	'finish task': function(done, h/*HistoryTask*/){
+		
+		eq_(TaskHistory.length, 1, 'Has?');
+		h
+			.log('foo-log')
+			.fail(assert.avoid())
+			.done(finish)
+			;
+		
+		function finish() {
+			TaskQueue
+			.finish(h._id.toString())
+			.fail(assert.avoid())
+			.done(function(h){
+				
+				eq_(TaskHistory.length, 0);
+				
+				is_(h.end, 'Date');
+				is_(h.logs, 'Array');
+				
+				eq_(h.logs[0], 'foo-log');
+				eq_(h.state, Model.HistoryTask.state_Finished, 'State?');
+				
+				done();
+			});
+		}
+	}
+})
