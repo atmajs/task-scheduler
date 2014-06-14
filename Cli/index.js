@@ -4,7 +4,7 @@ if (typeof include === 'undefined') {
 	require('atma-io');
 	require('atma-loader-traceur');
 	require('atma-loader-package');
-	include = include.instance(new net.Uri('file://' + __filename).toString());
+	//-include = include.instance(new net.Uri('file://' + __filename).toString());
 }
 
 include

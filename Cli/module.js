@@ -7,9 +7,14 @@ include
 	.js({
 		project: [
 			'Utils::Utils',
-			'Model::Model'
+			'Model::Model',
+			'Queue::Queue',
+			'Api::Api'
 		],
-		src: 'src/*.es6.package::Lib'
+		src: [
+			'src/utils/*.es6.package::CliUtils',
+			'src/*.es6.package::Lib'
+		]
 	})
 	.done(function(resp){
 		var args = process.argv.slice(2),

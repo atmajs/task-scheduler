@@ -1,41 +1,37 @@
+/* global Cli */
 UTest({
-	'create': function(done){
-		Cli
-			.process('app create -name Foo -password Baz')
-			.fail(assert.avoid())
-			.always(done);
+	'create': function(){
+		return Cli
+			.process('app create -name Foo -password Baz');
 			
 	},
 	'should fail on dublicate': function(done){
 		Cli
 			.process('app create -name Foo -password Baz')
-			.done(assert.avoid())
+			.fail(assert.await())
 			.always(done);
-			
 	},
-	'list': function(done){
-		
-		Cli
+	'list': function(){
+		return Cli
 			.process('app list')
-			.done(arr => {
-				deepEq_(arr, ['Foo']);
-			})
-			.fail(assert.avoid())
-			.always(done);
+			.done(arr =>  deepEq_(arr, ['Foo']))
 	},
-	'remove': function(done){
-		
-		Cli
+	'remove': function(){
+		return Cli
 			.process('app remove -name Foo')
-			.done(function(){
-				Cli
-					.process('app list')
-					.done(arr => {
-						eq_(arr.length, 0);
-					})
-					.fail(assert.avoid())
-					.always(done);
-			})
-			.fail(assert.avoid())
+			.pipe(() =>
+				Cli.process('app list').done(
+					arr => eq_(arr.length, 0)
+				)
+			);
+	},
+	'create test': function(){
+		return Cli
+			.process('app create -name Test -password test')
+			.pipe(() =>
+				Cli.process('app list').done(
+					arr => eq_(arr.length, 1)
+				)
+			);
 	}
 })

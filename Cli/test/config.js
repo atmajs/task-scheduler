@@ -1,32 +1,26 @@
 module.exports = {
-	exec: "node",
-	tests: "test/*.test",
+	exec: 'node',
+	env: 'module.js::Cli',
+	tests: 'test/*.test',
 	
 	$config: {
 		$before: function(done){
-			logger.cfg('logCaller', true);
-			include
-				.js('module.js::Cli')
-				.done(function(resp){
-					global.Cli = resp.Cli
-					
-					logger.log(app.config.port, app.config.mongo);
-					Class
-						.MongoStore
-						.settings(app.config.mongo)
-					Class
-						.MongoStore
-						.resolveDb()
-						.done(function(db){
-							db.dropDatabase(function(){
-								
-								Class
-									.MongoStore
-									.ensureIndexesAll()
-									.always(done);
-							});
-						})
-				});
+			var Mongo = Class.MongoStore;
+			Mongo
+				.settings(app.config.mongo);
+			Mongo
+				.profiler
+				.toggle(true);
+			Mongo
+				.resolveDb()
+				.done(function(db){
+					db.dropDatabase(function(){
+						
+						Mongo
+							.ensureIndexesAll()
+							.always(done);
+					});
+				})			
 		}
 	}
 	

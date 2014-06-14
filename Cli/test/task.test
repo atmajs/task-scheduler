@@ -1,0 +1,23 @@
+/* global Cli */
+UTest({
+	'create': function(){
+		return Cli
+			.process(
+				'task create \
+					-app.name Test \
+					-name First \
+					-trigger "in 400 ms" \
+					-exec.code "io.File.write(\'my-test.txt\', String(new Date))"'
+			);
+			
+	},
+	'list': function(){
+		eq_(1,1);
+		return Cli
+			.process(
+				'task list -all'
+			)
+			.done(arr => logger.log);
+	},
+	
+})

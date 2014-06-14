@@ -5,6 +5,8 @@ if (typeof include === 'undefined') {
 	require('atma-server');
 }
 
+process.on('SIGINT', shutdownApp)
+
 global.app = atma.server.Application({
 		base: '/App/'
 	})
@@ -12,9 +14,8 @@ global.app = atma.server.Application({
 	;
 	
 function createApp(app){
-	
 	var connect = require('connect'),
-		port = process.env.PORT || app.config.port || 5888;
+		port = app.config.port;
 
 	var server = connect()
 		.use(app.responder({
@@ -27,9 +28,12 @@ function createApp(app){
 		.listen(port);
 	
 	
-	app.lib.Queue.Socket.listen(server);
-	app.lib.Worker.Worker.connect(app.config);
+	//app.lib.Queue.Server.listen(server);
+	//app.lib.Worker.Worker.connect(app.config);
 	
 	logger.log('Listen', app.config.port);
-
+}
+function shutdownApp(){
+	require('fs').appendFileSync('./in.txt', 'SHUTDOWN');
+	process.exit(0);
 }

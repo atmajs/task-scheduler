@@ -49,7 +49,7 @@ include
 					.process(command, args, config)
 					.fail( error => logger.error(error) )
 					.done( message => message && logger.log(message) )
-					.always(() => {
+					.always(function(){
 						var msg = this._resolved
 							? 'Ok'.green
 							: 'Fail'.red

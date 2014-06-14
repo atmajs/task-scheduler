@@ -16,7 +16,8 @@ include
 			
 			app: {
 				_id: null,
-				name: ''
+				name: '',
+				base: null
 			},
 			
 			name: '',

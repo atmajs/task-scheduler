@@ -1,29 +1,39 @@
 include
-	.use('Model')
-	.done(function(resp, Model){
+	.use('Model', 'CliUtils')
+	.done(function(resp, Model, Utils){
 		
 		include.exports = {
 			'create': {
 				meta: {
 					description: 'Ensure task. Type `bold<hint -help>` for additional format information'.color,
 					arguments: {
-						'name': 'String',
-						'trigger': 'String',
+						'name': 'string',
+						'trigger': 'string',
 						
-						'?app.name': 'String',
-						'?exec.script': 'String',
-						'?exec.src': 'String',
-						'?exec.command': 'String',
-						'?exec.cwd': 'String'
+						'?app.name': 'string',
+						'?exec.script': 'string',
+						'?exec.src': 'string',
+						'?exec.command': 'string',
+						'?exec.cwd': 'string'
 					}
 				},
 				process: function(params, config){
-					return new Model
-						.Application({
-							name: params.name,
-							password: params.password
-						})
-						.save();
+					return Utils.Api.post('/task', params);
+				}
+			},
+			'list':  {
+				meta: {
+					description: 'Get tasks',
+					arguments: {
+						'?all': 'boolean',
+						'?pending': 'boolean',
+						'?history': 'boolean',
+						'?skip': 'number',
+						'?limit': 'number'
+					}
+				},
+				process: function(params, config){
+					return Utils.Api.get('/tasks');
 				}
 			}
 		};
