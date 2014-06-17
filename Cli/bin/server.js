@@ -2,7 +2,9 @@ require('atma-libs/globals');
 process.on('exit', shutdownSelf);
 process.on('SIGINT', shutdownSelf);
 process.on('uncaughtException', function(error){
+    send(error.stack);
     send(error);
+    server_Shutdown();
     send('fail');
 });
 
@@ -42,7 +44,7 @@ function server_Start(){
             return disconnect(error);
         
         
-        var count = config.workers || 0,
+        var count = config.workers || 1,
             i = count;
         if (i === 0) {
             workerStarted();
@@ -50,7 +52,7 @@ function server_Start(){
         }
         
         while(--i > -1){
-            startWorker();
+            startWorker(workerStarted);
         }
         function workerStarted(error) {
             if (error) 
@@ -127,6 +129,7 @@ function shutdownSelf() {
 
 function fork(path, cb){
     var thread = new Monitor(path, {
+        max: 2,
         silent: true,
         killSignal: 'SIGINT',
         killTree: false,
@@ -140,12 +143,28 @@ function fork(path, cb){
             
             cb(null, thread);
         })
-        .on('stop', function(){
+        .on('stop', function(error){
+            send('stopped'.bold);
             cb('stopped: ' + path);
         })
         .on('error', function(error){
+            send('errored '.bold + error);
             cb(error)
-        });
+        })
+        .on('restart', function(a, b) {
+            send('Failed to start: ' + path);
+        })
+        .on('exit:code', function(code, x) {
+            //send('Forever detected script exited with code ' + code);
+            
+        })
+        .on('stdout', function(data){
+            send(path + ' [stdout]: ' + String(data));
+        })
+        .on('stderr', function(data){
+            send(path + ' [stderr]: ' + String(data));
+        })
+        ;
     
     thread.start();
 }

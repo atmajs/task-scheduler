@@ -1,6 +1,6 @@
 include
 	.js('./socket.es6')
-	.use('Api')
+	.use('RestApi')
 	.done(function(resp, Api){
 		
 		include.exports = {
@@ -19,7 +19,7 @@ include
 				.pipe(
 					() => fallback(url, method, body, headers),
 					() => send(url, method, body, headers)
-				);
+				)
 		}
 		function send(url, method, body, headers) {
 			url = `http://127.0.0.1:${app.config.port}/rest${url}`;
@@ -38,6 +38,8 @@ include
 			return dfr;
 		}
 		function fallback(url, method, body, headers) {
-			return Api.execute(url, method, body, headers)
+			return Api
+				.execute(url, method, body, headers)
+				.done( () => method !== 'get' && logger.log('Saved to database'.green.bold) )
 		}
 	})

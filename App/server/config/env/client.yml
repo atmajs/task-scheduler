@@ -7,7 +7,7 @@ env:
 			src: '/.reference/atma/include/lib/include.js'
 		
 		routes:
-			
+			control: '/public/control/{0}/{1}.es6'
 			
 		scripts:
 			atma:
@@ -26,7 +26,9 @@ env:
 			atma_compo:
 				- prism
 				- tabs
-	
+			control:
+				- ajax-loader
+			
 		styles:
 			- '/.reference/bootstrap/dist/css/bootstrap.min.css'
 		

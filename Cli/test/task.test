@@ -1,23 +1,36 @@
 /* global Cli */
 UTest({
+	'start server': function(){
+		return Cli.process('server start');
+	},
 	'create': function(){
-		return Cli
-			.process(
-				'task create \
-					-app.name Test \
-					-name First \
-					-trigger "in 400 ms" \
-					-exec.code "io.File.write(\'my-test.txt\', String(new Date))"'
-			);
-			
+		return Cli.process([
+			'task',
+			'create',
+			'-app.name',
+			'Test',
+			'-name',
+			'First',
+			'-trigger',
+			'in 400 ms',
+			'-exec.script',
+			'io.File.write(\'my-test.txt\', String(new Date))'
+		]);
 	},
 	'list': function(){
-		eq_(1,1);
-		return Cli
-			.process(
-				'task list -all'
-			)
-			.done(arr => logger.log);
+		return Cli.process(
+			'task list -all'
+		).done(arr => {
+			eq_(arr.length, 1);
+			has_(arr, [{
+				name: 'First',
+				app: {
+					name: 'Test'	
+				}
+			}])
+		});
 	},
-	
+	'stop server': function(){
+		return Cli.process('server stop');
+	}
 })

@@ -36,8 +36,9 @@ module.exports = Class({
 		
 		if (val.meta) {
 			var err = Class.validate(route.current.params, val.meta.arguments);
-			if (err) 
+			if (err) {
 				return dfr.reject(err)
+			}
 		}
 		
 		var result = val.process(route.current.params, config);

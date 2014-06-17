@@ -13,19 +13,18 @@ function initialize(resp, Model, TaskFactory, Utils){
 			meta: {
 				description: 'Create new task',
 				arguments: {
+					
 					'?app': {
 						'name': 'string'
 					},
-					'task': {
-						'name': 'string',
-						'trigger': 'string',
-						'exec': {
-							'?script': 'string',
-							'?src': {
-								'path': 'string',
-								'?cwd': 'string'
-							}
-						
+					'name': 'string',
+					'trigger': 'string',
+					'exec': {
+						'?script': 'string',
+						'?src': {
+							'path': 'string',
+							'?cwd': 'string'
+						}
 					}
 				},
 				response: {
@@ -34,26 +33,29 @@ function initialize(resp, Model, TaskFactory, Utils){
 				}
 			},
 			process:  function(req, res){
-				var task = req.body.task,
-					app = req.body.app;
+				var task = req.body;
 				
-				if (app) {
+				if (task.app && task.app.name) {
 					Model
 						.Application
 						.fetch({
-							name: req
+							name: task.app.name
 						})
-						.done(ensureTask)
-						.fail(ensureTask.bind(null, null))
+						.done(app => ensureTask(this, app))
+						.fail(() => ensureTask(this))
+				} else {
+					
+					ensureTask(this);
 				}
 				
-				function ensureTask(app) {
+				function ensureTask(service, app) {
 					if (app) {
 						task.app = Object.map(app, '_id', 'name', 'base')
 					}
+					
 					TaskFactory
 						.ensureTask(task)
-						.pipe(this)
+						.pipe(service)
 						;
 				}
 				

@@ -17,15 +17,21 @@ function initialize(resp, Model, Utils){
 				arguments: {
 					'?limit': 'number',
 					'?skip': 'number',
-					'?search': 'regex_string',
-					'?filter': 'pending|active'
+					'?search': 'string',
+					'?filter': /^pending|active$/
 				},
 				response: []
 			},
 			process: [
 				function(req, res, params){
 					
-					this.resolve('Not implemented')
+					Model
+						.Tasks
+						.fetch()
+						.pipe(
+							coll => coll.toJSON()
+						)
+						.pipe(this);
 				}
 			]
 		}

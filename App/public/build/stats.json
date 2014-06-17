@@ -1,0 +1,15 @@
+{
+    "build": {
+        "/": {
+            "scripts": true,
+            "styles": true,
+            "load": false
+        },
+        "index": {
+            "scripts": false,
+            "styles": false,
+            "load": false
+        }
+    },
+    "buildVersion": 1403019510526
+}

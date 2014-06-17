@@ -32,7 +32,6 @@ include
 					);
 					return dfr.reject(msg);
 				}
-				
 				new resp
 					.ShellStrategy(strategy)
 					.process(

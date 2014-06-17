@@ -24,12 +24,14 @@ function createApp(app){
 				connect.json()
 			]
 		}))
-		.use(connect.static(__dirname))
+		.use(atma.server.staticContent.respond)
 		.listen(port);
 	
 	
-	//app.lib.Queue.Server.listen(server);
-	//app.lib.Worker.Worker.connect(app.config);
+	app.lib.Queue.Server.listen(server);
+	
+	if (app.config.hasWorker) 
+		app.lib.Worker.Worker.connect(app.config);
 	
 	logger.log('Listen', app.config.port);
 }

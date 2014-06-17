@@ -11,6 +11,6 @@ include
 					return new resp[key](exec);
 			}
 			
-			return null;
+			throw Error('Unsupported execution object: ' + Object.keys(exec));
 		}
 	})

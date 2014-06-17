@@ -9,7 +9,7 @@ include
 			'Utils::Utils',
 			'Model::Model',
 			'Queue::Queue',
-			'Api::Api'
+			'Api::RestApi'
 		],
 		src: [
 			'src/utils/*.es6.package::CliUtils',
