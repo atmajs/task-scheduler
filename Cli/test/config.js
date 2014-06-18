@@ -1,6 +1,6 @@
 module.exports = {
 	exec: 'node',
-	env: 'module.js::Cli',
+	env: 'Cli.js::Cli',
 	tests: 'test/*.test',
 	
 	$config: {

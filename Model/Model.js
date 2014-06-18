@@ -1,7 +1,7 @@
 include
 	.setBase(include.location)
 	.js(
-		'../Utils/index.js::Utils',
+		'../Utils/Utils.js::Utils',
 		'src/entity/**.es6.package::Entity',
 		'src/server/**.es6.package::Model'
 	)

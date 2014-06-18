@@ -1,7 +1,3 @@
-if (typeof atma === 'undefined') 
-	require('atma-server');
-
-
 var resume = include.pause();
 atma
 	.server

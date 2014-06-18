@@ -1,10 +1,10 @@
-include
-	.js(
-		'../Utils/index.js::Utils',
-		'../Model/index.js::Model',
-		'src/*.es6.package::Worker'
-	)
-	.done(function(resp){
-		
-		include.exports = resp.Worker;
-	})
+require('../package')
+	.done(function(rootConfig){
+		include
+			.instance('file://' + __filename)
+			.js('Worker.js')
+			.done(function(resp){
+				
+				resp.Worker.connect(rootConfig);
+			});
+	});

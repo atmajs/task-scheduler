@@ -8,14 +8,15 @@ env:
 			server_lib : '/server/lib/{0}.js' 
 			server_compo : '/server/compo/{0}/{1}.js'
 
-			Model: /../Model/src/{0}.js
-			Api: /../Api/src/{0}.js
-			Project: '../{0}/index.js'
+			Project: '../{0}/{0}.js'
 		scripts:
 			
 			Project:
-				- 'Utils::Utils'
-				- 'Model::Model'
-				- 'Queue::Queue'
-				- 'Worker::Worker'
+				# alias is taken from filename for `include.use(ALIAS)`
+				# so it same as, e.g 'Utils::Utils'
+				
+				- 'Utils'
+				- 'Model'
+				- 'Queue'
+				- 'Worker'
 			

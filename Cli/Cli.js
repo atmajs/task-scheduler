@@ -1,14 +1,13 @@
 include
 	.setBase(include.location)
 	.routes({
-		project: '../{0}/index.js'
+		project: '../{0}/{0}.js'
 	})
-	.js('src/application.js')
 	.js({
 		project: [
-			'Utils::Utils',
-			'Model::Model',
-			'Queue::Queue',
+			'Utils',
+			'Model',
+			'Queue',
 			'Api::RestApi'
 		],
 		src: [

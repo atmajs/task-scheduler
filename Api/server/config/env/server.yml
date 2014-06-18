@@ -2,6 +2,10 @@
 env:
 	server:
 		scripts:
-			- '../Utils/index.js::Utils'
-			- '../Model/index.js::Model'
-			- '../Queue/index.js::Queue'
+			
+			# alias is taken from filename for `include.use(ALIAS)`
+			# so it same as, e.g '../Utils/Utils.js::Utils'
+			
+			- '../Utils/Utils.js'
+			- '../Model/Model.js'
+			- '../Queue/Queue.js'

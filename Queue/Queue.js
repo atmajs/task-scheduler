@@ -1,7 +1,7 @@
 include
 	.js(
-		'../Utils/index.js::Utils',
-		'../Model/index.js::Model',
+		'../Utils/Utils.js',
+		'../Model/Model.js',
 		'src/*.es6.package::Queue'
 	)
 	.done(function(resp){

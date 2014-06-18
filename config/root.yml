@@ -1,0 +1,11 @@
+# Generic root Configuration
+# Some projects contain project-level Configuration
+
+port:
+	'#if TEST': 5887
+	'default': 5888
+
+mongo:
+	db:
+		'#if TEST': test-task-scheduler
+		'default': task-scheduler

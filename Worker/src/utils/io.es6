@@ -55,13 +55,10 @@ function init(){
 		
 		socket
 			.on('connect', function() {
-				logger.log('io_socket_connect'.green)
 				dfr.resolve(socket)
 			})
 	
 			.on('error', function(error) {
-				
-				logger.log('io_socket_connect_fail'.red, error)
 				
 				socket.socket.disconnectSync();
 				socket.socket.removeAllListeners();

@@ -1,15 +1,12 @@
-port:
-	'#if ENV=="test"': 5887
-	'default': 5888
 
-hasWorker: false
-	
-mongo:
-	db:
-		'#if ENV=="test"': test-task-scheduler
-		'default': task-scheduler
+# start queue application with one worker
+# otherwise extern workers should be started
+
+embedWorker:
+	'#if (debug || test)': true
+	'default': false
 	
 subapps:
 	rest:
 		# all requests to `/rest/***` are piped to Api Application
-		controller: /../Api/index.js
+		controller: /../Api/Api.js
