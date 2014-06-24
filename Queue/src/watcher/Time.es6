@@ -1,6 +1,6 @@
 include
-	.use('Model.Tasks')
-	.done(function(resp, Tasks){
+	.use('Model.Tasks', 'Logger')
+	.done(function(resp, Tasks, log){
 		
 		/* Events:
 		 * - `time`, task
@@ -92,7 +92,7 @@ include
 				span = date - new Date,
 				timer = setTimeout(_fireDelegate(task), span)
 				;
-			logger.log('TaskFactory | Watch `%s` in `%d`ms'
+			log('TaskFactory | Watch `%s` in `%d`ms'
 				, task.name
 				, span
 			);

@@ -1,8 +1,19 @@
 /* global Cli */
+var file_PATH = '../test-cli-write.txt';
 UTest({
+	$config: {
+		timeout: 4000
+	},
+	$before: function(){
+		io.File.remove(file_PATH);
+	},
+	$after: function(){
+		io.File.remove(file_PATH);
+	},
 	'start server': function(){
 		return Cli.process('server start');
 	},
+	
 	'create': function(){
 		return Cli.process([
 			'task',
@@ -12,9 +23,9 @@ UTest({
 			'-name',
 			'First',
 			'-trigger',
-			'in 400 ms',
+			'in 200 ms',
 			'-exec.script',
-			'io.File.write(\'my-test.txt\', String(new Date))'
+			'io.File.write(\'test-cli-write.txt\', \'Baz \' + new Date(2014,0,1).getFullYear())'
 		]);
 	},
 	'list': function(){
@@ -30,7 +41,14 @@ UTest({
 			}])
 		});
 	},
+	'ensure write': function(done){
+		setTimeout(() => {
+			eq_(io.File.exists(file_PATH), true);
+			eq_(io.File.read(file_PATH), 'Baz 2014');
+			done();
+		}, 1000);
+	},
 	'stop server': function(){
 		return Cli.process('server stop');
 	}
-})
+});

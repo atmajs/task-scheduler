@@ -1,7 +1,7 @@
 include
-	.use('Model')
+	.use('Model', 'Logger')
 	.js('TaskFactory.es6', 'TaskHistory.es6')
-	.done(function(resp, Model){
+	.done(function(resp, Model, log){
 		
 		var TaskFactory = resp.TaskFactory,
 			TaskHistory = resp.TaskHistory
@@ -24,11 +24,11 @@ include
 			
 			Self: {
 				add: function(task){
-					logger.log('TaskQueue| Push `bold<%s>`'.color, task.name);
+					log('TaskQueue | Push `bold<%s>`'.color, task.name);
 					
 					var taskAdded = () => {
-						logger.log(
-							'TaskQueue: Task, ready for execution `bold<%s>`'.color
+						log(
+							'TaskQueue | Task, ready for execution `bold<%s>`'.color
 							, task.name
 						);
 						this.trigger('hasNewTasks', this);
@@ -52,7 +52,7 @@ include
 					.shift()
 					.del()
 					.fail(error =>
-						logger.error('Queuedtask | Del error', error)
+						log.error('QueuedTask | Del error', error)
 					);
 				TaskHistory
 					.add(scheduled._task, worker)
@@ -75,7 +75,7 @@ include
 							return;
 						}
 						
-						logger.warn(
+						log.error(
 							'There are still tasks in the queue.',
 							'Last application-run terminated unexpectedly.'
 						);
@@ -100,7 +100,7 @@ include
 						dfr.resolve(this);
 					},
 					onError = (message, error) => {
-						logger.error(message, error);
+						log.error(message, error);
 						dfr.reject(error);
 					};
 				this

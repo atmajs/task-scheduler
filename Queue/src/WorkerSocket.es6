@@ -1,11 +1,11 @@
 include
-	.use('Model')
+	.use('Model', 'Logger')
 	.js('TaskQueue.es6')
-	.done(function(resp){
+	.done(function(resp, Model, log){
 		
 		var WorkerSocket = include.exports = Class({
 			Construct: function(socket, io){
-				logger.log('Worker Connected'.green.bold);
+				log('Worker Connected'.green.bold);
 				
 				socket
 					.on('task:pluck', function(workerId, done){
@@ -19,7 +19,7 @@ include
 							;
 					})
 					.on('task:completed', function(historyTask, workerInfo, done){
-						logger.log(
+						log(
 							'Queue Socket | Task completed'
 							, historyTask._id
 						);

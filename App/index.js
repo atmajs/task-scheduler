@@ -1,12 +1,13 @@
-process.on('SIGINT', shutdownApp)
-require('../package')
-	.done(function(rootConfig){
+process.on('SIGINT', shutdownApp);
+require('../root-app')
+	.done(function(){
+		
 		global.app = atma
 			.server
 			.Application({
 				base: __dirname,
 				configs: [
-					rootConfig.toJSON(),
+					'../config/**.yml',
 					'server/config/**.yml'	
 				]
 			})
@@ -15,7 +16,7 @@ require('../package')
 	
 function startApp(app){
 	var connect = require('connect'),
-		port = process.env.PORT || app.config.port,
+		port = app.config.port,
 		// Application library Modules: @see ./server/config/env/server.yml
 		Lib = app.lib,
 		
@@ -34,7 +35,10 @@ function startApp(app){
 	if (app.config.embedWorker) 
 		Lib.Worker.connect(app.config);
 	
-	logger.log('Listen', port);
+	logger.log('Queue server started on', port);
+	
+	if (process.send) 
+		process.send('ok');
 }
 function shutdownApp(){
 	process.exit(0);

@@ -1,6 +1,6 @@
 include
-	.use('Model.HistoryTask')
-	.done(function(resp, HistoryTask){
+	.use('Model.HistoryTask', 'Logger')
+	.done(function(resp, HistoryTask, log){
 		
 		include.exports = Class('Worker.Runner', {
 			Base: Class.EventEmitter,
@@ -19,8 +19,8 @@ include
 			stack: null,
 			
 			run: function(app, historyTask){
-				logger.log(
-					'Worker Runner | execute task'
+				log.trace(
+					'Execute task'
 					, historyTask.task.name.bold
 				);
 				
@@ -41,7 +41,7 @@ include
 			
 		});
 		
-		
+		// === private
 		
 		function task_doneDelegate(runner, task){
 			return function(){
@@ -55,15 +55,15 @@ include
 			};
 		}
 		function task_complete(runner, historyTask){
-			logger.log(
-				'Runner | Task completed %s in %d ms'
+			log(
+				'Task %s completed in %d ms'
 				, historyTask.task.name.bold
 				, new Date - historyTask.start
 			);
 				
 			var i = runner.stack.indexOf(historyTask);
 			if (i === -1) 
-				logger.warn('No task in stack', runner.stack);
+				log.error('No task in stack', runner.stack);
 			
 			runner.stack.splice(i, 1);
 			runner.trigger('task:completed', historyTask, {

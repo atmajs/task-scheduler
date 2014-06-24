@@ -1,5 +1,5 @@
 include
-	.js('../../Queue/index.js::Queue')
+	.js('../../Queue/Queue.js::Queue')
 	.done(function(resp){
 		
 		var Queue = resp.Queue;
@@ -21,7 +21,6 @@ include
 				
 				Queue.Server.listen(httpServer);
 				Worker
-					.Worker
 					.connect(config)
 					.always(done)
 					;
@@ -43,7 +42,7 @@ include
 				}, 600)
 			},
 			
-			'!repeat many (rrule)': function(done){
+			'repeat many (rrule)': function(done){
 				global.Many = [];
 				
 				Queue.TaskFactory.ensureTask({

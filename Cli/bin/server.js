@@ -1,3 +1,4 @@
+/* global config, threads */
 require('atma-libs/globals');
 process.on('exit', shutdownSelf);
 process.on('SIGINT', shutdownSelf);
@@ -55,15 +56,14 @@ function server_Start(){
             startWorker(workerStarted);
         }
         function workerStarted(error) {
-            if (error) 
+            if (error)
                 send(error);
-            if (--count > -1) 
+                
+            if (--count > 0) 
                 return;
             
             config
-                .$write({
-                    pid: config.pid
-                })
+                .$write({ pid: config.pid }, false)
                 .fail(disconnect)
                 .done(function(){
                     var msg = logger.formatMessage(
@@ -72,7 +72,7 @@ function server_Start(){
                     );
                     config.pid.workers.forEach(function(pid, index){
                         msg += logger.formatMessage(
-                            'Worker green<%s> process: bold<%s>'.color
+                            '\nWorker green<%s> process: bold<%s>'.color
                             , index
                             , pid
                         );
@@ -87,17 +87,19 @@ function server_Start(){
 }
 function startServer(cb) {
     fork('App/index.js', function(error, thread){
-        if (error)  return cb(error);
+        if (thread) 
+            config.$set('pid.server', thread.child.pid);
         
-        config.$set('pid.server', thread.child.pid);
+        if (error)  return cb(error);
         cb();
     });
 }
 function startWorker(cb) {
     fork('Worker/index.js', function(error, thread){
+        if (thread) 
+            config.$get('pid.workers').push(thread.child.pid);
+            
         if (error)  return cb(error);
-        
-        config.$get('pid.workers').push(thread.child.pid);
         cb();
     });
 }
@@ -133,15 +135,21 @@ function fork(path, cb){
         silent: true,
         killSignal: 'SIGINT',
         killTree: false,
+        detached: true,
         spawnWith: {
-            detached: true
-        }
+            detached: true,
+            stdio: ['ipc'],
+        },
+        options: [
+            '--release'
+        ]
     });
     threads.push(thread);
     thread
         .on('start', function(){
-            
-            cb(null, thread);
+            //thread.child.on('message', function(msg){
+            //      ...
+            //});
         })
         .on('stop', function(error){
             send('stopped'.bold);
@@ -154,15 +162,19 @@ function fork(path, cb){
         .on('restart', function(a, b) {
             send('Failed to start: ' + path);
         })
-        .on('exit:code', function(code, x) {
-            //send('Forever detected script exited with code ' + code);
+        .on('message', function(message){
+            if (message === 'ok') {
+                cb(null, thread);
+                return;
+            }
             
+            cb(message, thread);
         })
         .on('stdout', function(data){
-            send(path + ' [stdout]: ' + String(data));
+            send('[stdout]: ' + path + String(data));
         })
         .on('stderr', function(data){
-            send(path + ' [stderr]: ' + String(data));
+            send('[stderr]: ' + path + String(data));
         })
         ;
     
@@ -179,6 +191,13 @@ function send() {
     console.log(msg);
 }
 function disconnect(error) {
+    
+    threads.forEach(function(thread){
+        thread
+            .removeAllListeners('stdout')
+            .removeAllListeners('stderr');
+    });
+    
     if (error == null) {
         send('ok');
         return;

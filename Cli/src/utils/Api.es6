@@ -2,7 +2,6 @@ include
 	.js('./socket.es6')
 	.use('RestApi')
 	.done(function(resp, Api){
-		
 		include.exports = {
 			get: function(url){
 				return httpRun(url, 'get');
@@ -33,6 +32,14 @@ include
 				if (error) 
 					return dfr.reject(error);
 				
+				if (typeof body === 'string') {
+					try {
+						body = JSON.parse(body);
+					} catch(e){
+						dfr.reject('Invalid json: ' + body);
+						return;
+					}
+				}
 				dfr.resolve(body);
 			});
 			return dfr;

@@ -36,6 +36,12 @@ function fork(appdir, script, args) {
 			dfr.reject('');
 			return;
 		}
+		
+		if (/^\[std/.test(msg)) {
+			logger.log(msg);
+			return;
+		}
+		
 		logger.log(msg);
 	});
 	

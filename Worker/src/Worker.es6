@@ -1,9 +1,10 @@
 include
+	.use('Logger')
 	.js(
 		'Runner.es6'
 		, 'source/Socket.es6'
 	)
-	.done(function(resp){
+	.done(function(resp, log){
 		
 		var Worker = include.exports = Class({
 			Construct: function(source){
@@ -30,11 +31,16 @@ include
 						.Socket
 						.connect(config)
 						.fail(function(error){
-							logger.error('Worker can`t connect to the master Queue', error);
-							dfr.reject(error);
+							var msg = logger.formatMessage(
+								'Can`t connect to the master Queue'
+								, error
+							);
+							
+							log.error(msg);
+							dfr.reject(error, msg);
 						})
 						.done(function(source){
-							logger.log('connected'.green)
+							log('Connected to server'.green, config.port)
 							dfr.resolve(new Worker(source));
 						});
 					

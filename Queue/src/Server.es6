@@ -1,6 +1,7 @@
 include
 	.js('WorkerSocket.es6', 'TaskQueue.es6')
-	.done(function(resp){
+	.use('Logger')
+	.done(function(resp, log){
 		
 		include.exports = {
 			listen: function(httpServer){
@@ -27,7 +28,7 @@ include
 		
 		function emit(){
 			if (server_io == null) {
-				logger.error('Queue Socket | Socket server is not yet started');
+				log.error('Queue Socket | Socket server is not yet started');
 				return;
 			}
 			
@@ -35,7 +36,7 @@ include
 				clients = socket.clients();
 			
 			if (clients.length === 0) {
-				logger.error('Queue Socket | No workers');
+				log.error('Queue Socket | No workers');
 				return;
 			}
 			

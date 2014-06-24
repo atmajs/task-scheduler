@@ -4,8 +4,8 @@ module.exports = {
 	exec: 'node',
 	
 	env: [
-		'/index.js::Worker',
-		'../Model/index.js::Model'
+		'/Worker.js::Worker',
+		'../Model/Model.js::Model'
 	],
 	
 	$config: {

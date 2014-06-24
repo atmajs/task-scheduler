@@ -1,6 +1,8 @@
 # Generic root Configuration
 # Some projects contain project-level Configuration
 
+host: 'http://127.0.0.1'
+
 port:
 	'#if TEST': 5887
 	'default': 5888

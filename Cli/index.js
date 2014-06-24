@@ -1,4 +1,4 @@
-require('../package')
+require('../root-app')
 	.done(function(){
 		
 		include

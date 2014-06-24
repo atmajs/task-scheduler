@@ -1,7 +1,7 @@
 include
-	.use('Model')
+	.use('Model', 'Logger')
 	.js('../utils/io.es6::IoUtils')
-	.done(function(resp, Model){
+	.done(function(resp, Model, log){
 
 		var Socket = include.exports = Class({
 			Base: Class.EventEmitter,
@@ -32,7 +32,7 @@ include
 						.connect(config)
 						.fail(dfr.rejectDelegate())
 						.done(function(socket){
-							logger.log('Worker Socket | connected'.green)
+							log.trace('Worker Socket | connected'.green)
 							dfr.resolve(new Socket(socket));
 						});
 					
