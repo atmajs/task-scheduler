@@ -1,0 +1,17 @@
+
+.-menu {
+	
+	:radio .nav.nav-pills.nav-stacked as=ul x-route='/-' {
+		
+		var list = ['tasks','active','history','workers'];
+		
+		for (name of list) {
+			
+			li name='~[name]' > a x-dynamic href='/~[name]' {
+				
+				span.badge.pull-right > '~[: count[name] ]'
+				'~[L: name]'
+			}
+		}
+	}
+}

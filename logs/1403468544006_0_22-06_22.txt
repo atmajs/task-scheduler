@@ -1,0 +1,20 @@
+info: socket.io started
+
+Queue server started on 5887 (index.js:37)
+info: handshake authorized M-iFCOYG3S62KPj-fJ1I
+
+Worker Connected to server 5887 (Worker.es6:22)
+info: handshake authorized BIZpRvehQ7tqIKzLfJ1J
+
+Worker Connected to server 5887 (Worker.es6:22)
+Worker Task First completed in 142 ms (Runner.es6:36)
+info: socket.io started
+
+Queue server started on 5888 (index.js:37)
+info: handshake authorized 2YpxtINAXv4EYTL6Fgda
+
+Worker Connected to server 5888 (Worker.es6:29)
+>> ENOENT D:\atma\task-scheduler\App\public\build\load.html
+
+Resource cannt be loaded file://D:/atma/task-scheduler/App/public/build/load.html
+

@@ -22,11 +22,11 @@ include
 			
 			
 			hasNext: function(){
-				return false
+				throw Error('`hasNext` not overriden');
 			},
 			
 			getNext: function(){
-				return new Date
+				throw Error('`getNext` not overriden');
 			},
 			
 			toJSON: function(){

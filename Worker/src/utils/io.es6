@@ -48,7 +48,7 @@ function init(){
 		
 		url += '/task-scheduler-worker';
 		
-		var socket = client.connect(url, {
+		var socket = client(url, {
 			'connect timeout': 2000,
 			'force new connection': true
 		});
@@ -72,6 +72,7 @@ function init(){
 	
 	
 	function getClient(){
+		//return require('socket.io-client');
 		//@ HACKY - io client workaround
 		
 		var _io = global.io;

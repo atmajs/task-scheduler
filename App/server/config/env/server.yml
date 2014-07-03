@@ -9,14 +9,20 @@ env:
 			server_compo : '/server/compo/{0}/{1}.js'
 
 			Project: '../{0}/{0}.js'
+			Relase: '../{0}/{}.min.js'
 		scripts:
 			
 			Project:
-				# alias is taken from filename for `include.use(ALIAS)`
-				# so it same as, e.g 'Utils::Utils'
+				# filename is taken from the resource alias (for `include.use(ALIAS)`)
+				# so it the same as, e.g 'Utils::Utils'
 				
 				- 'Utils'
 				- 'Model'
 				- 'Queue'
 				- 'Worker'
+				
+			Relase:
+				'#if release':
+					- 'Worker'
+			
 			

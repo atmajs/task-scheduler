@@ -1,5 +1,4 @@
 (function(){
-	
 	include
 		.setBase(include.location)
 		.js(

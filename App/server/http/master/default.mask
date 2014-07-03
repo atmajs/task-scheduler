@@ -13,6 +13,7 @@ layout:master #default {
 		
 		body {
 			
+			:menu;
 			
 			@placeholder #body;
 			

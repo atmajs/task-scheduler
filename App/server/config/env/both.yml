@@ -20,3 +20,8 @@ env:
 			view: '/public/view/{0}/{1}.js'
 
 		scripts:
+			atma:
+				- util-format/format
+				- i18n/localization
+			public_compo:
+				- menu

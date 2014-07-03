@@ -8,9 +8,12 @@ include
 				var _io = global.io;
 				delete global.io;
 		
-				server_io = require('socket.io').listen(httpServer, {
+				var socketIO = require('socket.io');
+				server_io = socketIO(httpServer, {
 					'log level': 2
 				});
+				
+				
 		
 				global.io = _io;
 				

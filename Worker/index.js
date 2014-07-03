@@ -9,10 +9,10 @@ require('../root-app')
 					.Worker
 					.connect(app.config)
 					.fail(function(error, msg){
-						process.send && process.send(msg)
+						process.send && process.send(msg);
 					})
 					.done(function(){
-						process.send && process.send('ok')
+						process.send && process.send('ok');
 					});
 			});
 	});

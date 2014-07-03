@@ -16,7 +16,15 @@ include
 					.source
 					.on('task:run', (app, historyTask) =>
 						this.runner.run(app, historyTask)
-					);
+					)
+					.on('getStatus', (done) => {
+						done({
+							tasks: this.runner.stat,
+							uptime: process.uptime(),
+							memory: process.memoryUsage().heapTotal / (1024 * 2),
+							pid: process.pid
+						});
+					})
 				this
 					.runner
 					.on('task:completed', (historyTask, info) =>

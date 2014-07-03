@@ -85,11 +85,11 @@ include
 		
 		
 		function _watch(task) {
-			if (task.trigger.hasNext() === false) 
+			var date = task.calcNext();
+			if (date == null) 
 				return false;
 			
-			var date = task.trigger.getNext(),
-				span = date - new Date,
+			var span = date - new Date,
 				timer = setTimeout(_fireDelegate(task), span)
 				;
 			log('TaskFactory | Watch `%s` in `%d`ms'

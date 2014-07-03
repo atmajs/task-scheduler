@@ -30,5 +30,5 @@ env:
 				- ajax-loader
 			
 		styles:
-			- '/.reference/bootstrap/dist/css/bootstrap.min.css'
+			- '/.reference/bootstrap/dist/css/bootstrap.css'
 		

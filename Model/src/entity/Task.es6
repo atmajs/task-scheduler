@@ -44,6 +44,14 @@ include
 					&& areEquivalent(this.exec, task.exec)
 					&& areEquivalent(this.data, task.data)
 					;
+			},
+			
+			calcNext: function(){
+				this.next = null;
+				if (this.trigger == null || this.trigger.hasNext() === false) 
+					return null;
+				
+				return (this.next = this.trigger.getNext());
 			}
 		});
 		

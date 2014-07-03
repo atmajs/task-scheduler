@@ -29,6 +29,10 @@
     "appcfg": "~0.1.28",
     "request": "~2.36.0"
   },
+  "scripts": {
+    "start": "node Cli/index server start",
+    "stop": "node Cli/index server stop"
+  },
   "atma": {
     "plugins": [
       "atma-loader-traceur",

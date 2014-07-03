@@ -77,7 +77,7 @@ include
 						
 						log.error(
 							'There are still tasks in the queue.',
-							'Last application-run terminated unexpectedly.'
+							'Last application-run terminated unexpectedly or worker failed. Restore...'
 						);
 						
 						var ids = queuedTasks

@@ -2,6 +2,8 @@ include
 	.use('Model.HistoryTask', 'Logger')
 	.done(function(resp, HistoryTask, log){
 		
+		
+
 		include.exports = Class('Worker.Runner', {
 			Base: Class.EventEmitter,
 			/*
@@ -11,7 +13,11 @@ include
 				this.stack = [];
 				this.worker = worker;
 			},
-			
+			stat: {
+				current: 0,
+				resolved: 0,
+				rejected: 0
+			},
 			config: {
 				parallel: 10,
 				retries: 4
@@ -23,7 +29,7 @@ include
 					'Execute task'
 					, historyTask.task.name.bold
 				);
-				
+				this.stat.current++;
 				this.stack.push(historyTask);
 				historyTask
 					.task
@@ -31,6 +37,9 @@ include
 					.process(app, historyTask.task)
 					.done(task_doneDelegate(this, historyTask))
 					.fail(task_failDelegate(this, historyTask))
+					.always(() => --this.stat.current)
+					.done(() => ++this.stat.resolved)
+					.fail(() => ++this.stat.rejected)
 					;
 			},
 			
