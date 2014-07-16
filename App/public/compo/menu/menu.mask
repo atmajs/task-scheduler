@@ -1,7 +1,7 @@
 
 .-menu {
 	
-	:radio .nav.nav-pills.nav-stacked as=ul x-route='/-' {
+	div.nav.nav-pills.nav-stacked {
 		
 		var list = ['tasks','active','history','workers'];
 		
@@ -10,7 +10,7 @@
 			li name='~[name]' > a x-dynamic href='/~[name]' {
 				
 				span.badge.pull-right > '~[: count[name] ]'
-				'~[L: name]'
+				'~[L: "nav_" + name]'
 			}
 		}
 	}

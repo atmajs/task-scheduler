@@ -1,5 +1,5 @@
 layout:view master='default' {
 	@content #body {
-		'Hello some one two opa'
+		'Content'
 	}
 }

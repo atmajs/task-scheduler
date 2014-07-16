@@ -24,17 +24,15 @@ function init(){
 		
 		var socket = dfr._resolved[0];
 		
-		socket.socket.disconnectSync();
+		socket.disconnect();
 		dfr = null;
 	};
 	
 	io_connect = function(config){
-		
 		if (dfr) 
 			return dfr;
 		
 		dfr = new Class.Deferred();
-		
 		
 		if (client == null) 
 			client = getClient();
@@ -47,7 +45,6 @@ function init(){
 			url = (host || 'http://localhost') + ':' + (port || 5811)
 		
 		url += '/task-scheduler-worker';
-		
 		var socket = client(url, {
 			'connect timeout': 2000,
 			'force new connection': true
@@ -57,16 +54,12 @@ function init(){
 			.on('connect', function() {
 				dfr.resolve(socket)
 			})
-	
 			.on('error', function(error) {
-				
-				socket.socket.disconnectSync();
-				socket.socket.removeAllListeners();
-				
+				socket.disconnect();
+				socket.removeAllListeners();
 				dfr && dfr.reject(error);
-			})
+			});
 			
-		
 		return dfr;
 	};
 	

@@ -22,7 +22,8 @@ include
 				get: function(name, password){
 					if (password.length !== 32) 
 						password = Utils.crypto.md5(password);
-						
+					
+					var dfr = new Class.Deferred;
 					this
 						.fetch({
 							name: name
@@ -34,8 +35,9 @@ include
 							if (password !== app.password)
 								return dfr.reject({ code: 403 });
 							
-							return dfr.resolve(app);
+							dfr.resolve(app);
 						});
+					return dfr;
 				}
 			}
 		});

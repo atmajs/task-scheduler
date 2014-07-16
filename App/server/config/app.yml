@@ -10,3 +10,11 @@ subapps:
 	rest:
 		# all requests to `/rest/***` are piped to Api Application
 		controller: /../Api/Api.js
+	
+i18n:
+	support:
+		- en
+		- de
+	path: '~/public/localization/%%.json'
+	
+static: '/App/'

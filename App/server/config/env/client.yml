@@ -7,8 +7,9 @@ env:
 			src: '/.reference/atma/include/lib/include.js'
 		
 		routes:
+			project: '/.reference/{0}/{0}.js?type=client'
 			control: '/public/control/{0}/{1}.es6'
-			
+			style: '/public/style/{0}.less'
 		scripts:
 			atma:
 				- ruqq/dom/jquery
@@ -19,7 +20,9 @@ env:
 
 				- mask-node/mask.bootstrap
 				- ruta
+				- atma-logger/browser
 				- mask-animation/mask.animation
+				
 				- '#if debug':
 					- include/include.autoreload
 			
@@ -28,7 +31,12 @@ env:
 				- tabs
 			control:
 				- ajax-loader
+				
+			project:
+				- Model
 			
 		styles:
 			- '/.reference/bootstrap/dist/css/bootstrap.css'
-		
+			- '/public/style/main.less'
+			- '/public/style/other.less'
+			

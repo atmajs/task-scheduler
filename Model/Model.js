@@ -1,9 +1,10 @@
+var type = include.route.params && include.route.params.type || 'server';
 include
 	.setBase(include.location)
 	.js(
 		'../Utils/Utils.js::Utils',
 		'src/entity/**.es6.package::Entity',
-		'src/server/**.es6.package::Model'
+		'src/' + type + '/**.es6.package::Model'
 	)
 	.done(function(resp){
 		

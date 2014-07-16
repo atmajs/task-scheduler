@@ -1,26 +1,26 @@
-(function(){
-	include
-		.setBase(include.location)
-		.js(
-			'node_modules/cron-parser/lib/parser.js::CronExpression'
-			, 'node_modules/rrule/lib/rrule.js::RRule'
-			, 'src/.package::Helpers'
-			//, './node_modules/underscore/underscore-min.js::_'
-		)
-		.done(function(resp){
+include
+	.setBase(include.location)
+	.js(
+		'node_modules/cron-parser/dist/cron-parser.js::CronParser'
+		, 'node_modules/rrule/lib/rrule.js::RRule'
+		, 'src/.package::Helpers'
+	)
+	.done(function(resp){
+		
+		var _CronParser = resp.CronParser || CronParser,
+			_RRule = resp.RRule || RRule;
+		
+		include.exports = {
+			Parser: {
+				CronExpression: _CronParser.parseExpression,
+				RRule: _RRule,
+				OnceExpression: resp.Helpers.parser.trigger.once,
+				IntervalExpression: resp.Helpers.parser.trigger.interval
+			},
 			
-			include.exports = {
-				CronExpression: resp.CronExpression,
-				RRule: resp.RRule.RRule,
-				Parser: {
-					OnceExpression: resp.Helpers.parser.trigger.once,
-					IntervalExpression: resp.Helpers.parser.trigger.interval
-				},
-				
-				obj: resp.Helpers.obj,
-				is: resp.Helpers.is,
-				
-				execScript: resp.Helpers.script.execute
-			};
-		});
-}());
+			obj: resp.Helpers.obj,
+			is: resp.Helpers.is,
+			
+			execScript: resp.Helpers.script.execute
+		};
+	});

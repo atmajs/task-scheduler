@@ -11,13 +11,8 @@ env:
 			atma_compo: '/.reference/atma/compos/{0}/lib/{1}.js'
 			
 			public : '/public/script/{0}.js'
-			public_model: '/public/model/{0}.js'
-			public_compo: '/public/compo/{0}/{1}.js'
-			public_script: '/public/script/{0}.js'
-			public_control: /public/control/{0}/{1}.js
-			public_attr: /public/attr/{0}.js
-
-			view: '/public/view/{0}/{1}.js'
+			public_compo: '/public/compo/{0}/{1}.es6'
+			view: '/public/view/{0}/{1}.es6'
 
 		scripts:
 			atma:

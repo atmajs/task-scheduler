@@ -10,42 +10,52 @@ require('../root-app')
 					'server/config/**.yml'	
 				]
 			})
-			.done(startApp)
+			.done(startApp);
 	});
 	
 function startApp(app){
-	var connect = require('connect'),
-		port = app.config.port,
-		// Application library Modules: @see ./server/config/env/server.yml
-		Lib = app.lib,
+	/*
+	 * Application library Modules: @see ./server/config/env/server.yml
+	 */
+	var Lib = app.lib;
+	
+	
+	app
+		.processor({
+			
+			/*
+			 * this middleware pipeline will be executed only
+			 * if application finds any endpoint (subapp | handler | service | page)
+			 */
+			middleware: [
+				require('body-parser').json(),
+				$L.middleware(app.config.i18n),
+				atma.server.middleware.query
+			],
+			
+			/*
+			 * Not endpoints or no one has ended the response
+			 */
+			after: [
+				atma.server.middleware.static
+			]
+		})
+		.listen()
+	
+	Lib
+		.Queue
+		.Server
+		.listen();
 		
-		server = require('http').createServer(
-				app.processor({
-					middleware: [
-						connect.query(),
-						connect.json()
-					],
-					after: [
-						atma.server.StaticContent.respond	
-					]
-				})
-			)
-			.listen(port)
-			;
+	if (app.config.embedWorker) 
+		Lib.Worker.connect(app.config);
 	
-	//Lib.Queue.Server.listen(server);
-	//if (app.config.embedWorker) 
-	//	Lib.Worker.connect(app.config);
-	
-	logger.log('Queue server started on', port);
+	logger.log('Queue server started on', app.config.port);
 	
 	if (process.send) 
 		process.send('ok');
-		
-	if (app.config.debug) {
-		app.autoreload(server);
-	}
 }
+
 function shutdownApp(){
 	process.exit(0);
 }

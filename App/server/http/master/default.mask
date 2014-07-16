@@ -13,9 +13,9 @@ layout:master #default {
 		
 		body {
 			
-			:menu;
+			.layout-menu > :menu;
 			
-			@placeholder #body;
+			.layout-content > @placeholder #body;
 			
 			atma:scripts;
 		}

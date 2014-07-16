@@ -4,7 +4,7 @@ include
 
 		mask.registerHandler(':ajax-loader', Compo.createClass({
 			
-			tagName: 'div',
+			tagName: 'section',
 			attr: {
 				'class' : '-ajax-loader'
 			},

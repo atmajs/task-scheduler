@@ -3,46 +3,22 @@ include
 	.use('Logger')
 	.done(function(resp, log){
 		
+		
 		include.exports = {
-			listen: function(httpServer){
-				var _io = global.io;
-				delete global.io;
-		
-				var socketIO = require('socket.io');
-				server_io = socketIO(httpServer, {
-					'log level': 2
-				});
+			get workerCount() {
+				return app.webSockets.clients(socket_NAMESPACE).length;
+			},
+			listen: function(){
 				
-				
-		
-				global.io = _io;
-				
-				server_io
-					.of(socket_NAMESPACE)
-					.on('connection', socket =>
-						new resp.WorkerSocket(socket, server_io)
-					);
+				app
+					.webSockets
+					.registerHandler(socket_NAMESPACE, resp.WorkerSocket)
+					;
 			}
 		};
-		resp.TaskQueue.on('hasNewTasks', () => emit('hasNewTasks'));
+		resp.TaskQueue.on('hasNewTasks', () =>
+			app.webSockets.emit(socket_NAMESPACE, 'hasNewTasks')
+		);
 		
-		var socket_NAMESPACE = resp.WorkerSocket.socket_NAMESPACE,
-			server_io;
-		
-		function emit(){
-			if (server_io == null) {
-				log.error('Queue Socket | Socket server is not yet started');
-				return;
-			}
-			
-			var socket = server_io.of(socket_NAMESPACE),
-				clients = socket.clients();
-			
-			if (clients.length === 0) {
-				log.error('Queue Socket | No workers');
-				return;
-			}
-			
-			socket.emit.apply(socket, arguments);
-		}
-	})
+		var socket_NAMESPACE = resp.WorkerSocket.socket_NAMESPACE;
+	});
