@@ -5,24 +5,11 @@ include
 	.done(function(resp, Model){
 		
 		mask.registerHandler(':menu', Compo({
+			tagName: 'menu',
+			attr: {
+				'class': '-menu'
+			},
 			template: resp.load.Template,
-
-			//compos: {
-			//
-			//},
-			//events: {
-			//
-			//},
-			//slots: {
-			//
-			//},
-			//pipes: {
-			//
-			//},
-			//constructor: function(){
-			//
-			//},
-
 			onRenderStart: function(model, ctx, container){
 				
 				this.model = {

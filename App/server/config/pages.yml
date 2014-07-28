@@ -26,4 +26,21 @@ pages:
 	# Default page path is /server/http/page/index/index.mask
 	# Each page item also has some additional infos
 	# - title - Page Title
+	
+	!/ :
+		id: tasks
+		title: Tasks
+	
+	/active:
+		id: active
+		template: active
+		title: Active
+	
+	/workers:
+		id: workers
+		template: workers
+		title: Workers
+		scripts:
+			view:
+				- workers
 

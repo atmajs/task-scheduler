@@ -1,17 +1,15 @@
-
-.-menu {
 	
-	div.nav.nav-pills.nav-stacked {
+.nav.nav-pills.nav-stacked {
+	
+	var list = ['tasks','active','history','workers'];
+	
+	for (name of list) {
 		
-		var list = ['tasks','active','history','workers'];
-		
-		for (name of list) {
+		li name='~[name]' > a.viewTitle x-dynamic href='/~[name]' {
+			span.badge.pull-right > '~[: count[name] ]'
 			
-			li name='~[name]' > a x-dynamic href='/~[name]' {
-				
-				span.badge.pull-right > '~[: count[name] ]'
-				'~[L: "nav_" + name]'
-			}
+			.roll-link >
+				span data-title='~[name]'  > '~[L: "nav_" + name]'
 		}
 	}
 }

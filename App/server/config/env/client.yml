@@ -38,5 +38,6 @@ env:
 		styles:
 			- '/.reference/bootstrap/dist/css/bootstrap.css'
 			- '/public/style/main.less'
-			- '/public/style/other.less'
+			- '/public/style/layout.less'
+
 			

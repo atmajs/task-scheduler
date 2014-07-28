@@ -6,17 +6,21 @@ layout:master #default {
 		head {
 			meta http-equiv="Content-Type" content="text/html;charset=utf-8";
 			meta name="viewport" content="maximum-scale=1.5, minimum-scale=.8, initial-scale=1, user-scalable=1";
-			title > "Topmodel Quiz"
+			title > "Task Scheduler"
 			
 			atma:styles;
 		}
 		
 		body {
 			
-			.layout-menu > :menu;
+			.layout-menu >
+				:menu;
 			
-			.layout-content > @placeholder #body;
+			.layout-content >
+				:viewManager #views >
+					@placeholder #body;
 			
+			:pageActivity;
 			atma:scripts;
 		}
 	}

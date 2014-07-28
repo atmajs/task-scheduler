@@ -1,8 +1,186 @@
-/**
- * menu Styles
- *
- * example:
- *
- * .-menu 
- *
- */
+
+@import "/public/style/lesshat.less";
+@import "/public/style/global.less";
+
+
+menu {
+	.box-sizing(border-box);
+	.size(100%, 100%);
+	
+	
+	.user-select(none);
+	
+    display: block;
+    
+	margin:0px;
+	padding:0px;
+    
+	z-index: 101;
+
+    background: #F3F0ED url(/images/dust2.png) 0 0 repeat;
+	color: rgb(25,25,25);
+	
+	.perspective(500px);
+	.transition(~"transform 200ms ease-in");
+	
+	a {
+		border-width: 0px;
+	}
+}
+menu:hover {
+   //color:rgb(220,225,220);
+    /*z-index: 999;*/
+}
+
+menu.hidden {
+	.translateX(-250px);
+}
+
+menu > .menu-show {
+	opacity: 0;
+	width: 32px;
+	height: 32px;
+	background: url('/images/ico/menu.png') center center no-repeat;
+	
+	position: absolute;
+	
+	right: -40px;
+	top: 10px;
+	.transition(~"opacity 500ms");
+	
+	pointer-events: none;
+}
+
+.menu-help:after {
+    content:' ';
+    position:absolute;
+    right: -3px;
+    top:0px;
+    width:3px;
+    height:100%;
+    background:rgba(0,0,0,.4);
+
+}
+
+menu > .scroller {
+	height:100%;
+	overflow: auto;
+	
+	.transform-origin(0 50%);
+	.rotateY(0deg);
+	.transition(transform 200ms ease-in);
+	-webkit-overflow-scrolling: touch;
+	
+	> .scroller-container {
+		-webkit-transform: translateZ(0px);
+		
+	   padding: 0px;
+   }
+	
+}
+
+.menu-logo {
+	padding-top: 15px;
+	text-align: center;
+}
+
+
+
+menu .viewTitle {cursor: pointer; opacity: .7; font-size: .9em;}
+menu .viewTitle:hover {  opacity: 1; }
+
+menu > .menu-help {
+	position:absolute;
+	top:0px; left: 105%;
+	width:100%;
+	height: 100%;
+	z-index: 9999999;
+	background: inherit;
+	opacity: 1;
+	display: none;
+	-webkit-transition: all 100ms linear;
+	font-size: small;
+}
+.menu-help > p {padding: 10px;}
+
+
+.menu-help:before {
+	content:' ';
+    position:absolute;
+    left: -3px;
+    top:0px;
+    width:3px;
+    height:100%;
+    background:rgba(0,0,0,.4);
+}
+
+menu h3 {
+	font-size: 1em;
+	margin:0px;
+	padding: 10px 0px;
+}
+
+menu ul {
+	list-style: none;
+}
+
+.viewTitle.selected {
+	font-weight: bold;
+	opacity: 1;
+	
+	> .roll-link {
+		background: @color_Selected;
+		color: white;
+	}
+}
+
+
+
+.roll-link {
+	
+	cursor: pointer;
+    display: inline-block;
+    overflow: hidden;
+	vertical-align: top;
+	
+	.perspective(600px);
+	.perspective-origin(50% 50%);
+	
+ }
+ .roll-link span {
+	
+	padding: 4px 5px;
+	
+   display: block;
+   position: relative;
+   padding: 0 2px;
+   
+   .transition(all 400ms ease);
+   .transform-origin(50% 0%);
+   .transform-style(preserve-3d);
+   
+ 
+ }
+ .roll-link span::after {
+   content: attr(data-title);
+   display: block;
+   position: absolute;
+   
+   top: 0px;
+   left: 0px;
+   
+   width: 100%;
+   padding: 0 2px;
+   color: #fff;
+   background: @color_Selected;
+   
+   .transform-origin(50% 0%);
+   .transform(translate3d( 0px, 105%, 0px ) rotateX( -90deg ));
+   
+ }
+ .roll-link:hover span {
+   color: grey;
+   background: @color_Selected;
+   
+   .transform(translate3d( 0px, 0px, -30px ) rotateX( 90deg ));
+ }

@@ -20,3 +20,5 @@ env:
 				- i18n/localization
 			public_compo:
 				- menu
+				- view/viewManager
+			
