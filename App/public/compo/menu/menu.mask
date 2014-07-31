@@ -1,15 +1,15 @@
 	
-.nav.nav-pills.nav-stacked {
-	
-	var list = ['tasks','active','history','workers'];
+ul.nav.nav-pills.nav-stacked {
 	
 	for (name of list) {
 		
-		li name='~[name]' > a.viewTitle x-dynamic href='/~[name]' {
-			span.badge.pull-right > '~[: count[name] ]'
-			
-			.roll-link >
-				span data-title='~[name]'  > '~[L: "nav_" + name]'
-		}
+		li.~[bind: current == name ? 'selected'] name='~[name]' >
+			a x-dynamic href='/~[name]' {
+				span.badge.pull-right > '~[: count[name] ]'
+				
+				.roll-link >
+					span data-title='~[L: "nav_" + name]'  > '~[L: "nav_" + name]'
+				
+			}
 	}
 }

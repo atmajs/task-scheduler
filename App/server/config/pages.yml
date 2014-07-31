@@ -40,7 +40,8 @@ pages:
 		id: workers
 		template: workers
 		title: Workers
-		scripts:
-			view:
-				- workers
+		env:
+			both:
+				view:
+					- workers
 

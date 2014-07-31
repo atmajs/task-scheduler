@@ -21,7 +21,8 @@ include
 					.on('task:run', (app, historyTask, done) => {
 						this.trigger('task:run', app, historyTask);
 						done(true);
-					});
+					})
+					.on('getStatus', this.pipe('getStatus'))
 			},
 			
 			Static: {

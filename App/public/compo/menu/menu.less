@@ -86,8 +86,7 @@ menu > .scroller {
 
 
 
-menu .viewTitle {cursor: pointer; opacity: .7; font-size: .9em;}
-menu .viewTitle:hover {  opacity: 1; }
+menu li {cursor: pointer; }
 
 menu > .menu-help {
 	position:absolute;
@@ -122,17 +121,38 @@ menu h3 {
 
 menu ul {
 	list-style: none;
-}
-
-.viewTitle.selected {
-	font-weight: bold;
-	opacity: 1;
 	
-	> .roll-link {
-		background: @color_Selected;
-		color: white;
+	> li {
+		cursor: pointer;
+		position: relative;
+		
+		&.selected {
+			font-weight: bold;
+			> .roll-link {
+				background: @color_Selected;
+				color: white;
+			}
+			
+			> a {
+				border-radius: 0px !important;
+			}
+		}
+		&.selected:after {
+			content: ' ';
+			width: 0;
+			height: 100%;
+			border-style: solid;
+			border-width: 20px 0 20px 5px;
+			border-color: transparent transparent transparent @color_Selected;
+			
+			position: absolute;
+			top: 0;
+			left: 0;
+		}
+		
 	}
 }
+
 
 
 
@@ -145,42 +165,40 @@ menu ul {
 	
 	.perspective(600px);
 	.perspective-origin(50% 50%);
-	
- }
- .roll-link span {
-	
+}
+
+.roll-link span {
+   
 	padding: 4px 5px;
+   
+	display: block;
+	position: relative;
+	padding: 0 2px;
+  
+	.transition(all 400ms ease);
+	.transform-origin(50% 0%);
+	.transform-style(preserve-3d);
+}
+
+.roll-link span::after {
+	content: attr(data-title);
+	display: block;
+	position: absolute;
 	
-   display: block;
-   position: relative;
-   padding: 0 2px;
-   
-   .transition(all 400ms ease);
-   .transform-origin(50% 0%);
-   .transform-style(preserve-3d);
-   
- 
- }
- .roll-link span::after {
-   content: attr(data-title);
-   display: block;
-   position: absolute;
-   
-   top: 0px;
-   left: 0px;
-   
-   width: 100%;
-   padding: 0 2px;
-   color: #fff;
-   background: @color_Selected;
-   
-   .transform-origin(50% 0%);
-   .transform(translate3d( 0px, 105%, 0px ) rotateX( -90deg ));
-   
- }
- .roll-link:hover span {
-   color: grey;
-   background: @color_Selected;
-   
-   .transform(translate3d( 0px, 0px, -30px ) rotateX( 90deg ));
- }
+	top: 0px;
+	left: 0px;
+	
+	width: 100%;
+	padding: 0 2px;
+	color: #fff;
+	background: @color_Selected;
+	
+	.transform-origin(50% 0%);
+	.transform(translate3d( 0px, 105%, 0px ) rotateX( -90deg ));
+}
+li:hover:not(.selected) .roll-link > span {
+	color: grey;
+	background: @color_Selected;
+	
+	.transform(translate3d( 0px, 0px, -30px ) rotateX( 90deg ));
+}

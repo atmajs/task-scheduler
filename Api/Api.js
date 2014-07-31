@@ -4,11 +4,4 @@ atma
 	.Application({
 		base: include.location
 	})
-	.done(function(app){
-		
-		app.responders([
-			app.responder()
-		]);
-		
-		resume(app);
-	});
+	.done(resume);

@@ -3,6 +3,7 @@
     "underscore": "~1.5.2",
     "cron-parser": "git+https://github.com/tenbits/cron-parser.git#e5b243bebd426ce6815992a4dd3d6ffddff572fe",
     "rrule": "~2.0.1",
-    "spark-md5": "0.0.5"
+    "spark-md5": "0.0.5",
+    "es6-shim": "~0.14.0"
   }
 }

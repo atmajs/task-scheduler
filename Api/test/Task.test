@@ -1,16 +1,53 @@
-var request = require('supertest');
+var request = require('supertest'),
+	filename = 'test-cli-write.txt',
+	file_PATH = '/test-cli-write.txt',
+	script = `io.File.write('${filename}', 'Baz ' + new Date(2010,0,1).getFullYear())`,
+	task = {
+		name: 'Test',
+		trigger: 'in 200ms',
+		exec: {
+			script: script
+		}
+	};
 
 UTest({
 	
 	$config: {
 		errorableCallbacks: true
 	},
-	
+	$before: function(){
+		io.File.remove(file_PATH);
+	},
+	$after: function(){
+		io.File.remove(file_PATH);
+	},
 	'create': function(done){
-		
 		request(ApiServ)
-			.get('/task')
-			.expect('ONE', done)
-	}
+			.post('/rest/task')
+			.send(task)
+			.end(function(error, res){
+				eq_(error, null);
+				is_(res.body._id, 'String');
+				is_(res.body.next, 'String');
+				done(error);
+			});
+	},
+	'list': function(done){
+		request(ApiServ)
+			.get('/rest/tasks')
+			.end(function(error, res){
+				eq_(error, null);
+				notEq_(res.body.length, 0);
+				has_(res.body[0], task);
+				setTimeout(done, 200);
+		});
+	},
+	'ensure write': function(done){
+		setTimeout(() => {
+			eq_(io.File.exists(file_PATH), true);
+			eq_(io.File.read(file_PATH), 'Baz 2010');
+			done();
+		}, 1000);
+	},
 	
 })

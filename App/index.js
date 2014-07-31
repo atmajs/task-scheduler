@@ -1,5 +1,4 @@
-process.on('SIGINT', shutdownApp);
-require('../root-app')
+module.exports = require('../root-app')
 	.done(function(){
 		global.app = atma
 			.server
@@ -10,15 +9,14 @@ require('../root-app')
 					'server/config/**.yml'	
 				]
 			})
-			.done(startApp);
+			.done(Start);
 	});
-	
-function startApp(app){
+
+function Start(app){
 	/*
 	 * Application library Modules: @see ./server/config/env/server.yml
 	 */
 	var Lib = app.lib;
-	
 	
 	app
 		.processor({
@@ -56,6 +54,6 @@ function startApp(app){
 		process.send('ok');
 }
 
-function shutdownApp(){
+process.on('SIGINT', function Shutdown(){
 	process.exit(0);
-}
+});

@@ -31,6 +31,7 @@
         "atma-loader-less": ">0.0.0"
     },
     "scripts": {
+        "test": "atma test",
         "start": "node Cli/index server start",
         "stop": "node Cli/index server stop",
         "debug.start": "node App/index --debug"

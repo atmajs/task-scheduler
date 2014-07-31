@@ -58,9 +58,7 @@ function initialize(resp, Model, TaskFactory, Utils){
 						.pipe(service)
 						;
 				}
-				
 			}
-			
 		}
 		
 		

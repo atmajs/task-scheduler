@@ -1,7 +1,7 @@
 mask.registerHandler(':viewManager', Compo({
 	tagName: 'section',
 	onRenderStart: function(){
-		this.nodes = jmask(this.nodes).wrap('.view');
+		this.nodes = jmask('.view').append(this.nodes);
 	},
 	onRenderEnd: function(){
 		this._pages = {};
@@ -10,6 +10,8 @@ mask.registerHandler(':viewManager', Compo({
 		ruta.add('/:page', route => {
 			var page = route.current.params.page,
 				div = this._pages[page];
+			this._emit('navigate', page);
+			
 			if (div != null) {
 				this._show(div);
 				return;
@@ -27,8 +29,9 @@ mask.registerHandler(':viewManager', Compo({
 		})
 	},
 	_pages: null,
-	_emit: function(event){
-		Compo.pipe(':viewManager').emit(event);
+	_emit: function(){
+		var pipe = Compo.pipe('viewManager');
+		pipe.emit.apply(pipe, arguments);
 	},
 	_show: function(div){
 		this

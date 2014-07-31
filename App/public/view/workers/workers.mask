@@ -1,1 +1,36 @@
-'Workers )'
+h3 { 'Connected Workers ' tt > ' (~[list.length])' }
+
+if (error){
+	.alert.alert-danger > '~[error]'
+}
+
+ul.list-group > each(list) {
+	li.list-group-item {
+		table.table {
+			tr {
+				td > em > 'Process'
+				td > '~[pid]'
+			}
+			tr {
+				td > 'Memory'
+				td > '~[format: memory, ",0.00"] KB'
+			}
+			tr {
+				td > 'Uptime'
+				td > '~[: $c.formatTimespan(uptime) ]'
+			}
+			tr.success {
+				td > 'Completed tasks'
+				td > b > '~[tasks.resolved]'
+			}
+			tr.warning {
+				td > 'Running tasks'
+				td > b > '~[tasks.current]'
+			}
+			tr.danger {
+				td > 'Failed tasks'
+				td > b > '~[tasks.rejected]'
+			}
+		}
+	}
+}

@@ -24,7 +24,8 @@ include
 							memory: process.memoryUsage().heapTotal / (1024 * 2),
 							pid: process.pid
 						});
-					})
+					});
+					
 				this
 					.runner
 					.on('task:completed', (historyTask, info) =>
@@ -48,7 +49,7 @@ include
 							dfr.reject(error, msg);
 						})
 						.done(function(source){
-							log('Connected to server'.green, config.port)
+							log('Connected to server'.green.bold, config.port)
 							dfr.resolve(new Worker(source));
 						});
 					

@@ -1,0 +1,33 @@
+var request = require('supertest');
+
+UTest({
+	
+	$config: {
+		errorableCallbacks: true
+	},
+	'create': function(done){
+		
+		request(ApiServ)
+			.get('/rest/workers')
+			.expect(200)
+			.end(function(err, res){
+				eq_(err, null);
+				
+				var workers = res.body;
+				eq_(workers.length, 1);
+				has_(workers[0], {
+					tasks: {
+						current: 0,
+						resolved: 0,
+						rejected:  0,
+					},
+					uptime: null,
+					memory: null,
+					pid: null
+				});
+				
+				done();
+			})
+	}
+	
+})

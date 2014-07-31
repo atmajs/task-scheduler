@@ -6,3 +6,5 @@ services:
 		controller: Task
 	'^/tasks':
 		controller: Tasks
+	'^/workers':
+		controller: Workers

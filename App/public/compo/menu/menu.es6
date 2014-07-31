@@ -9,6 +9,14 @@ include
 			attr: {
 				'class': '-menu'
 			},
+			pipes: {
+				viewManager: {
+					navigate: function(page){
+						logger.log('>', page)
+						this.model.current = page;
+					}
+				}
+			},
 			template: resp.load.Template,
 			onRenderStart: function(model, ctx, container){
 				
@@ -16,7 +24,14 @@ include
 					count: {
 						workers: app.lib.Queue.Server.workerCount,
 						active: app.lib.Queue.TaskQueue.length
-					}
+					},
+					list: [
+						'tasks',
+						'active',
+						'history',
+						'workers'
+					],
+					current: ctx.page.data.id
 				};
 				
 				var resume = Compo.pause(this, ctx),

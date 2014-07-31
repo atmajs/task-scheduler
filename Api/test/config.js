@@ -5,21 +5,25 @@ module.exports = {
 	$config: {
 		$before: function(done){
 			
-			
 			include
-				.js('index.js::App')
+				.js('/../App/index.js::App')
 				.done(function(resp){
-					global.ApiServ = require('http').createServer(function(req, res){
-						resp.App.process(req, res);
-					});
+					//global.ApiServ = require('http').createServer(resp.App.process);
 					
-					Class
-						.MongoStore
-						.resolveDb()
-						.done(function(db){
-							db.dropDatabase();
-						})
-						.always(done);
+					resp.App.done(function(){
+						global.app.done(function(){
+								
+							global.ApiServ = global.app._server;
+							Class
+								.MongoStore
+								.resolveDb()
+								.done(function(db){
+									db.dropDatabase();
+								})
+								.always(done);
+							
+						});
+					});
 				});
 		}
 	}
