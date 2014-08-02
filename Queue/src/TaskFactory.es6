@@ -7,6 +7,9 @@ include
 		var TaskFactory = include.exports = Class('Queue.TaskFactory', {
 			
 			Static: {
+				get watchingCount () {
+					return TimeWatcher.collection.length
+				},
 				ensureTask: function(task){
 					var dfr = new Class.Deferred;
 					if (task instanceof Task === false) {

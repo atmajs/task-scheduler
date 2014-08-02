@@ -4,9 +4,9 @@ env:
 
 
 		routes:
-			server : '/server/{0}.js' 
-			server_lib : '/server/lib/{0}.js' 
-			server_compo : '/server/compo/{0}/{1}.js'
+			server : '/server/{0}.es6' 
+			server_lib : '/server/lib/{0}.es6' 
+			server_compo : '/server/compo/{0}/{1}.es6'
 
 			Project: '../{0}/{0}.js'
 			Relase: '../{0}/{}.min.js'
@@ -20,8 +20,8 @@ env:
 				- 'Model'
 				- 'Queue'
 				- 'Worker'
-				
-			Relase:
+			
+			Release:
 				'#if release':
 					- 'Worker'
 			

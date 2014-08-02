@@ -1,21 +1,8 @@
-
-
 page:
 	route: '/?:page/?:tab/?:section'
-	
-	
+		
 	location:
-		controller: '/server/http/page/{0}/{1}.js'
-		template: '/server/http/page/{0}/{1}.mask'
-		master: '/server/http/master/{0}.mask'
-		viewTemplate: '/public/view/{0}/{1}.mask'
-		viewController: '/public/view/{0}/{1}.js'
-		viewStyle: '/public/view/{0}/{1}.less'
-	
-	extension:
-		javascript: js
-		style: less
-		template: mask
+		template: '/server/http/page/{0}.mask'
 	
 	index:
 		template: index
@@ -27,10 +14,23 @@ pages:
 	# Each page item also has some additional infos
 	# - title - Page Title
 	
-	!/ :
-		id: tasks
+	!/:
+		id: index
+		template: tasks
 		title: Tasks
-	
+		env:
+			both:
+				view:
+					- tasks
+	/tasks:
+		id: tasks
+		template: tasks
+		title: Tasks
+		env:
+			both:
+				view:
+					- tasks
+					
 	/active:
 		id: active
 		template: active

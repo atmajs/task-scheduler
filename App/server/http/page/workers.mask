@@ -1,5 +1,4 @@
 layout:view master='default' {
-	@content #body {
+	@content #body >
 		:view:workers;
-	}
 }

@@ -3,7 +3,36 @@ include
 	.done(function(resp){
 		include.exports = {
 			isEqual: _deepEqual,
-			typeof: obj_typeof
+			typeof: obj_typeof,
+			setProperty: function(){
+				
+			},
+			getProperty: function(obj, property){
+				var chain = property.split('.'),
+					imax = chain.length,
+					i = -1;
+				while ( ++i < imax ) {
+					if (obj == null) 
+						return null;
+		
+					obj = obj[chain[i]];
+				}
+				return obj;
+			},
+			setProperty: function(obj, property, value) {
+				var chain = property.split('.'),
+					imax = chain.length - 1,
+					i = -1,
+					key;
+				while ( ++i < imax ) {
+					key = chain[i];
+					if (obj[key] == null) 
+						obj[key] = {};
+		
+					obj = obj[key];
+				}
+				obj[chain[i]] = value;
+			}
 		};
 		
 		var is = resp.is;

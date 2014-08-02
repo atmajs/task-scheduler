@@ -1,11 +1,13 @@
-	
+p {
+	button.btn-block.btn.btn-success > '~[L:task_Create]'
+}
 ul.nav.nav-pills.nav-stacked {
 	
 	for (name of list) {
 		
 		li.~[bind: current == name ? 'selected'] name='~[name]' >
 			a x-dynamic href='/~[name]' {
-				span.badge.pull-right > '~[: count[name] ]'
+				span.badge.pull-right > '~[bind: stat[name] ]'
 				
 				.roll-link >
 					span data-title='~[L: "nav_" + name]'  > '~[L: "nav_" + name]'

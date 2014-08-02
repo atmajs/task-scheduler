@@ -31,8 +31,10 @@ env:
 				- tabs
 			control:
 				- ajax-loader
+				- timer
 				
 			project:
+				- Utils
 				- Model
 			
 		styles:

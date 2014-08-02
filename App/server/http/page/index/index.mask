@@ -1,5 +1,0 @@
-layout:view master='default' {
-	@content #body {
-		'Index Content'
-	}
-}

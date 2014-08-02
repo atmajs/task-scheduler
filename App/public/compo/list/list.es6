@@ -3,7 +3,7 @@ mask.registerHandler(':list', Compo({
 		attributes: {
 			'?x-binded': 'boolean',
 			'?x-model': function(name){
-				var Ctor = Class.Model[name];
+				var Ctor = Class(name);
 				return Ctor == null
 					? Error(name + ' is not defined in Class repository')
 					: Ctor;
@@ -22,18 +22,20 @@ mask.registerHandler(':list', Compo({
 		if (item == null) 
 			item = this.nodes;
 		
-		this.nodes = jmask((this.xBinded ? '+' : '') + 'each (.)')
-			.append(item);
-		
-		
-		if (this.xModel == null) {
+		if (this.xModel == null) 
 			return;
-		}
 		
-		return Ctor
+		var resume = Compo.pause(this, ctx);
+		this
+			.xModel
 			.fetch()
-			.done((instance) => {
+			.done(instance => {
 				this.model = instance;
+				this.nodes = instance.length !== 0
+					? jmask((this.xBinded ? '+' : '') + 'each (.)')
+					: none
+					;
+				resume();
 			});
 	}
 }))

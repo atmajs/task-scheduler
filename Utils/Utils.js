@@ -8,19 +8,21 @@ include
 	.done(function(resp){
 		
 		var _CronParser = resp.CronParser || CronParser,
-			_RRule = resp.RRule || RRule;
+			_RRule = resp.RRule || RRule,
+			_Helpers = resp.Helpers
+			;
 		
 		include.exports = {
 			Parser: {
 				CronExpression: _CronParser.parseExpression,
 				RRule: _RRule,
-				OnceExpression: resp.Helpers.parser.trigger.once,
-				IntervalExpression: resp.Helpers.parser.trigger.interval
+				OnceExpression: _Helpers.parser.trigger.once,
+				IntervalExpression: _Helpers.parser.trigger.interval
 			},
 			
-			obj: resp.Helpers.obj,
-			is: resp.Helpers.is,
-			
-			execScript: resp.Helpers.script.execute
+			obj: _Helpers.obj,
+			is: _Helpers.is,
+			date: _Helpers.date,
+			execScript: _Helpers.script.execute
 		};
 	});

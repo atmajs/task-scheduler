@@ -1,7 +1,6 @@
 include
 	.use('Model.Tasks', 'Logger')
 	.done(function(resp, Tasks, log){
-		
 		/* Events:
 		 * - `time`, task
 		 * - `watch`, task, timerID

@@ -17,7 +17,7 @@ ul.list-group > each(list) {
 			}
 			tr {
 				td > 'Uptime'
-				td > '~[: $c.formatTimespan(uptime) ]'
+				td > :timer x-timespan='~[uptime]';
 			}
 			tr.success {
 				td > 'Completed tasks'

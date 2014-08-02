@@ -1,6 +1,10 @@
 {
 	"nav_tasks": "Tasks",
+	"nav_queue": "Queue",
 	"nav_active": "Active",
 	"nav_history": "History",
-	"nav_workers": "Workers"
+	"nav_workers": "Workers",
+	"task_Create": "Schedule Task",
+	
+	"tasks_empty": "Empty. Please create the first task via web interface or CLI"
 }

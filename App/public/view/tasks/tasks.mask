@@ -1,3 +1,11 @@
-:list x-model='Tasks' x-binded > li {
-	h3 > '~[title]'
+h3 > 'Tasks'
+
+:list x-model='Tasks' x-binded=1 {
+	@template > li > h3 > '~[title]'
+	
+	@empty > h4 /*> center */ {
+		em > tt > '~[L:tasks_empty]'
+		br;
+		//button.btn.btn-xs.btn-success > 'Create'
+	}
 }

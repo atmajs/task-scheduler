@@ -32,7 +32,7 @@ function Start(app){
 			],
 			
 			/*
-			 * Not endpoints or no one has ended the response
+			 * no endpoints or noone has ended the response
 			 */
 			after: [
 				atma.server.middleware.static

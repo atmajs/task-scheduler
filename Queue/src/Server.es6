@@ -3,7 +3,8 @@ include
 	.use('Logger')
 	.done(function(resp, log){
 		
-		include.exports = {
+		include.exports = new (Class({
+			Base: Class.EventEmitter,
 			get workerCount() {
 				return app.webSockets.clients(nsp_WORKER).length;
 			},
@@ -11,8 +12,15 @@ include
 			listen: function(){
 				app
 					.webSockets
-					.registerHandler(nsp_WORKER, resp.WorkerSocket)
+					.registerHandler(nsp_WORKER, (socket, io) => {
+						triggerStatus();
+						socket.on('disconnect', triggerStatus);
+						new resp.WorkerSocket(socket, io);
+					})
 					;
+				var triggerStatus = () => {
+					this.trigger('workerCountChanged', this.workerCount);
+				};
 			},
 			
 			getWorkersStatus: Class.Deferred.create(function(dfr){
@@ -22,7 +30,7 @@ include
 					, dfr.pipeCallback()
 				);
 			})
-		};
+		}));
 		resp.TaskQueue.on('hasNewTasks', () =>
 			app.webSockets.emit(nsp_WORKER, 'hasNewTasks')
 		);
