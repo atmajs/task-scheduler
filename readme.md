@@ -1,6 +1,8 @@
 Task Scheduler
 ----
-**_work in progress_**
+[![Build Status](https://travis-ci.org/atmajs/task-scheduler.svg?branch=master)](https://travis-ci.org/atmajs/task-scheduler)
+
+**_Work in progress_**
 
 
 Task Scheduler Server to schedule or run scripts/applications/commands which:
