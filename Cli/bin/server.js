@@ -156,7 +156,7 @@ function fork(path, cb){
             cb(error)
         })
         .on('restart', function(a, b) {
-            send('Failed to start: ' + path);
+            send('Failed to start: ' + path + '. cwd:' + process.cwd());
         })
         .on('message', function(message){
             if (message === 'ok') {
