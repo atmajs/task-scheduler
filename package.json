@@ -24,7 +24,7 @@
         "atma-libs": "~0.9.35",
         "atma-logger": "~0.0.88",
         "atma-io": "~0.1.76",
-        "atma-server": "0.0.97",
+        "atma-server": "~0.1.14",
         "socket.io": "~1.0.3",
         "socket.io-client": "~1.0.6",
         "forever-monitor": "git+https://github.com/tenbits/forever-monitor.git#9eb5efc8bd79cd7cf2ace8cd96f94f7eab34754e",
