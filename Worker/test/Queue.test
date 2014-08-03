@@ -9,19 +9,12 @@ include
 			},
 			$before: function(done){
 				
-				var config = {
-						port: 5889
-					},
-					
-					httpServer = require('http')
-						.createServer(function(){})
-						.listen(config.port)
-					;
-					
+				var config = { port: 5889 };
 				
-				Queue.Server.listen(httpServer);
+				new Queue.Server(null, config);
 				Worker
 					.connect(config)
+					.fail(assert.avoid())
 					.always(done)
 					;
 			},

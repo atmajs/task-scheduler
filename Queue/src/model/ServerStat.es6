@@ -13,7 +13,7 @@ include
 			propertyChangeNotifiers: {
 				workers: function(change){
 					this.addEventListener(
-						Server
+						Server.Instance()
 						, 'workerCountChanged'
 						, change
 					);
@@ -22,7 +22,7 @@ include
 			
 			Construct: function(){
 				this.defer();
-				this.workers = Server.workerCount;
+				this.workers = Server.Instance().workerCount;
 				this.queue = TaskFactory.watchingCount;
 				this.active = TaskQueue.length;
 				

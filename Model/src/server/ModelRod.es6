@@ -50,7 +50,8 @@ var ModelRod = include.exports = Class.patch('ModelRod', {
 	}
 });
 
-atma.server.Application.on('listen', ModelRod.bind);
+if (typeof atma !== 'undefined' && atma.server) 
+	atma.server.Application.on('listen', ModelRod.bind);
 
 // ==== private
 var _webSockets,

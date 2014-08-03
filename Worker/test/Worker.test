@@ -13,7 +13,7 @@ UTest({
 			done();
 		});
 		
-		var worker = new Worker.Worker(source);
+		var worker = new Worker(source);
 		source
 			.trigger('task:run', {}, historyTask);
 	},
@@ -31,7 +31,7 @@ UTest({
 			done();
 		});
 		
-		var worker = new Worker.Worker(source);
+		var worker = new Worker(source);
 		source
 			.trigger('task:run', {}, historyTask);
 	},
@@ -48,7 +48,7 @@ UTest({
 		});
 		
 		
-		var worker = new Worker.Worker(source);
+		var worker = new Worker(source);
 		source
 			.trigger('task:run', {}, historyTask);
 	}
@@ -58,5 +58,5 @@ function MockSource(onComplete){
 	return new (Class({
 		Base: Class.EventEmitter,
 		complete: onComplete
-	}))
+	}));
 }

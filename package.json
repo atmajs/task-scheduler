@@ -19,7 +19,7 @@
         "atma-loader-package": ">0.0.0",
         "mongodb": "~1.4.4",
         "atma-libs": "~0.9.35",
-        "atma-logger": "0.0.82",
+        "atma-logger": "~0.0.88",
         "atma-io": "~0.1.76",
         "atma-server": "0.0.97",
         "socket.io": "~1.0.3",

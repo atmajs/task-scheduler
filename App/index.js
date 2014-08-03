@@ -40,10 +40,7 @@ function Start(app){
 		})
 		.listen()
 	
-	Lib
-		.Queue
-		.Server
-		.listen();
+	Lib.Queue.Server.Instance(this);
 		
 	if (app.config.embedWorker) 
 		Lib.Worker.connect(app.config);

@@ -3,8 +3,8 @@ module.exports = {
 	exec: 'node',
 	
 	env: [
-		'/index.js::Queue',
-		'../Model/index.js::Model'
+		'/Queue.js',
+		'../Model/Model.js'
 	],
 	
 	$config: {
