@@ -6,11 +6,11 @@ Task Scheduler
 
 
 Task Scheduler Server to schedule or run scripts/applications/commands which:
-- scales: Server consists of a master Task Queue process and the workers. 
+- scales. Server consists of a master task queue process and the workers. 
 - has web interface
 - has RESTful API
-- has WebSockets
-- has Database persistance
+- has websockets
+- has database persistance
 
 
 #### Time Triggers
@@ -18,17 +18,43 @@ Describe with:
 - [RRule](https://github.com/jakubroztocil/rrule)
 - [Cron](https://github.com/tenbits/cron-parser)
 - One time triggers:
-	- `Date`
-	- Relative to current date, like `in 2 hours and 20 minutes`
+	- `Date` instance
+	- relative to the current time, like `in 2 hours and 20 minutes`
 	
 #### Executors
-- Source: `{ src: 'tasks/foo.js' }`
-- Command: `{ command: 'wget -i file' }`
+- source: `{ src: 'tasks/foo.js' }`
+- command: `{ command: 'wget -i file' }`
+- request: `{ url: 'http://foo.com/baz', method: 'POST', data: {}}`
 
+### CLI
+```bash
+$ npm i -g task-scheduler
+$ tasksched --help
 
-_There are already some tests in project directories_
+# Server
+$ tasksched server --help
+# - start the server
+$ tasksched server start
+# - stop the server
+$ tasksched server stop
 
-It is simple as just ensuring that the task exists
+# Application
+$ tasksched app --help
+# - create the application. Tasks are bound to the app after the authorization
+$ tasksched app create --name Foo --password BazPass
+# ... for more infos, see the help action
+
+# Task
+$ tasksched task --help
+# - create the task
+$ tasksched task create --name FooName --trigger "in 20 minutes" --exec.src baz.js
+# ... for more infos, see the help action
+```
+
+### Web Interface
+Start the server `$ tasksched server start` and navigate to `http://localhost:5888/`
+
+### Client module
 ```javascript
 	var client = require('task-scheduler-client');
 	client
@@ -43,6 +69,7 @@ It is simple as just ensuring that the task exists
 		.fail(onError)   //> task creation failed
 		;
 ```
+> If the task with the same name, same `trigger` and `exec` already exists, it will do nothing.
 
 ----
 (c) MIT - The Atma.js Project
