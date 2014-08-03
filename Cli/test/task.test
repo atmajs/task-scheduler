@@ -2,7 +2,7 @@
 var file_PATH = '../test-cli-write.txt';
 UTest({
 	$config: {
-		timeout: 4000
+		timeout: 7000
 	},
 	$before: function(){
 		io.File.remove(file_PATH);

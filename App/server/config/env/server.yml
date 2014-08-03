@@ -9,7 +9,7 @@ env:
 			server_compo : '/server/compo/{0}/{1}.es6'
 
 			Project: '../{0}/{0}.js'
-			Relase: '../{0}/{}.min.js'
+			Release: '../{0}/{0}.min.js'
 		scripts:
 			
 			Project:
@@ -21,8 +21,8 @@ env:
 				- 'Queue'
 				- 'Worker'
 			
-			Release:
-				'#if release':
-					- 'Worker'
+			#Release:
+			#	'#if release':
+			#		- 'Worker'
 			
 			

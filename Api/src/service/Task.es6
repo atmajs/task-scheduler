@@ -50,7 +50,11 @@ function initialize(resp, Model, TaskFactory, Utils){
 				
 				function ensureTask(service, app) {
 					if (app) {
-						task.app = Object.map(app, '_id', 'name', 'base')
+						task.app = {
+							_id: app._id,
+							name: app.name,
+							base: app.base
+						};
 					}
 					
 					TaskFactory

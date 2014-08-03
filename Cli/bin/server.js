@@ -89,18 +89,14 @@ function startServer(cb) {
     fork('App/index.js', function(error, thread){
         if (thread) 
             config.$set('pid.server', thread.child.pid);
-        
-        if (error)  return cb(error);
-        cb();
+        cb(error);
     });
 }
 function startWorker(cb) {
     fork('Worker/index.js', function(error, thread){
         if (thread) 
             config.$get('pid.workers').push(thread.child.pid);
-            
-        if (error)  return cb(error);
-        cb();
+        cb(error);
     });
 }
 function server_Shutdown(){

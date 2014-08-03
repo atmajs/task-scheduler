@@ -18,11 +18,16 @@ function fork(appdir, script, args) {
 		});
   
 	child.on('error', logger.error);
-	child.on('exit', (code, signal) => 
-		dfr.reject(logger.formatMessage(
-			'Server exited with the code bold<%s>'.color
-			, code))
-	);
+	child.on('exit', (code, signal) => {
+		if (code !== 0) {
+			dfr.reject(logger.formatMessage(
+				'Server exited with the code bold<%s>'.color
+				, code
+			));
+		}
+		
+		dfr.resolve('Child stopped');
+	});
 	child.on('message', msg => {
 		if ('ok' === msg) {
 			child.disconnect();
