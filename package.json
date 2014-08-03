@@ -5,7 +5,10 @@
         "name": "Alex Kit",
         "email": "alex.kit@atmajs.com"
     },
-    "version": "0.0.0",
+    "version": "0.0.1",
+    "bin": {
+        "tasksched": "Cli/index.js"
+    },
     "repository": {
         "type": "git",
         "url": "git://github.com/atmajs/task-scheduler.git"
