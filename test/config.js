@@ -15,5 +15,10 @@ module.exports = {
 			fork: 'test/config.js'
 		},
 		
+		'project-cli': {
+			cwd: 'Cli/',
+			fork: 'test/config.js'
+		},
+		
 	}
 };

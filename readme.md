@@ -10,7 +10,8 @@ Task Scheduler Server to schedule or run scripts/applications/commands which:
 - has web interface
 - has RESTful API
 - has websockets
-- has database persistance
+- has database persistence
+- has `forever-monitor` integration
 
 
 #### Time Triggers

@@ -1,3 +1,6 @@
+services:
+  mongodb
+
 before_script:
   - cd Utils
   - npm install
