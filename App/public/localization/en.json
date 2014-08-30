@@ -6,5 +6,13 @@
 	"nav_workers": "Workers",
 	"task_Create": "Schedule Task",
 	
-	"tasks_empty": "Empty. Please create the first task via web interface or CLI"
+	"tasks_empty": "Empty. Please create the first task via web interface or CLI",
+	
+	"wProcess": "Process",
+	"wMemory": "Memory",
+	"wCompletedTasks": "Completed tasks",
+	"wRunningTasks": "Running Tasks",
+	"wUptime": "Uptime",
+	"wFailedTasks": "Failed tasks"
+	
 }

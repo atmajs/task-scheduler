@@ -1,0 +1,26 @@
+{
+    "name": "atma-formatter",
+    "version": "0.8.11",
+    "homepage": "https://github.com/atmajs/util-format",
+    "authors": [
+        "Alex Kit <alex.kit@atmajs.com>"
+    ],
+    "description": "Date/String/Number formatter",
+    "main": "lib/format.js",
+    "keywords": [
+        "printf",
+        "formatter"
+    ],
+    "license": "MIT",
+    "ignore": [
+        ".travis.yml",
+        "build.js",
+        "*.komodoproject",
+        "builds/",
+        "src/",
+        "node_modules",
+        "bower_components",
+        "test",
+        "tests"
+    ]
+}

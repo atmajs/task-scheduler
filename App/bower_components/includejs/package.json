@@ -1,0 +1,30 @@
+{
+    "name": "includejs",
+    "description": "Resource Loader",
+    "version": "0.9.9",
+    "homepage": "http://atmajs.com/include",
+    "contributors": [],
+    "author": "Alex Kit <alex.kit@atmajs.com>",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/tenbits/IncludeJS.git"
+    },
+    "bugs": {
+        "url": "https://github.com/tenbits/IncludeJS/issues"
+    },
+    "licenses": [
+        "MIT"
+    ],
+    "main": "./lib/include.node.js",
+    "dependencies": {},
+    "devDependencies": {
+        "atma": ">0.9.0"
+    },
+    "scripts": {
+        "test": "atma test"
+    },
+    "keywords": [],
+    "engines": {
+        "node": "~0.8.9"
+    }
+}

@@ -19,10 +19,11 @@ include
 			template: resp.load.Template,
 			onRenderStart: function(model, ctx, container){
 				
+				var resume = Compo.pause(this, ctx);
 				var stat = Model
 					.ModelRod
 					.resolve('ServerStat')
-					.done(Compo.pause(this, ctx))
+					.done(resume)
 					;
 					
 				this.model = {

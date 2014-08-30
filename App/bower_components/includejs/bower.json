@@ -1,0 +1,26 @@
+{
+    "name": "includejs",
+    "version": "0.9.9",
+    "homepage": "https://github.com/atmajs/IncludeJS",
+    "authors": [
+        "Alex Kit <alex.kit@atmajs.com>"
+    ],
+    "description": "Resource Loader",
+    "main": "lib/include.node.js",
+    "keywords": [
+        "module",
+        "resource"
+    ],
+    "license": "MIT",
+    "ignore": [
+        ".travis.yml",
+        "build.js",
+        "*.komodoproject",
+        "builds/",
+        "src/",
+        "node_modules",
+        "bower_components",
+        "test",
+        "tests"
+    ]
+}

@@ -44,4 +44,20 @@ pages:
 			both:
 				view:
 					- workers
-
+	
+	/task/create:
+		id: editor
+		template: editor
+		title: Editor
+		env:
+			both:
+				view:
+					- editor
+	
+	'/task/:id/edit' :
+		template: editor
+		title: Editor
+		env:
+			both:
+				view:
+					- editor

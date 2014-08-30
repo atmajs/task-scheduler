@@ -7,6 +7,15 @@
         
         "settings": {
             "traceur-extension": ["es6", "test"]
+        },
+        
+        "projects": {
+            "Model": {
+                "path": "../Model"
+            },
+            "Utils": {
+                "path": "../Utils"
+            }
         }
     }
 }

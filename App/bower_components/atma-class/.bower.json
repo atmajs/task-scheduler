@@ -1,0 +1,35 @@
+{
+  "name": "atma-class",
+  "version": "1.0.67",
+  "homepage": "https://github.com/atmajs/ClassJS",
+  "authors": [
+    "Alex Kit <alex.kit@atmajs.com>"
+  ],
+  "description": "Business Logic and Data Access Layers",
+  "main": "lib/class.js",
+  "keywords": [
+    "class",
+    "oop"
+  ],
+  "license": "MIT",
+  "ignore": [
+    ".travis.yml",
+    "build.js",
+    "*.komodoproject",
+    "builds/",
+    "src/",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "_release": "1.0.67",
+  "_resolution": {
+    "type": "version",
+    "tag": "v1.0.67",
+    "commit": "1c6287f483d68c55c6c528122e25ada63d44aacb"
+  },
+  "_source": "git://github.com/atmajs/ClassJS.git",
+  "_target": "*",
+  "_originalSource": "atma-class"
+}

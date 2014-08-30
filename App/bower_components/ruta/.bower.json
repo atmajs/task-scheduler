@@ -1,0 +1,36 @@
+{
+  "name": "ruta",
+  "version": "0.1.10",
+  "homepage": "https://github.com/atmajs/Ruta",
+  "authors": [
+    "Alex Kit <alex.kit@atmajs.com>"
+  ],
+  "description": "Route-Value collections",
+  "main": "lib/ruta.min.js",
+  "keywords": [
+    "route",
+    "HistoryAPI",
+    "HashChange"
+  ],
+  "license": "MIT",
+  "ignore": [
+    ".travis.yml",
+    "build.js",
+    "*.komodoproject",
+    "builds/",
+    "src/",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "_release": "0.1.10",
+  "_resolution": {
+    "type": "version",
+    "tag": "v0.1.10",
+    "commit": "f853f27368a61025d1915430401def87c147f4cc"
+  },
+  "_source": "git://github.com/atmajs/Ruta.git",
+  "_target": "*",
+  "_originalSource": "ruta"
+}

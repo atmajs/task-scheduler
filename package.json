@@ -1,58 +1,59 @@
 {
-    "name": "task-scheduler",
-    "description": "Task Scheduler Server",
-    "author": {
-        "name": "Alex Kit",
-        "email": "alex.kit@atmajs.com"
-    },
-    "version": "0.0.1",
-    "bin": {
-        "tasksched": "Cli/index.js"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git://github.com/atmajs/task-scheduler.git"
-    },
-    "devDependencies": {
-        "atma": ">0.9.30",
-        "mongodb": ">0.0.0"
-    },
-    "dependencies": {
-        "atma-loader-traceur": ">0.0.0",
-        "atma-loader-package": ">0.0.0",
-        "mongodb": "~1.4.4",
-        "atma-libs": "~0.9.35",
-        "atma-logger": "~0.0.88",
-        "atma-io": "~0.1.76",
-        "atma-server": "~0.1.14",
-        "socket.io": "~1.0.3",
-        "socket.io-client": "~1.0.6",
-        "forever-monitor": "git+https://github.com/tenbits/forever-monitor.git#9eb5efc8bd79cd7cf2ace8cd96f94f7eab34754e",
-        "appcfg": "~0.1.28",
-        "request": "~2.36.0",
-        "body-parser": "~1.4.3",
-        "atma-loader-less": ">0.0.0"
-    },
-    "scripts": {
-        "test": "atma test",
-        "start": "node Cli/index server start",
-        "stop": "node Cli/index server stop",
-        "debug.start": "node App/index --debug"
-    },
-    "atma": {
-        "plugins": [
-            "atma-loader-traceur",
-            "atma-loader-package",
-            "atma-loader-less"
-        ],
-        "settings": {
-            "atma-loader-traceur": {
-                "extensions": [
-                    "test",
-                    "es6"
-                ]
-            }
-        }
-    },
-    "license": "MIT"
+  "name": "task-scheduler",
+  "description": "Task Scheduler Server",
+  "author": {
+    "name": "Alex Kit",
+    "email": "alex.kit@atmajs.com"
+  },
+  "version": "0.0.1",
+  "bin": {
+    "tasksched": "Cli/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/atmajs/task-scheduler.git"
+  },
+  "devDependencies": {
+    "atma": ">0.9.30",
+    "mongodb": ">0.0.0"
+  },
+  "dependencies": {
+    "atma-loader-traceur": ">0.0.0",
+    "atma-loader-package": ">0.0.0",
+    "mongodb": "~1.4.4",
+    "atma-libs": "~0.9.35",
+    "atma-logger": "~0.0.88",
+    "atma-io": "~0.1.76",
+    "atma-server": "~0.1.14",
+    "socket.io": "~1.0.3",
+    "socket.io-client": "~1.0.6",
+    "forever-monitor": "git+https://github.com/tenbits/forever-monitor.git#9eb5efc8bd79cd7cf2ace8cd96f94f7eab34754e",
+    "appcfg": "~0.1.28",
+    "request": "~2.36.0",
+    "body-parser": "~1.4.3",
+    "atma-loader-less": ">0.0.0",
+    "atma-formatter": "~0.8.11"
+  },
+  "scripts": {
+    "test": "atma test",
+    "start": "node Cli/index server start",
+    "stop": "node Cli/index server stop",
+    "debug.start": "node App/index --debug"
+  },
+  "atma": {
+    "plugins": [
+      "atma-loader-traceur",
+      "atma-loader-package",
+      "atma-loader-less"
+    ],
+    "settings": {
+      "atma-loader-traceur": {
+        "extensions": [
+          "test",
+          "es6"
+        ]
+      }
+    }
+  },
+  "license": "MIT"
 }

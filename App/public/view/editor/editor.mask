@@ -1,0 +1,29 @@
+
+.-editor {
+	if (task != null){
+		'~[task.name]'
+	}
+	else {
+		
+		div style='
+			line-height:100vh;
+			vertical-align:middle;
+			text-align:center;
+			font-size: 3em;
+		' {
+			.text-danger.fa.fa-ban > :animation x-autostart x-repeat {
+				@model {
+					'transform | scale(0) > scale(1) | 2s linear'
+					'opacity | 0 > 1 | 2s linear'
+				}
+				@next {
+					'transform | > scale(2) | 2s linear'
+					'opacity | > 0 | 2s linear'
+				}
+			}
+			' Not Found'
+			
+			
+		}
+	}
+}

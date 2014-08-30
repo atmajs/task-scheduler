@@ -1,0 +1,21 @@
+{
+    "name": "ruta",
+    "description": "Route-Value Collections",
+    "author": {
+        "name": "Alexander Kit",
+        "email": "alex.kit@atmajs.com"
+    },
+    "version": "0.1.10",
+    "main": "./lib/ruta.js",
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/atmajs/Ruta.git"
+    },
+    "devDependencies": {
+        "atma": ">0.8.0"
+    },
+    "scripts": {
+        "test": "atma test"
+    },
+    "license": "MIT"
+}

@@ -1,0 +1,16 @@
+{
+  "name": "-",
+  "dependencies": {
+    "maskjs": "latest",
+    "includejs": "latest",
+    "ruta": "latest",
+    "atma-formatter": "latest",
+    "atma-class": "latest",
+    "atma-i18n": "latest",
+    "atma-logger": "latest",
+    "jquery": "latest",
+    "mask-animation": "latest",
+    "bootstrap": "latest",
+    "fontawesome": "~4.2.0"
+  }
+}

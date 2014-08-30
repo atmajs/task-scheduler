@@ -4,42 +4,51 @@ env:
 	client:
 
 		include:
-			src: '/.reference/atma/include/lib/include.js'
+			src: '/bower_components/includejs/lib/include.js'
 		
 		routes:
 			project: '/.reference/{0}/{0}.js?type=client'
 			control: '/public/control/{0}/{1}.es6'
 			style: '/public/style/{0}.less'
 		scripts:
-			atma:
-				- ruqq/dom/jquery
-				- class
-				- mask
+			bower:
+				- jquery
+				- atma-class
+				- maskjs
 				- '#if debug':
-					- mask/plugin.reload
+					- maskjs/lib/plugin.reload.js
 
-				- mask-node/mask.bootstrap
+				- maskjs/lib/mask.bootstrap.js
 				- ruta
-				- atma-logger/browser
-				- mask-animation/mask.animation
-				
+				- atma-logger
+				- mask-animation
 				- '#if debug':
-					- include/include.autoreload
+					- includejs/lib/include.autoreload.js
+				- bootstrap
 			
-			atma_compo:
-				- prism
-				- tabs
-			control:
-				- ajax-loader
-				- timer
-				
 			project:
 				- Utils
 				- Model
+				
+			atma_compo:
+				#- prism
+				#- tabs
+				
+			control:
+				- ajax-loader
+				- timer
+				- dialog
 			
+			public_compo:
+				- task-editor
+				
 		styles:
-			- '/.reference/bootstrap/dist/css/bootstrap.css'
-			- '/public/style/main.less'
-			- '/public/style/layout.less'
+			bower:
+				- bootstrap
+				- fontawesome
+			
+			application:
+				- '/public/style/main.less'
+				- '/public/style/layout.less'
 
 			

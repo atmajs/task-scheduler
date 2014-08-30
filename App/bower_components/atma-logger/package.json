@@ -1,0 +1,42 @@
+{
+    "name": "atma-logger",
+    "description": "Logger | Formatter + Color",
+    "author": {
+        "name": "Alexander Kit",
+        "email": "alex.kit@atmajs.com"
+    },
+    "version": "0.0.89",
+    "main": "./lib/logger.js",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/atmajs/atma-logger.git"
+    },
+    "keywords": [
+        "logger",
+        "file",
+        "console"
+    ],
+    "license": "MIT",
+    "dependencies": {
+        "atma-formatter": ">0.8.7"
+    },
+    "devDependencies": {
+        "atma": "latest",
+        "atma-loader-traceur": ">0.0.0"
+    },
+    "scripts": {
+        "test": "atma test"
+    },
+    "atma": {
+        "plugins": [
+            "atma-loader-traceur"
+        ],
+        "settings": {
+            "atma-loader-traceur": {
+                "extensions": [
+                    "test"
+                ]
+            }
+        }
+    }
+}

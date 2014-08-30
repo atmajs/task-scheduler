@@ -13,14 +13,18 @@ layout:master #default {
 		
 		body {
 			
-			.layout-menu >
-				:menu;
+			:app {
+				.layout-menu >
+					:menu;
+				
+				.layout-content >
+					:viewManager #views >
+						@placeholder #body;
+				
+				:task-editor;
+				:pageActivity;
+			}
 			
-			.layout-content >
-				:viewManager #views >
-					@placeholder #body;
-			
-			:pageActivity;
 			atma:scripts;
 		}
 	}

@@ -22,7 +22,7 @@ include
 			
 			Construct: function(){
 				this.defer();
-				this.workers = Server.Instance().workerCount;
+				this.workers = Server.Instance().getWorkersCount();
 				this.queue = TaskFactory.watchingCount;
 				this.active = TaskQueue.length;
 				

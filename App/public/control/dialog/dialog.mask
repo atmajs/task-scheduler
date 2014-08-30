@@ -1,0 +1,16 @@
+.modal.fade tabindex=-1 > .modal-dialog >  .modal-content{
+	.modal-header{
+		button.close type=button data-dismiss=modal > span > '×'
+		h4.modal-title > @title;
+	}
+	.modal-body > @body;
+		
+	.modal-footer {
+		button.btn.btn-default.btn-small type=button data-dismiss=modal data-dismiss=modal > 
+			'~[L: wCancel]'
+		button.btn.btn-primary type=button {
+			@ok;
+			@else > '~[L: wOk]'
+		}
+	}
+}

@@ -3,7 +3,6 @@ include
 	.done(function(resp, Server){
 	
 		var HttpService = atma.server.HttpService;
-		
 		include.exports = HttpService({
 			
 			'$get /': {
@@ -15,14 +14,12 @@ include
 				},
 				process:  function(req, res){
 					Server
+						.Instance()
 						.getWorkersStatus()
 						.pipe(this)
 						;
 				}
-				
 			}
-			
-			
 		});
 		
 	});

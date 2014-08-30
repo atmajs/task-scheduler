@@ -1,0 +1,25 @@
+{
+    "name": "atma-logger",
+    "version": "0.0.89",
+    "homepage": "https://github.com/atmajs/atma-logger",
+    "authors": [
+        "Alex Kit <alex.kit@atmajs.com>"
+    ],
+    "description": "Logger | Formatter + Color",
+    "main": "lib/browser.js",
+    "keywords": [
+        "logger"
+    ],
+    "license": "MIT",
+    "ignore": [
+        ".travis.yml",
+        "build.js",
+        "*.komodoproject",
+        "builds/",
+        "src/",
+        "node_modules",
+        "bower_components",
+        "test",
+        "tests"
+    ]
+}

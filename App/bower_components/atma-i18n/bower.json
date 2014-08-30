@@ -1,0 +1,26 @@
+{
+    "name": "atma-i18n",
+    "description": "Localization Module",
+    "version": "0.0.71",
+    "homepage": "https://github.com/atmajs/Ruta",
+    "authors": [
+        "Alex Kit <alex.kit@atmajs.com>"
+    ],
+    "main": "lib/localization.js",
+    "keywords": [
+        "localization"
+    ],
+    "license": "MIT",
+    "ignore": [
+        ".travis.yml",
+        "build.js",
+        "*.komodoproject",
+        "builds/",
+        "examples/",
+        "src/",
+        "node_modules",
+        "bower_components",
+        "test",
+        "tests"
+    ]
+}

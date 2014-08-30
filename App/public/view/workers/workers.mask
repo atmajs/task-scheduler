@@ -1,4 +1,4 @@
-h3 { 'Connected Workers ' tt > ' (~[list.length])' }
+h3 { 'Connected Workers: ' tt > ' (~[list.length])' }
 
 if (error){
 	.alert.alert-danger > '~[error]'
@@ -7,29 +7,31 @@ if (error){
 ul.list-group > each(list) {
 	li.list-group-item {
 		table.table {
-			tr {
-				td > em > 'Process'
+			thead > tr {
+				td > em > '~[L: wProcess]'
 				td > '~[pid]'
 			}
-			tr {
-				td > 'Memory'
-				td > '~[format: memory, ",0.00"] KB'
-			}
-			tr {
-				td > 'Uptime'
-				td > :timer x-timespan='~[uptime]';
-			}
-			tr.success {
-				td > 'Completed tasks'
-				td > b > '~[tasks.resolved]'
-			}
-			tr.warning {
-				td > 'Running tasks'
-				td > b > '~[tasks.current]'
-			}
-			tr.danger {
-				td > 'Failed tasks'
-				td > b > '~[tasks.rejected]'
+			tbody {
+				tr {
+					td > '~[L: wMemory ]'
+					td > '~[format: memory, ",0.00"] KB'
+				}
+				tr {
+					td > '~[L: wUptime ]'
+					td > :timer x-timespan='~[uptime]';
+				}
+				tr.success {
+					td > '~[L: wCompletedTasks ]'
+					td > b > '~[tasks.resolved]'
+				}
+				tr.warning {
+					td > '~[L: wRunningTasks ]'
+					td > b > '~[tasks.current]'
+				}
+				tr.danger {
+					td > '~[L: wFailedTasks ]'
+					td > b > '~[tasks.rejected]'
+				}
 			}
 		}
 	}
