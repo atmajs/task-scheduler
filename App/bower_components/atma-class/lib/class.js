@@ -1,13 +1,13 @@
 // source /src/license.txt
 /*!
- * ClassJS v1.0.66
+ * ClassJS v%VERSION%
  * Part of the Atma.js Project
  * http://atmajs.com/
  *
  * MIT license
  * http://opensource.org/licenses/MIT
  *
- * (c) 2012, 2014 Atma.js and other contributors
+ * (c) 2012, %YEAR% Atma.js and other contributors
  */
 // end:source /src/license.txt
 // source /src/umd.js
@@ -61,7 +61,9 @@
 	var is_Function,
 		is_Object,
 		is_Array,
+		is_ArrayLike,
 		is_String,
+		is_Date,
 		is_notEmptyString,
 		is_rawObject,
 		is_NullOrGlobal;
@@ -71,19 +73,30 @@
 			return typeof x === 'function';
 		};
 		is_Object = function(x) {
-			return x != null &&  typeof x === 'object';
+			return x != null
+				&&  typeof x === 'object';
+		};
+		is_Date = function(x){
+			return x != null
+				&& x.constructor.name === 'Date'
+				&& x instanceof Date;
 		};
 		is_Array = function(x) {
 			return x != null
 				&& typeof x.length === 'number'
 				&& typeof x.slice === 'function';
 		};
+		is_ArrayLike = is_Array;
+		
 		is_String = function(x) {
 			return typeof x === 'string';
 		};
+		
 		is_notEmptyString = function(x) {
-			return typeof x === 'string' && x !== '';
+			return typeof x === 'string'
+				&& x !== '';
 		};
+		
 		is_rawObject = function(obj) {
 			if (obj == null) 
 				return false;
@@ -347,6 +360,7 @@
 		
 		
 		class_inherit = PROTO in Object.prototype
+			//? inherit_Object_create
 			? inherit
 			: inherit_protoLess
 			;
@@ -355,35 +369,25 @@
 			if (mix == null) 
 				return;
 			
-			if (is_Function(mix)) {
-				for (var key in mix) {
-					if (mix.hasOwnProperty(key) && _class[key] == null) {
-						_class[key] = mix[key];
-					}
-				}
-				return;
-			}
-			
-			if (Array.isArray(mix)) {
-				var imax = mix.length,
-					i = -1;
-				
-				
-				while ( ++i < imax ) {
+			if (is_ArrayLike(mix)) {
+				var i = mix.length;
+				while ( --i > -1 ) {
 					class_inheritStatics(_class, mix[i]);
 				}
 				return;
 			}
 			
-			if (mix.Static) {
-				mix = mix.Static;
-				for (var key in mix) {
-					if (mix.hasOwnProperty(key) && _class[key] == null) {
-						_class[key] = mix[key];
-					}
-				}
+			var Static;
+			if (is_Function(mix)) 
+				Static = mix;
+			else if (is_Object(mix.Static)) 
+				Static = mix.Static;
+			
+			
+			if (Static == null)
 				return;
-			}
+			
+			obj_extendDescriptorsDefaults(_class, Static);
 		};
 		
 		
@@ -426,6 +430,9 @@
 			
 			var key, val;
 			for (key in source) {
+				if (key === 'constructor') 
+					continue;
+				
 				val = source[key];
 				if (val != null) 
 					proto[key] = val;
@@ -446,7 +453,6 @@
 					return  fn_apply(super_, this, args);
 				}
 			} else{
-				
 				proxy = fn_doNothing;
 			}
 			
@@ -486,6 +492,29 @@
 			
 			
 			_class.prototype = prototype;
+		}
+		function inherit_Object_create(_class, _base, _extends, original, _overrides, defaults) {
+			
+			if (_base != null) {
+				_class.prototype = Object.create(_base.prototype);
+				obj_extendDescriptors(_class.prototype, original);
+			} else {
+				_class.prototype = Object.create(original);
+			}
+			
+			_class.prototype.constructor = _class;
+			
+			if (_extends != null) {
+				arr_each(_extends, function(x) {
+					obj_defaults(_class.prototype, x);
+				});
+			}
+			
+			var proto = _class.prototype;
+			obj_defaults(proto, defaults);
+			for (var key in _overrides) {
+				proto[key] = proto_override(proto[key], _overrides[key]);
+			}
 		}
 	
 	
@@ -595,6 +624,9 @@
 						continue;
 					case 'object':
 						
+						if (is_Date(val)) 
+							break;
+						
 						var toJSON = val.toJSON;
 						if (toJSON == null) 
 							break;
@@ -663,7 +695,8 @@
 		obj_setProperty,
 		obj_defaults,
 		obj_extend,
-		
+		obj_extendDescriptors,
+		obj_extendDescriptorsDefaults,
 		obj_validate
 		;
 	
@@ -758,6 +791,49 @@
 			}
 			return target;
 		};
+		
+		(function(){
+			var getDescr = Object.getOwnPropertyDescriptor,
+				define = Object.defineProperty;
+			
+			if (getDescr == null) {
+				obj_extendDescriptors = obj_extend;
+				obj_extendDescriptorsDefaults = obj_defaults;
+				return;
+			}
+			obj_extendDescriptors = function(target, source){
+				return _extendDescriptors(target, source, false);
+			};
+			obj_extendDescriptorsDefaults = function(target, source){
+				return _extendDescriptors(target, source, true);
+			};
+			function _extendDescriptors (target, source, defaultsOnly) {
+				if (target == null) 
+					return {};
+				if (source == null) 
+					return source;
+				
+				var descr,
+					key;
+				for(key in source){
+					if (defaultsOnly === true && target[key] != null) 
+						continue;
+					
+					descr = getDescr(source, key);
+					if (descr == null) {
+						obj_extendDescriptors(target, source['__proto__']);
+						continue;
+					}
+					if (descr.value !== void 0) {
+						target[key] = descr.value;
+						continue;
+					}
+					define(target, key, descr);
+				}
+				return target;
+			};
+		}());
+		
 		
 		(function(){
 			
@@ -2282,9 +2358,7 @@
 			data.constructor = _class.prototype.constructor;
 	
 			if (_static != null) {
-				for (key in _static) {
-					_class[key] = _static[key];
-				}
+				obj_extendDescriptors(_class, _static);
 			}
 	
 			_class.prototype = data;
@@ -2346,9 +2420,7 @@
 			class_register(namespace, _class);
 	
 		if (_static != null) {
-			for (key in _static) {
-				_class[key] = _static[key];
-			}
+			obj_extendDescriptors(_class, _static);
 		}
 		
 		if (_base != null) 
@@ -2357,11 +2429,8 @@
 		if (_extends != null) 
 			class_inheritStatics(_class, _extends);
 		
-	
 		class_extendProtoObjects(data, _base, _extends);
-		//if (data.toJSON === void 0) 
-		//	data.toJSON = json_proto_toJSON;
-			
+		
 		class_inherit(_class, _base, _extends, data, _overrides, {
 			toJSON: json_proto_toJSON
 		});
@@ -2376,7 +2445,7 @@
 	var Await;
 	
 	(function(){
-		
+		return;	
 		Await = Class({
 			Extends: Deferred.prototype,
 		

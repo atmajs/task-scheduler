@@ -1,0 +1,25 @@
+
+.-input-exec {
+	:tabs {
+		@header {
+			div name='local-file' > 'Local File'
+			div name='upload-file' > 'Upload File'
+			div name='upload-source' > 'JavaScript Source'
+			div name='commands' > 'Shell Commands'
+		}
+		@panels {
+			div name='local-file' {
+				input.form-control placeholder='Path';
+			}
+			div name='upload-file' {
+				input.form-control type=file accept='application/javascript';
+			}
+			div name='upload-source' {
+				textare:ace language=javascript;
+			}
+			div name='commands' {
+				textarea:acr language=bash;
+			}
+		}
+	}
+}

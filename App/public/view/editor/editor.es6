@@ -1,6 +1,9 @@
 include 
-	.load('editor.mask::Template') 
-	.css('editor.less') //
+	.load('./editor.mask::Template') 
+	.css('./editor.less')
+	.js('./TriggerBinder.es6',
+		'./input-exec/input-exec.es6'
+	)
 	.use('Model.Task')
 	.done(function(resp, Task){
 
@@ -9,7 +12,7 @@ include
 			onRenderStart (model, ctx, container) {
 				var id = ctx.page.query.id;
 				if (id == null) {
-					this.model = { task: new Task };
+					this.model = { task: new Task({ name: 'test' }) };
 					return;
 				}
 				

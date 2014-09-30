@@ -1,7 +1,7 @@
 {
   "name": "-",
   "dependencies": {
-    "maskjs": "latest",
+    "maskjs": "~0.9.11",
     "includejs": "latest",
     "ruta": "latest",
     "atma-formatter": "latest",
@@ -11,6 +11,8 @@
     "jquery": "latest",
     "mask-animation": "latest",
     "bootstrap": "latest",
-    "fontawesome": "~4.2.0"
+    "fontawesome": "~4.2.0",
+    "marked": "~0.3.2",
+    "compo-tabs": "0.0.2"
   }
 }

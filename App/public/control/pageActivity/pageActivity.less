@@ -1,0 +1,35 @@
+@import '/public/style/lesshat.less';
+
+.-pageActivity {
+	display: none;
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	height: 5px;
+	background: blue;
+	z-index: 100;
+	.scaleZ(1);
+}
+.-pageActivity-layer {
+	position:absolute;
+	display: block;
+	
+	height: 5px;
+	
+	top: 0px;
+	left: 0px;
+	bottom: 0px;
+	right: 0px;
+	margin: auto;
+	
+	.scaleZ(1);
+	
+	&.__green { background: green; }
+	&.__red { background: red; }
+	&.__yellow { background: yellow; }
+	&.__blue { background: blue; }
+	&.__orange { background: #f97732; }
+}
+
+ 

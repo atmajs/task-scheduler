@@ -3,6 +3,7 @@ include
 	.js(
 		'node_modules/cron-parser/dist/cron-parser.js::CronParser'
 		, 'node_modules/rrule/lib/rrule.js::RRule'
+		, 'node_modules/rrule/lib/nlp.js'
 		, 'src/.package::Helpers'
 	)
 	.done(function(resp){

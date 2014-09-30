@@ -14,7 +14,7 @@ include
 					return new resp[key]({ rule: rule });
 				}
 			}
-			logger.error('Rule is not supported', rule);
-			return null;
-		}
+			
+			throw Error('Rule is not supported');
+		};
 	})

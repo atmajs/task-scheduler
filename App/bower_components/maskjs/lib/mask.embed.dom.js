@@ -24,7 +24,8 @@ var Mask = exports.mask = (function(){
 			allowCache: true
 		};
 		
-	var _Array_slice = Array.prototype.slice;
+	var _Array_slice = Array.prototype.slice,
+		_Object_create = Object.create;
 	
 	// end:source /src/scope-vars.js
     // source /src/util/is.js
@@ -583,7 +584,7 @@ var Mask = exports.mask = (function(){
 			
 			return stack
 				.split('\n')
-				.slice(6)
+				.slice(6, 8)
 				.join('\n');
 		}
 		function inherit(Ctor, Base){
@@ -1980,13 +1981,17 @@ var Mask = exports.mask = (function(){
 						result %= value;
 						break;
 					case op_LogicalNotEqual:
+						/* jshint eqeqeq: false */
 						result = result != value;
+						/* jshint eqeqeq: true */
 						break;
 					case op_LogicalNotEqual_Strict:
 						result = result !== value;
 						break;
 					case op_LogicalEqual:
+						/* jshint eqeqeq: false */
 						result = result == value;
+						/* jshint eqeqeq: true */
 						break;
 					case op_LogicalEqual_Strict:
 						result = result === value;
@@ -2813,8 +2818,9 @@ var Mask = exports.mask = (function(){
 					continue;
 				}
 				
+				/* jshint eqeqeq: false */
 				if (eval_(expr, model, ctx, controller) == value) {
-					//! `==` comparison
+					/* jshint eqeqeq: true */
 					case_ = child;
 					break;
 				}
@@ -2980,14 +2986,14 @@ var Mask = exports.mask = (function(){
 		
 		// source 1.utils.js
 		function _appendChild(el){
-			
-			if (this.nodes == null) {
+			var nodes = this.nodes;
+			if (nodes == null) {
 				this.nodes = [el];
 				return;
 			}
 			
-			this.nodes.push(el);
-			var prev = this.nodes[this.nodes.length - 2];
+			nodes.push(el);
+			var prev = nodes[nodes.length - 2];
 			
 			prev.nextSibling = el;
 		}
@@ -3050,11 +3056,7 @@ var Mask = exports.mask = (function(){
 		
 		// end:source 4.Component.js
 		// source 5.Fragment.js
-		
-		
-		function Fragment(){
-			
-		}
+		function Fragment(){}
 		
 		Fragment.prototype = {
 			constructor: Fragment,
@@ -3112,7 +3114,7 @@ var Mask = exports.mask = (function(){
 		// source ./cursor.js
 		var cursor_groupEnd,
 			cursor_quoteEnd,
-			cursor_refEnd;
+			cursor_refEnd
 			;
 		
 		(function(){
@@ -3190,8 +3192,8 @@ var Mask = exports.mask = (function(){
 		var parser_var;
 		(function(){
 			parser_var = function(template, index, length, parent){
-				var node = new Node('var', parent);
-				var start,
+				var node = new Node('var', parent),
+					start,
 					c;
 				
 				node.stringify = stingify;
@@ -3285,7 +3287,7 @@ var Mask = exports.mask = (function(){
 						str += ',';
 					
 					str += key + '=' + attr[key];
-				};
+				}
 				return str + ';';
 			}
 		}());
@@ -3629,8 +3631,10 @@ var Mask = exports.mask = (function(){
 						if (isEscaped === true) {
 							token = token.replace(regexpEscapedChar[_char], _char);
 						}
-	
-						token = ensureTemplateFunction(token);
+						
+						if (state !== state_attr || key !== 'class') 
+							token = ensureTemplateFunction(token);
+							
 						index += isUnescapedBlock ? 3 : 1;
 						continue;
 					}
@@ -3774,10 +3778,8 @@ var Mask = exports.mask = (function(){
 							if (key === 'id' || last === go_attrVal) {
 								token = ensureTemplateFunction(token);
 							}
-							else if (key === 'class') {
-								// interpolate later
-							}
-							else {
+							else if (key !== 'class') {
+								// interpolate class later
 								parser_warn('Invalid interpolation (in attr name)'
 									, template
 									, index
@@ -3787,7 +3789,6 @@ var Mask = exports.mask = (function(){
 							}
 						}
 					}
-					
 				}
 	
 				if (c !== c) {
@@ -4323,7 +4324,7 @@ var Mask = exports.mask = (function(){
 				}
 			}
 			
-			if (type == 1 && custom_Tags[node.tagName] != null) {
+			if (type === 1 && custom_Tags[node.tagName] != null) {
 				// check if the tag name was overriden
 				type = 4;
 			}

@@ -25,62 +25,9 @@ Resources:
 
 - [maskFiddle](http://atmajs.com/mask-try)
 - [Documentation](http://atmajs.com/mask)
-
-#### Quick start and examples
-Most simple MaskJS sample to show where you could start from:
-```html
-<DOCTYPE html>
-<html>
-	<head><!-- ... meta, styles, etc --></head>
-	<body>
-		<header>
-			<!-- e.g add menu into header -->
-			<script type='text/mask' data-run='true'>
-				ul {
-					for(page of pages) {
-						li > a
-							href='/~[page].html'
-							x-signal='click: fooAction' > '~[page]'
-					}
-					// nested components
-					:bazCompo > :quxCompo;
-				}
-			</script>
-		</header>
-		
-		<!-- ... other html, or mask blocks -->
-		<!--
-			usually you would have only one Mask block, which is the entry point
-			for the app, and you would use nested component composition to
-			encapsulate logic, models, templates and behaviour
-		-->
-		
-		<script src='http://cdn.jsdelivr.net/g/maskjs'></script>
-		<script type='text/javascript'>
-			var App = mask.Compo({
-				model: {
-					pages: [ 'blog', 'about', 'contact' ]
-				},
-				slots: {
-					fooAction: function(event){
-						event.preventDefault();
-						console.log(this instanceof App);
-						// ...
-					}
-				}
-			});
-			mask.registerHandler(':bazCompo', mask.Compo({/*implement*/}));
-			mask.registerHandler(':quxCompo', mask.Compo({/*implement*/}));
-			mask.run(App);
-		</script>
-	</body>
-</html>
-```
-
-Other resources:
 - [Samples](/examples)
 - [TodoMVC app](http://todomvc.com/labs/architecture-examples/atmajs/)
-
+- [Chrome Debug Plugin](https://chrome.google.com/webstore/detail/atmajs-devtool/bpaepkmcmoablpdahclhdceapndfhdpo)
 
 ----
 
@@ -94,16 +41,23 @@ Other resources:
 - [Browser Support](#browser-support)
 - [Plugins](#plugins)
 
+----
+
+- [Quick Start](#quick-start)
+
+----
+
 ##### Syntax
 
-- Component- and element-based markup
+
+- Component and element-based markup
 - Statements, Expressions, Interpolations
 - Performance. _No precompilation is required_
 - Small size. _~30% smaller than HTML_ Additionaly, there is a minification tool - [mask-minify](https://github.com/atmajs/mask-minify).
 - DOM Builder
-	[Template &rarr; Mask DOM &rarr; Shadow DOM &rarr; Live DOM]
+	`[Template &rarr; Mask DOM &rarr; Shadow DOM &rarr; Live DOM]`
 - HTML Builder (_nodejs_)
-	[Template &rarr; Mask DOM &rarr; HTML]
+	`[Template &rarr; Mask DOM &rarr; HTML]`
 
 ```scss
 .container {
@@ -203,8 +157,10 @@ $.fn.beforeMask
 $.fn.afterMask
 $.fn.emptyAndDispose
 $.fn.removeAndDispose
+//e.g.
+$('.foo').appendMask('h4 > "~[title]"', { title: 'Hello' });
 ```
-So you would never need to use raw HTML.
+_So you would never need to use the HTML._
 
 ##### Performance
 
@@ -219,13 +175,15 @@ Some benchmarks:
 
 ##### Node.JS
 
-MaskJS on the server - [mask.node](https://github.com/atmajs/mask-node)
+MaskJS on the server - [mask.node](https://github.com/atmajs/mask-node). ([server](https://github.com/atmajs/atma-server))
 
 - HMVC benefits
 - Models serialization/de-serialization
 - Components render mode - Server, Client, Both
 - HTML rendered output with the Bootstrapping on the client, so that the components are initialized, all events and bindings are attached
+- Application start performance: browser receives ready html for rendering. 
 - SEO
+
 
 ##### Browser Support
 
@@ -239,10 +197,76 @@ There are already many plugins, components and useful utilities. Some of them wo
 - [Components](https://github.com/atmajs/Compos)
 
 
+#### Quick Start
+
+#### Quick start and examples
+Most simple MaskJS sample to show where you could start from:
+```html
+<!DOCTYPE html>
+<html>
+	<body>
+		<header>
+			<!-- e.g add menu into header -->
+			<script type='text/mask' data-run='true'>
+				ul {
+					for(page of pages) {
+						li > a
+							href='/~[page].html'
+							x-signal='click: fooAction' > '~[page]'
+					}
+					// nested components
+					:bazCompo > :quxCompo;
+				}
+			</script>
+		</header>
+		<!-- ... other html, or mask blocks -->
+		<!--
+			usually you would have only one Mask block, which is the entry point
+			for the app, and you would use nested component composition to
+			encapsulate logic, models, templates and the behaviour
+		-->
+		<script src='http://cdn.jsdelivr.net/g/maskjs'></script>
+		<script type='text/javascript'>
+			var App = mask.Compo({
+				model: {
+					pages: [ 'blog', 'about', 'contact' ]
+				},
+				slots: {
+					fooAction: function(event){
+						event.preventDefault();
+						console.log(this instanceof App);
+						// ...
+					}
+				}
+			});
+			mask.registerHandler(':bazCompo', mask.Compo({/*implement*/}));
+			mask.registerHandler(':quxCompo', mask.Compo({/*implement*/}));
+			mask.run(App);
+		</script>
+	</body>
+</html>
+```
 
 ###Changelog
 ------------
-
+- 0.9.6
+	- Merge feature for better encapsulation, e.g:
+	```sass
+		define :dialog {
+			.wrapper > .modal {
+				.modal-header {
+					@title;
+					.close;
+				}
+				.modal-content > @body;
+			}
+		}
+		// ..
+		:dialog {
+			@title > 'Hello'
+			@body  > 'World!'
+		}
+	```
 - 0.9.1
 	- Expressions:
 		- Accessors with Bracket notation: ```~[foo[bar]]```,```~[foo["key"]]```
@@ -323,5 +347,4 @@ There are already many plugins, components and useful utilities. Some of them wo
 		``` mask.setInterpolationQuotes('#{','}') ``` - for fallback (or any other start/end, caution - start should be of 2 chars and the end of 1
 	
 ----
-The MIT License (MIT)
-(c) 2014 Atma.js Project
+:copyright: MIT - 2014 Atma.js Project

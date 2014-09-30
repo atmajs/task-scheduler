@@ -1,0 +1,27 @@
+{
+    "devDependencies": {
+        "atma": ">0.9.26",
+        "atma-loader-traceur": ">0.0.0",
+        "atma-loader-less": ">0.0.0"
+    },
+    "scripts": {
+        "test": "atma test"
+    },
+    "atma": {
+        "plugins": [
+            "atma-loader-traceur",
+            "atma-loader-less"
+        ],
+        "settings": {
+            "atma-loader-traceur": {
+                "extensions": [
+                    "es6",
+                    "test"
+                ],
+                "traceur": {
+                    "sourceMaps": false
+                }
+            }
+        }
+    }
+}

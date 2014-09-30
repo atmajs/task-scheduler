@@ -38,9 +38,9 @@ env:
 				- ajax-loader
 				- timer
 				- dialog
+				- pageActivity
 			
 			public_compo:
-				- task-editor
 				
 		styles:
 			bower:

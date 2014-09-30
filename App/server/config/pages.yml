@@ -28,9 +28,10 @@ pages:
 		title: Tasks
 		env:
 			both:
-				view:
-					- tasks
-					
+				scripts:
+					view:
+						- tasks
+
 	/active:
 		id: active
 		template: active
@@ -42,8 +43,9 @@ pages:
 		title: Workers
 		env:
 			both:
-				view:
-					- workers
+				scripts:
+					view:
+						- workers
 	
 	/task/create:
 		id: editor
@@ -51,13 +53,15 @@ pages:
 		title: Editor
 		env:
 			both:
-				view:
-					- editor
-	
+				scripts:
+					view:
+						- editor
+
 	'/task/:id/edit' :
 		template: editor
 		title: Editor
 		env:
 			both:
-				view:
-					- editor
+				scripts:
+					view:
+						- editor

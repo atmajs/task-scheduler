@@ -1,0 +1,7 @@
+.-pageActivity {
+	.-pageActivity-layer.__green;
+	.-pageActivity-layer.__red;
+	.-pageActivity-layer.__yello;
+	.-pageActivity-layer.__blue;
+	.-pageActivity-layer.__orange;
+}

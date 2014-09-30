@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+	<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />    
+</head>
+<body>
+
+    <iframe></iframe>
+    
+
+    <script type='text/javascript'>
+
+
+        var _document =  frames[0].document;
+
+            
+        // _document.open();
+        // _document.write('<html><head></head><body></body></html>');
+        // _document.close();
+
+
+        function test(className){
+            /* remove all */
+            _document.body.innerHTML = '';
+
+
+            
+            var div = document.createElement('div');
+            div.setAttribute('class', className);
+            _document.body.appendChild(div);
+            
+            // -> this fails also            
+            //div.className = className; //# same result            
+            
+            
+            
+            // -> this pass tests
+            //_document.body.innerHTML = "<div class='"+className+"'></div>";
+
+
+            if (_document.querySelector('.' + className) == null){
+            // -> this fails also
+            //if (_document.querySelectorAll('.' + className).length == 0){
+                console.error('Not Found: .', className);
+                console.log('\t ensure class Attribute: ',_document.querySelector('div').getAttribute('class') == className);
+
+                return;
+            }
+
+
+
+            console.log('Found: .', className);            
+        }   
+
+
+        /* All with UpperCase fail */
+        ['classA','classa', 'class-a','class_a', 'a', 'A', 'cA', 'classAndroid', 'classandroid', 'OTHER'].forEach(test);
+
+
+    </script>   
+</body>
+</html>

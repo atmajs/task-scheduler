@@ -1,0 +1,7 @@
+.-infoPane .panel.panel-info .__collapsed {
+	.panel-heading x-signal='click: toggle' {
+		.fa; ' ';
+		@title;
+	}
+	.panel-body > :markdown > @body;
+}

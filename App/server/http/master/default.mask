@@ -21,7 +21,6 @@ layout:master #default {
 					:viewManager #views >
 						@placeholder #body;
 				
-				:task-editor;
 				:pageActivity;
 			}
 			

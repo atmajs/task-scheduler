@@ -1,0 +1,25 @@
+@import '/public/style/lesshat.less';
+
+.-infoPane {
+	> .panel-body {
+		overflow: hidden;
+		height: auto;
+		.transition(padding 100ms linear);
+	}
+	> .panel-heading {
+		cursor: pointer;
+		.user-select(none);
+	}
+	> .panel-heading > .fa:before {
+		content: '\f078';
+	}
+	
+	&.__collapsed > .panel-body {
+		padding: 2px;
+		height: 0px;
+	}
+	
+	&.__collapsed > .panel-heading > .fa:before {
+		content: '\f054';
+	}
+}

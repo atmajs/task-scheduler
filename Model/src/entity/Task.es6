@@ -52,6 +52,25 @@ include
 					return null;
 				
 				return (this.next = this.trigger.getNext());
+			},
+			
+			Static: {
+				parseTrigger: function(str){
+					return new resp.Trigger(str);
+				},
+				parseExecutor: function(str){
+					return new resp.Executor(str);
+				}
+			},
+			
+			Validate: {
+				trigger (x) {
+					try {
+						new resp.Trigger(x);
+					} catch (error) {
+						return error.message;
+					}
+				}
 			}
 		});
 		

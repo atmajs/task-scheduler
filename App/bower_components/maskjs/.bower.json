@@ -1,6 +1,6 @@
 {
   "name": "maskjs",
-  "version": "0.9.4",
+  "version": "0.9.11",
   "homepage": "https://github.com/atmajs/MaskJS",
   "authors": [
     "Alex Kit <alex.kit@atmajs.com>"
@@ -23,13 +23,14 @@
     "test",
     "tests"
   ],
-  "_release": "0.9.4",
+  "_release": "0.9.11",
   "_resolution": {
     "type": "version",
-    "tag": "v0.9.4",
-    "commit": "b077e20c90d3cf9cb6029f04955a331e4bdbcd86"
+    "tag": "v0.9.11",
+    "commit": "6aa6fd89d5789490098e9856681c6b795e2d2c30"
   },
   "_source": "git://github.com/atmajs/MaskJS.git",
-  "_target": "*",
-  "_originalSource": "maskjs"
+  "_target": "~0.9.11",
+  "_originalSource": "maskjs",
+  "_direct": true
 }
