@@ -8,3 +8,9 @@ services:
 		controller: Tasks
 	'^/workers':
 		controller: Workers
+	'^/system':
+		controller: System
+	'^/app':
+		controller: Application
+	'^/apps':
+		controller: Applications

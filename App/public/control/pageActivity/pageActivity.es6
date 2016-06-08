@@ -1,15 +1,21 @@
 include 
 	.load('pageActivity.mask::Template') 
-	.css('pageActivity.less') //
+	.css('pageActivity.less') 
 	.done(function(resp){
 
 		mask.registerHandler(':pageActivity', Compo({
 			template: resp.load.Template,
-
+			slots : {
+				domInsert () {
+					var await = this.await.bind(this, null),
+						resolve = this.resolve.bind(this)
+					Class.Remote.onBefore(await);
+					Class.Remote.onAfter(resolve, resolve);
+				}
+			},
 			onRenderEnd: function(){
 				this.els = this.$.children();
 			},
-			
 			await: function (dfr) {
 				if (dfr != null) 
 					dfr.always(this.resolve.bind(this));
@@ -19,12 +25,12 @@ include
 					this._start();
 			},
 			resolve: function(){
-				if (--this._awaitCount < 0) {
+				logger.log('after'.cyan, this._awaitCount);
+				if (--this._awaitCount < 1) {
 					this._stop();
 					this._awaitCount = 0;
 				}
 			},
-			
 			_start: function(){
 				if (this._timer) 
 					return;

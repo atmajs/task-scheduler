@@ -4,6 +4,10 @@ module.exports = {
 	
 	$config: {
 		$before: function(done){
+			if (global.ApiServ) {
+				done();
+				return;
+			}
 			
 			include
 				.js('/../App/index.js::App')

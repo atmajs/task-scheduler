@@ -1,24 +1,57 @@
-
 .-input-exec {
-	:tabs {
-		@header {
-			div name='local-file' > 'Local File'
-			div name='upload-file' > 'Upload File'
-			div name='upload-source' > 'JavaScript Source'
-			div name='commands' > 'Shell Commands'
+	label > 'Action'
+	a:tabs visible='~[: current]'  {
+		@tab name = src {
+			@head > 'Local File'
+			@body {
+				a:typeahead
+					placeholder = 'Path'
+					x-search = 'listDirectory'
+					x-prop-id = 'id'
+					x-prop-text = 'text'
+					
+					> :dualbind
+						dom-getter='get'
+						dom-setter='set'
+						dom-slot='typeaheadChanged'
+						x-signal='input_Src'
+						value='src'
+						;
+			}
 		}
-		@panels {
-			div name='local-file' {
-				input.form-control placeholder='Path';
+		@tab name = shell. {
+			@head > 'Shell'
+			@body {
+				blockquote > small > 'All commands are executed one after another'
+				.-input-exec-shell >
+					a:aceEditor mode='sh' >
+						:dualbind
+							dom-getter='get'
+							dom-setter='set'
+							dom-slot='aceEditor_Changed'
+							x-signal='input_Shell'
+							value='shell'
+							;
 			}
-			div name='upload-file' {
-				input.form-control type=file accept='application/javascript';
+		}
+		@tab name = script {
+			@head > 'Script'
+			@body {
+				.-input-exec-source >
+					a:aceEditor >
+						:dualbind
+							dom-getter='get'
+							dom-setter='set'
+							dom-slot='aceEditor_Changed'
+							x-signal='input_Script'
+							value='script'
+							;
 			}
-			div name='upload-source' {
-				textare:ace language=javascript;
-			}
-			div name='commands' {
-				textarea:acr language=bash;
+		}
+		@show {
+			@model {
+				'opacity | 0 > 1 | 200ms ease-in'
+				'transform | scale(0) > scale(1) | 200ms ease-out'
 			}
 		}
 	}

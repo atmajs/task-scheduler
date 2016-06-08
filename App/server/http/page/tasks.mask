@@ -1,4 +1,7 @@
 layout:view master='default' {
-	@content #body >
+	@content #body {
+		:resolver > :elements;
+		
 		:view:tasks;
+	}
 }

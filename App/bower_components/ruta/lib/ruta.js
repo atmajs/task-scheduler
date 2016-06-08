@@ -792,9 +792,7 @@
 		
 		RouteCollection.prototype = {
 			add: function(regpath, value){
-				
 				this.routes.push(new Route(regpath, value));
-				
 				return this;
 			},
 			
@@ -805,7 +803,6 @@
 			
 			clear: function(){
 				this.routes.length = 0;
-				
 				return this;
 			}
 		};
@@ -816,7 +813,6 @@
 			route_parseDefinition(route, definition);
 			return route_parsePath(route, path);
 		};
-		
 		
 		return RouteCollection;
 	}());
@@ -832,20 +828,16 @@
 		
 		// source Hash.js
 		function HashEmitter(listener) {
-		
 			if (typeof window === 'undefined' || 'onhashchange' in window === false)
 				return null;
 		
-		
+			this.listener = listener;
+			
 			var that = this;
-		
-			that.listener = listener;
-		
 			window.onhashchange = function() {
 				that.changed(location.hash);
 			};
-		
-			return that;
+			return this;
 		}
 		
 		(function() {
@@ -863,16 +855,13 @@
 					
 					location.hash = hash;
 				},
-		
 				changed: function(hash) {
 					this
 						.listener
 						.changed(hash_normalize(hash));
 						
 				},
-		
 				current: function() {
-					
 					return hash_normalize(location.hash);
 				}
 			};
@@ -880,57 +869,47 @@
 		}());
 		// end:source Hash.js
 		// source History.js
-		
-		function HistoryEmitter(listener){
-			
+		function HistoryEmitter(listener){	
 			if (typeof window === 'undefined')
 				return null;
 			
 			if (!(window.history && window.history.pushState))
 				return null;
 		
-			var that = this;	
-			
+			var that = this;
 			that.listener = listener;
 			that.initial = location.pathname;
-			
 			
 			window.onpopstate = function(){
 				if (that.initial === location.pathname) {
 					that.initial = null;
 					return;
 				}
-				
 				that.changed();
 			};
 			
 			return that;
 		}
 		
-		(function(){
-			
-			HistoryEmitter.prototype = {
-				navigate: function(url){
-					if (url == null) {
-						this.changed();
-						return;
-					}
-					
-					history.pushState({}, null, url);
+		HistoryEmitter.prototype = {
+			navigate: function(url){
+				if (url == null) {
 					this.changed();
-				},
-				
-				changed: function(){
-					
-					this.listener.changed(location.pathname + location.search);
-				},
-				current: function(){
-					
-					return location.pathname + location.search;
+					return;
 				}
-			};
+				
+				history.pushState({}, null, url);
+				this.initial = null;
+				this.changed();
+			},
+			changed: function(){
+				this.listener.changed(location.pathname + location.search);
+			},
+			current: function(){
+				return location.pathname + location.search;
+			}
+		};
 		
-		}());
 		// end:source History.js
 		
 		function Location(collection, type) {
@@ -965,9 +944,10 @@
 				
 			},
 			action: function(route){
-				
-				if (typeof route.value === 'function')
-					route.value(route);
+				if (typeof route.value === 'function') {
+					var current = route.current;
+					route.value(route, current && current.params);
+				}
 			},
 			navigate: function(url){
 				this.emitter.navigate(url);
@@ -1004,34 +984,37 @@
 		setRouterType: function(type){
 			if (router == null) 
 				router = new Location(routes, type);
-			
 			return this;
 		},
 		
 		setStrictBehaviour: function(isStrict){
 			_cfg_isStrict = isStrict;
+			return this;
 		},
 		
 		add: function(regpath, mix){
 			router_ensure();
-			
-			return routes.add(regpath, mix);
+			routes.add(regpath, mix);
+			return this;
 		},
 		
 		get: function(path){
-			
 			return routes.get(path);
 		},
 		navigate: function(path){
-			
-			router_ensure()
-				.navigate(path);
+			router_ensure().navigate(path);
+			return this;
 		},
 		current: function(){
 			return router_ensure().current();
 		},
 		currentPath: function(){
 			return router_ensure().currentPath();
+		},
+		
+		notifyCurrent: function(){
+			router_ensure().navigate();
+			return this;
 		},
 		
 		parse: Routes.parse,
@@ -1067,7 +1050,6 @@
 			
 			Ruta.navigate(this.href);
 		}
-		
 	}());
 	
 	// end:source ../src/mask/attr/anchor-dynamic.js

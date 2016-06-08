@@ -5,7 +5,7 @@
         "name": "Alexander Kit",
         "email": "alex.kit@atmajs.com"
     },
-    "version": "1.0.67",
+    "version": "1.0.68",
     "main": "./lib/class.node.js",
     "repository": {
         "type": "git",
@@ -18,5 +18,18 @@
     "scripts": {
         "test": "atma test"
     },
-    "license": "MIT"
+    "license": "MIT",
+    "dependencies": {
+        "atma-loader-traceur": ">0.0.0"
+    },
+    "atma": {
+        "plugins": [
+            "atma-loader-traceur"
+        ],
+        "settings": {
+            "atma-loader-traceur": {
+                "extensions": "test"
+            }
+        }
+    }
 }

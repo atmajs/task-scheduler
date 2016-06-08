@@ -1,0 +1,25 @@
+@title > 'New Application'
+@body {
+	p.text-danger > '~[bind: message]'
+	
+	.form-group {
+		label > 'Name'
+		input.form-control placeholder='Name' > :dualbind value='name';
+	}
+	.form-group {
+		label > 'Base x'
+		div > a:typeahead
+					placeholder = 'Path'
+					x-search = 'listDirectory'
+					x-prop-id = 'id'
+					x-prop-text = 'text'
+					
+					> :dualbind
+						dom-getter='get'
+						dom-setter='set'
+						dom-slot='typeaheadChanged'
+						value='base'
+						;
+	}
+}
+	

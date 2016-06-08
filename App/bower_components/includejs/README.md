@@ -3,12 +3,14 @@
 _The Resource Loader for Browsers and NodeJS_
 
 [![Build Status](https://travis-ci.org/atmajs/IncludeJS.svg?branch=master)](https://travis-ci.org/atmajs/IncludeJS)
+[![NPM version](https://badge.fury.io/js/includejs.svg)](http://badge.fury.io/js/includejs)
+[![Bower version](https://badge.fury.io/bo/includejs.svg)](http://badge.fury.io/bo/includejs)
 
 Features:
 
 - Loads any content: scripts, styles, ajax
 - Development friendly: incremental builds are not required
-- Production: finally, build the application into single html, js and css @see the [Atma.Toolkit](https://github.com/atmajs/Atma.Toolkit)
+- Production: Build the application into single html, js and css @see the [Atma.Toolkit](https://github.com/atmajs/Atma.Toolkit)
 - Inline Dependency Declaration
 	
 	_No external files, such as package.json or config.js_
@@ -60,6 +62,6 @@ Features:
 	```
 
 ----
-(c) 2014 Atma.js Project
+:copyright: 2014 Atma.js Project
 
 

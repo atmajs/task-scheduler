@@ -1,5 +1,5 @@
 include.exports = Class.patch('Task', {
-	Extends: Class.MongoStore.Single({
+	Store: Class.MongoStore.Single({
 		collection: 'tasks',
 		indexes: [
 			{ 'name': 1 },

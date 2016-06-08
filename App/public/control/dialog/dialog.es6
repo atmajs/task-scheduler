@@ -3,19 +3,16 @@ include
 	.done(function(resp){
 
 		mask.registerHandler(':dialog', Compo({
+			meta: {
+				mode: 'client'
+			},
 			template: resp.load.Template,
-			onRenderStart (model, ctx, container) {
-				
-			},
-			onRenderEnd (elements, model, ctx, container) {
-				
-			},
 			
-			showDialog () {
-				this.$.modal('show')
+			show() {
+				this.$.modal('show');
 			},
-			hideDialog () {
-				this.$.modal('hide')
+			hide() {
+				this.$.modal('hide');
 			}
 		}));
 	});

@@ -1,0 +1,44 @@
+.-editorActions {
+	p {
+		button.btn-block.btn.btn-success x-signal='click: taskSave' >
+			'Save'
+		
+		button.btn-block.btn.btn-danger.btn-sm x-signal='click: closeEditor' >
+			'Cancel'
+	}
+	
+	.hr;
+	
+	h5 {
+		'Applications '
+		i.glyphicon.glyphicon-question-sign
+			x-tooltip = 'Task will bound to selected application. Applications Cwd will be used';
+	}
+	
+	ul.applications > +each (applications) {
+		li {
+			span > '~[name]'
+			div > tt > '~[base]'
+			div style='text-align: right' >
+				:linkBtn signal=removeApp glyph=trash text = Delete;
+		}
+	}
+	
+	
+	.hr;
+	
+	:linkBtn
+		signal = createApp
+		glyph=plus
+		text = 'Create'
+		;
+	
+	:animation #show {
+		'transform | translate3d(-100%, 0, 0) > translate3d(0,0,0) | 200ms ease-in' 
+	}
+	:animation #hide {
+		'transform | translate3d(0, 0, 0) > translate3d(-100%,0,0) | 200ms ease-in' 
+	}
+}
+
+:appModal;

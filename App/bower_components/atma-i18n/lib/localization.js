@@ -454,6 +454,16 @@
 						if (--count < 0)
 							callback();
 					}
+				},
+				loadFromAtmaBackend: function(callback){
+					loadTranslation('/atma/i18n.json', function(data){
+						if (data == null) {
+							console.error('i18n: Atma Backend failed');
+							return;
+						}
+						lang_extend(data.lang || 'en', data);
+						callback && callback();
+					});
 				}
 			};
 			
@@ -617,7 +627,9 @@
 				}
 				
 				log_error('<Single Load: implemented `config.path` only>');
-			}
+			},
+			
+			loadFromAtmaBackend: Sources.file.loadFromAtmaBackend
 		};
 	}());
 	// end:source /src/sources/exports.js
@@ -670,7 +682,12 @@
 			// properties
 			fn.lang = lang;
 			fn.extend = lang_extend;
+			fn.translation = translation;
 			
+			var _json;
+			fn.stringify = function () {
+				return _json || (_json = JSON.stringify(translation));
+			};
 			return fn;
 		}
 	}(languages));
@@ -775,15 +792,20 @@
 	}
 	
 	$L.loadSingle = SourceFactory.loadSingle;
+	$L.resolveFromAtmaBackend = SourceFactory.loadFromAtmaBackend;
 	
 	// source node/middleware.js
-	
-	if (is_Node) {
+	(function(){
+		if (!is_Node) 
+			return;
 	
 		/* { path, support } */
 		$L.middleware = function(config){
 			
 			return function(req, res, next){
+				if (processJson(req, res, config, next)) 
+					return;
+				
 				$L
 					.loadSingle(config, req)
 					.done(function(){
@@ -792,7 +814,40 @@
 					});
 			};
 		};
-	}
+		
+		$L.jsonLang = function(config){
+			return function(req, res, next) {
+				if (processJson(req, res, config, next)) 
+					return;
+				
+				next();
+			};
+		};
+		
+		
+		function processJson(req, res, config, next){
+			if (req.url !== '/atma/i18n.json') 
+					return false;		
+			$L
+				.loadSingle(config, req)
+				.done(function(){
+					var Lang = $L.fromReq(req),
+						json = Lang.stringify(),
+						code = 200;
+					if (json == null) {
+						code = 500;
+						json = '{"error":"Language not defined: ' + Lang.lang + '"}';
+					}
+					res.writeHead(200, {
+						'Content-Length': json.length,
+						'Content-Type': 'application/json'
+					});
+					res.end(json);
+				});
+			return true;
+		}	
+	
+	}());
 	
 	// end:source node/middleware.js
 	// end:source /src/L.js

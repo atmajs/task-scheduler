@@ -1,0 +1,10 @@
+input id='~[id]' style='
+	position: absolute;
+	display: inline-block;
+	top: ~[top]px;
+	left: ~[left]px;
+	width: ~[width]px;
+'
+data-fn='~[action]'
+x-signal='keydown: foo'
+;

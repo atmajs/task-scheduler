@@ -1,6 +1,6 @@
 {
   "name": "atma-class",
-  "version": "1.0.67",
+  "version": "1.0.68",
   "homepage": "https://github.com/atmajs/ClassJS",
   "authors": [
     "Alex Kit <alex.kit@atmajs.com>"
@@ -23,13 +23,14 @@
     "test",
     "tests"
   ],
-  "_release": "1.0.67",
+  "_release": "1.0.68",
   "_resolution": {
     "type": "version",
-    "tag": "v1.0.67",
-    "commit": "1c6287f483d68c55c6c528122e25ada63d44aacb"
+    "tag": "v1.0.68",
+    "commit": "9a5e70646def2f06a8bdc2fe7f2640707ce664dd"
   },
   "_source": "git://github.com/atmajs/ClassJS.git",
-  "_target": "*",
-  "_originalSource": "atma-class"
+  "_target": "~1.0.68",
+  "_originalSource": "atma-class",
+  "_direct": true
 }

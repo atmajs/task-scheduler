@@ -7,20 +7,21 @@ mask.registerHandler(':viewManager', Compo({
 		this._pages = {};
 		this._resource = include;
 		
-		ruta.add('/:page', route => {
+		ruta.add('^/:page', route => {
+			var path = route.current.path;
 			var page = route.current.params.page,
-				div = this._pages[page];
+				data = this._pages[path];
 			this._emit('navigate', page);
 			
-			if (div != null) {
-				this._show(div);
+			if (data != null) {
+				this._show(data);
 				return;
 			}
 			
 			this._emit('loadStart');
 			$
-				.getJSON('/' + page + '?partial=@content>*')
-				.done(json => this._create(page, json))
+				.getJSON(path + '?partial=@content>*')
+				.done(json => this._create(path, json))
 				.fail(err => {
 					this._emit('loadEnd');
 					this._emit('error', err);
@@ -29,18 +30,28 @@ mask.registerHandler(':viewManager', Compo({
 		})
 	},
 	_pages: null,
-	_emit: function(){
-		var pipe = Compo.pipe('viewManager');
-		pipe.emit.apply(pipe, arguments);
+	_current: null,
+	_emit (...args) {
+		Compo.pipe('viewManager').emit(...args);
 	},
-	_show: function(div){
+	_notifyChildren (signal, ...args) {
+		if (this._current != null) 
+			Compo.signal.emitIn(this._current.compo, signal, ...args);
+	},
+	_show: function(data){
+		if (this._current === data) 
+			return;
+		
+		this._notifyChildren('viewManager_hide');	
+		this._current = data;
 		this
 			.$
 			.children()
 			.detach()
 			.end()
-			.append(div)
+			.append(data.panel)
 			;
+		this._notifyChildren('viewManager_show');
 	},
 	_create: function(page, json){
 		this
@@ -52,11 +63,14 @@ mask.registerHandler(':viewManager', Compo({
 				div.className = 'view';
 				div.innerHTML = json.html;
 				
-				this._pages[page] = div;
 				this._emit('loadEnd', div);
-				this._show(div);
 				
-				mask.Compo.bootstrap(div, this);
+				var data = {
+					panel: div,
+					compo: mask.Compo.bootstrap(div, this)
+				};
+				this._pages[page] = data
+				this._show(data);
 			});
 	}
 }))

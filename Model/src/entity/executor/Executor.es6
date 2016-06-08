@@ -1,6 +1,7 @@
 include
 	.js(
-		'ScriptExecutor.es6'
+		'ScriptExecutor.es6',
+		'SrcExecutor.es6'
 	)
 	.done(function(resp){
 		
@@ -12,5 +13,5 @@ include
 			}
 			
 			throw Error('Unsupported execution object: ' + Object.keys(exec));
-		}
+		};
 	})

@@ -21,6 +21,9 @@ function Start(app){
 	app
 		.processor({
 			
+			before: [
+				$L.jsonLang(app.config.i18n)
+			],
 			/*
 			 * this middleware pipeline will be executed only
 			 * if application finds any endpoint (subapp | handler | service | page)

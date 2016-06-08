@@ -11,16 +11,23 @@ env:
 
 		scripts:
 			bower:
+				- es6-shim
 				- atma-formatter
 				- atma-i18n
 				- compo-tabs
+				- compo-typeahead
+				- compo-ace
 			
 			public_control:
 				- markdown
 				- infoPane
+				- bootstrap
+				- bootstrap/tooltip
 				
 			public_compo:
 				- app
 				- menu
 				- list
 				- view/viewManager
+				- elements
+				- resolver

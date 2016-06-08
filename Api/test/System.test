@@ -1,0 +1,84 @@
+var request = require('supertest');
+var uri = new io.Directory('/').uri;
+
+UTest({	
+	'query `Api` folder' : (function(){
+		function run(path, done, check) {
+			request(global.ApiServ)
+				.get('/rest/system/io/directory/list')
+				.query({ path : path })
+				.end((error, res) => {
+					check(error, res.body);
+					done();
+				});	
+		}
+		function check(body, rgx){
+			eq_(
+				body.entries.some(x => rgx.test(x))
+				, true
+				, rgx.toString()
+			);
+		}
+		return {
+			'strict path' (done) {
+				run(uri.toLocalDir(), done, (err, body) => {
+					eq_(err, null);
+					has_(body, 'entries');
+					check(body, /Api\.js$/);
+					check(body, /test\//);
+				});
+			},
+			'path' (done) {
+				run(uri.toLocalDir() + 'foo', done, (err, body) => {
+					eq_(err, null);
+					has_(body, 'entries');
+					check(body, /Api\.js$/);
+					check(body, /test\//);
+				});
+			}
+		};
+	}()),
+	'path stat' : (function(){
+		function run (path, done, check) {
+			request(global.ApiServ)
+				.get('/rest/system/io/stat')
+				.query({ path : path })
+				.end((error, res) => {
+					eq_(error, null);
+					check(res.status, res.body);
+					done();
+				});
+		}
+		
+		return {
+			'directory' (done) {
+				run(uri.toLocalDir(), done, (status, body) => {
+					eq_(status, 200);
+					deepEq_(body, {
+						directory: true,
+						file: false,
+						size: 0
+					});
+				});
+			},
+			'file' (done) {
+				run(uri.combine('Api.js').toLocalFile(), done, (status, body) => {
+					eq_(status, 200);
+					has_(body, {
+						directory: false,
+						file: true,
+						size: null
+					});
+					notEq_(body.size, 0);
+				});
+			},
+			'404' (done) {
+				run(uri.combine('fake404').toLocalFile(), done, (status, body) => {
+					eq_(status, 404);
+					eq_(body.status, 404);
+					has_(body.message, 'ENOENT');
+				})
+			}
+		};
+	}())
+});

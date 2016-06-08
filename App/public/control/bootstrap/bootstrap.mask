@@ -1,0 +1,5 @@
+define :linkBtn >
+	a.btn.@[attr.class] x-signal='@[ attr.signal ? "click: " + attr.signal]' style='@[attr.style]' {
+		span.glyphicon.glyphicon-@[attr.glyph];
+		' @attr.text'
+	}

@@ -35,7 +35,6 @@ include
 		},
 		
 		renderStart: function(model, cntx) {
-
 			if (this.attr.src != null){
 			    var that = this;
                 
@@ -54,7 +53,6 @@ include
 			}
 
 			var md = str_trimTrailings(jmask(this).text());
-	
 			if (md) 
 				set_markdownContent(this, md);
 		},

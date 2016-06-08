@@ -6,57 +6,26 @@ include
 		
 		include.exports = Class('Executor.ScriptExecutor', {
 			Base: resp.IExecutor,
+			name: 'script',
 			Static: {
 				canHandle: function(data){
-					if (data.src || data.script) 
-						return true;
-					
-					return false;
+					return 'script' in data;
 				},
 			},
-			
-			
 			process: function(app, task){
-				
 				this.defer();
-				
-				if (this.src) 
-					this._processBySource(app, task);
-					
-				else if (this.script) 
-					this._processByScript(app, task);
-				
-				else
-					this.reject('`src` or `script` expected');
-					
+				Utils.execScript(app.config, this.src, (err, ...args) => {
+					if (err) {
+						this.reject(err);
+						return;
+					}
+					this.resolve(...args);
+				});
 				return this;
 			},
 			
-			
 			isEqual: function(exec){
-				return exec != null && (this.src === exec.src || this.script === exec.script);
-			},
-			
-			_processBySource: function(app, task){
-				Utils.execScript(app.config, this.src, (error, ...args) => {
-					if (error) {
-						this.reject(error);
-						return;
-					}
-					
-					this.resolve.apply(this, args);
-				});
-			},
-			
-			_processByScript: function(app, task){
-				try {
-					eval(this.script);
-					
-				} catch(error){
-					logger.error(error);
-				}
-				this.resolve();
-			},
-			
+				return exec != null && this.script === exec.script;
+			}
 		});
 	});

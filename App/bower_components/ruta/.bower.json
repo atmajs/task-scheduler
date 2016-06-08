@@ -1,6 +1,6 @@
 {
   "name": "ruta",
-  "version": "0.1.10",
+  "version": "0.1.11",
   "homepage": "https://github.com/atmajs/Ruta",
   "authors": [
     "Alex Kit <alex.kit@atmajs.com>"
@@ -24,13 +24,14 @@
     "test",
     "tests"
   ],
-  "_release": "0.1.10",
+  "_release": "0.1.11",
   "_resolution": {
     "type": "version",
-    "tag": "v0.1.10",
-    "commit": "f853f27368a61025d1915430401def87c147f4cc"
+    "tag": "v0.1.11",
+    "commit": "6c7115fa78d5c2c979f63268ef6c803748e3545e"
   },
   "_source": "git://github.com/atmajs/Ruta.git",
-  "_target": "*",
-  "_originalSource": "ruta"
+  "_target": "~0.1.11",
+  "_originalSource": "ruta",
+  "_direct": true
 }

@@ -1,0 +1,76 @@
+label > 'Rule'
+input.form-control
+	type=text
+	placeholder='e.g: every day at 11pm' >
+		:dualbind value=trigger bindingProvider=taskTriggerBinder;
+
+br;
+.clearfix {
+	.col-md-1 > .fa.fa-5x.fa-info;
+	.col-md-11 {
+		.clearfix {
+			.col-md-6 > :infoPane name='some' {
+				@title > 'in ...'
+				@body > '''
+					Support:
+					- `month(s) | M | m`
+					- `week(s) | w`
+					- `day(s) | d`
+					- `hour(s) | h`
+					- `minute(s) | min`
+					- `second(s) | s`
+					- `ms` _milliseconds_
+					
+					Samples:
+					- `in 2 hours and 20 min`
+					- `in 2 days and 2 hours and 10 min`
+					- `in 2 min, 5ms`
+				'''
+			}
+			.col-md-6 > :infoPane {
+				@title > 'every ...'
+				@body > '''
+					Samples:
+					- `every Monday at 11:30`
+					- `every 2 weeks on Friday for 6 times`
+					- `every weekday`
+					- `every 2 weeks on Tuesday`
+					- `every week on Monday, Wednesday`
+					- `every month on the 2nd last Friday for 7 times`
+					- `every 6 months`
+				'''
+			};
+		}
+		.clearfix {
+			.col-md-6 > :infoPane {
+				@title > 'iCalendar'
+				@body > '''
+					Samples:
+					- `FREQ=DAILY;BYHOUR=23`
+					- `FREQ=DAILY;INTERVAL=2;COUNT=4`
+					- `FREQ=WEEKLY;BYDAY=MO,WE`
+					- `FREQ=MONTHLY;BYMONTHDAY=10,15;COUNT=20`
+					- `FREQ=DAILY;INTERVAL=3;COUNT=10`
+					- `FREQ=MONTHLY;BYDAY=-2FR;COUNT=7`
+				'''
+			}
+			.col-md-6 > :infoPane {
+				@title > 'Cron (*    *    *    *    *    *)'
+				@body > '''
+					```
+					
+					*    *    *    *    *    *
+					┬    ┬    ┬    ┬    ┬    ┬
+					│    │    │    │    │    |
+					│    │    │    │    │    └ day of week (0 - 6)
+					│    │    │    │    └───── month (1 - 12)
+					│    │    │    └────────── day of month (1 - 31)
+					│    │    └─────────────── hour (0 - 23)
+					│    └──────────────────── minute (0 - 59)
+					└───────────────────────── second (0 - 59, optional)
+					```
+				'''
+			}
+		}
+	}
+}

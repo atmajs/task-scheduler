@@ -5,7 +5,7 @@ host: 'http://127.0.0.1'
 
 port:
 	'#if TEST': 5887
-	'default': 5888
+	'default': 5777
 
 mongo:
 	db:

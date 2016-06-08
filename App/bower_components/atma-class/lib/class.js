@@ -2445,7 +2445,7 @@
 	var Await;
 	
 	(function(){
-		return;	
+		
 		Await = Class({
 			Extends: Deferred.prototype,
 		

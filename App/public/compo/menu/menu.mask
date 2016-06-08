@@ -1,6 +1,10 @@
 p {
-	button.btn-block.btn.btn-success x-signal='click: createTask' >
-		'~[L:task_Create]'
+	a
+		.btn-block
+		.btn
+		.btn-success
+		x-dynamic
+		href='/task/create' > '~[L:task_Create]'
 }
 
 ul.nav.nav-pills.nav-stacked >

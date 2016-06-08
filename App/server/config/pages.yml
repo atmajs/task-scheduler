@@ -14,14 +14,10 @@ pages:
 	# Each page item also has some additional infos
 	# - title - Page Title
 	
-	!/:
+	/:
 		id: index
-		template: tasks
-		title: Tasks
-		env:
-			both:
-				view:
-					- tasks
+		redirect: tasks
+		
 	/tasks:
 		id: tasks
 		template: tasks

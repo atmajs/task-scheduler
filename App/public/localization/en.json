@@ -13,6 +13,7 @@
 	"wCompletedTasks": "Completed tasks",
 	"wRunningTasks": "Running Tasks",
 	"wUptime": "Uptime",
-	"wFailedTasks": "Failed tasks"
-	
+	"wFailedTasks": "Failed tasks",
+	"wOk": "Ok",
+	"wCancel": "Cancel"
 }

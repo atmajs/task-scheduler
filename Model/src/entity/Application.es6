@@ -11,4 +11,15 @@ include.exports = Class('Application', {
 	
 	// md5 password
 	password: '',
+	
+	Validate: {
+		name (val) {
+			if (!val) 
+				return 'Application name is empty';
+		},
+		base (val) {
+			if (!val) 
+				return 'Application working directory is empty';
+		}
+	}
 })

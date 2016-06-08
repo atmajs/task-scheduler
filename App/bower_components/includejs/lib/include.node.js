@@ -20,7 +20,7 @@
 	if (typeof include !== 'undefined' && typeof include.js === 'function') {
 		// allow only one `include` per application
 		_exports.include = include;
-		_exports.includeLib = includeLib;
+		_exports.includeLib = include.Lib || _global.includeLib;
 		return;
 	}
 	
@@ -364,7 +364,8 @@
 			while (url.indexOf('../') !== -1) {
 				url = url.replace(reg_subFolder, '');
 			}
-			return url;
+	
+			return url.replace(/\/\.\//g, '/');
 		}
 		
 	}());
@@ -1162,11 +1163,13 @@
 	
 	// end:source ../src/4.IncludeDeferred.js 
 	// source ../src/5.Include.js 
-	var Include = (function(IncludeDeferred) {
+	var Include,
+		IncludeLib = {};
+	(function(IncludeDeferred) {
 	
-		function Include() {
+		Include = function() {
 			IncludeDeferred.call(this);
-		}
+		};
 	
 		stub_release(Include.prototype);
 		
@@ -1181,18 +1184,21 @@
 			isNode: false,
 			
 			setCurrent: function(data) {
-				var url = data.url;
-				if (url[0] === '/' && this.base)
-					url = this.base + url.substring(1);
-						
-				var resource = new Resource(
-					'js'
-					, { path: url }
-					, data.namespace
-					, null
-					, null
-					, url);
-	
+				var url = data.url,
+					resource = this.getResourceById(url, 'js');
+					
+				if (resource == null) {
+					if (url[0] === '/' && this.base)
+						url = this.base + url.substring(1);
+							
+					var resource = new Resource(
+						'js'
+						, { path: url }
+						, data.namespace
+						, null
+						, null
+						, url);
+				}
 				if (resource.state < 3) {
 					console.error("<include> Resource should be loaded", data);
 				}
@@ -1336,11 +1342,7 @@
 							if (CustomLoader.exists(resource)){
 								
 								resource.state = 3;
-								CustomLoader.load(resource, function(resource, response){
-									
-									resource.exports = response;
-									resource.readystatechanged(4);
-								});
+								CustomLoader.load(resource, CustomLoader_onComplete);
 							}
 							break;
 						}
@@ -1348,6 +1350,10 @@
 						//
 						(bin[key] || (bin[key] = {}))[id] = resource;
 					}
+				}
+				function CustomLoader_onComplete(resource, response) {
+					resource.exports = response;
+					resource.readystatechanged(4);
 				}
 			},
 			/**
@@ -1375,6 +1381,29 @@
 					url = this.base + url.substring(1);
 				
 				return incl_getResource(url, type)
+			},
+			getResourceById: function(url, type){
+				var _bin = bin[type],
+					_res = _bin[url];
+				if (_res != null) 
+					return _res;
+				
+				if (this.base && url[0] === '/') {
+					_res = _bin[path_combine(this.base, url)];
+					if (_res != null) 
+						return _res;
+				}
+				if (this.base && this.location) {
+					_res = _bin[path_combine(this.base, this.location, url)];
+					if (_res != null) 
+						return _res;
+				}
+				if (this.location) {
+					_res = _bin[path_combine(this.location, url)];
+					if (_res != null) 
+						return _res;
+				}
+				return null;
 			},
 			getResources: function(){
 				return bin;
@@ -1463,7 +1492,7 @@
 					res, key, id;
 				
 				for(key in bin){
-					if (type != null && type != key) 
+					if (type != null && type !== key) 
 						continue;
 					
 					for (id in bin[key]){
@@ -1474,12 +1503,10 @@
 				}
 				
 				return resources;
-			}
+			},
+			Lib: IncludeLib
 		});
 		
-		
-		return Include;
-	
 		
 		// >> FUNCTIONS
 		
@@ -2006,15 +2033,16 @@
 	// end:source ../src/9.Resource.js
 	
 	// source ../src/10.export.js
+	IncludeLib.Routes = RoutesLib;
+	IncludeLib.Resource = Resource;
+	IncludeLib.ScriptStack = ScriptStack;
+	IncludeLib.registerLoader = CustomLoader.register;
 	
 	exports.include = new Include();
+	exports.includeLib = IncludeLib;
 	
-	exports.includeLib = {
-		Routes: RoutesLib,
-		Resource: Resource,
-		ScriptStack: ScriptStack,
-		registerLoader: CustomLoader.register
-	};
+	
+	
 	// end:source ../src/10.export.js
 	
 	// source ../src/node/node.js

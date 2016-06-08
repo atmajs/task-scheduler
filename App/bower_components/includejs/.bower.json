@@ -1,6 +1,6 @@
 {
   "name": "includejs",
-  "version": "0.9.9",
+  "version": "0.9.10",
   "homepage": "https://github.com/atmajs/IncludeJS",
   "authors": [
     "Alex Kit <alex.kit@atmajs.com>"
@@ -23,13 +23,14 @@
     "test",
     "tests"
   ],
-  "_release": "0.9.9",
+  "_release": "0.9.10",
   "_resolution": {
     "type": "version",
-    "tag": "v0.9.9",
-    "commit": "fd24e11df1557cde4d32ce868a7016b3ad720460"
+    "tag": "v0.9.10",
+    "commit": "91de6e3538cb1b9713b5bd2c176f423e550e56a0"
   },
   "_source": "git://github.com/atmajs/includejs.git",
-  "_target": "*",
-  "_originalSource": "includejs"
+  "_target": "~0.9.10",
+  "_originalSource": "includejs",
+  "_direct": true
 }

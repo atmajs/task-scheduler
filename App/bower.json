@@ -1,11 +1,11 @@
 {
   "name": "-",
   "dependencies": {
-    "maskjs": "~0.9.11",
-    "includejs": "latest",
-    "ruta": "latest",
+    "maskjs": "~0.10.1",
+    "includejs": "~0.9.10",
+    "ruta": "~0.1.11",
     "atma-formatter": "latest",
-    "atma-class": "latest",
+    "atma-class": "~1.0.68",
     "atma-i18n": "latest",
     "atma-logger": "latest",
     "jquery": "latest",
@@ -13,6 +13,9 @@
     "bootstrap": "latest",
     "fontawesome": "~4.2.0",
     "marked": "~0.3.2",
-    "compo-tabs": "0.0.2"
+    "compo-tabs": "0.0.2",
+    "compo-typeahead": "~0.8.5",
+    "es6-shim": "~0.18.0",
+    "traceur-runtime": "~0.0.66"
   }
 }

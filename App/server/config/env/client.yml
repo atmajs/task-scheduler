@@ -9,9 +9,12 @@ env:
 		routes:
 			project: '/.reference/{0}/{0}.js?type=client'
 			control: '/public/control/{0}/{1}.es6'
+			script: '/public/script/{0}.es6'
 			style: '/public/style/{0}.less'
+			
 		scripts:
 			bower:
+				- traceur-runtime
 				- jquery
 				- atma-class
 				- maskjs
@@ -41,7 +44,8 @@ env:
 				- pageActivity
 			
 			public_compo:
-				
+			script:
+			
 		styles:
 			bower:
 				- bootstrap

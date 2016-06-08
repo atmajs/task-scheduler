@@ -1,0 +1,48 @@
+@import "/public/style/layout.less";
+@import "/public/style/global.less";
+
+.-editorActions {
+	.layout-menu;
+	
+	position: fixed;
+	background: @color_Black;
+	z-index: 1050;
+	
+	> .hr {
+		margin-top: 10px;
+		border: 0;
+		border-bottom: 1px dashed #ccc;
+		background: #999;
+	}
+	
+	> h5 {
+		color: #eee;
+		text-align: center;
+	}
+	
+	a.btn { color: #ddd; position: relative; }
+	a.btn:hover { color: #fff; }
+	a.btn:active { top: 1px; }
+	
+	> .applications {
+		color: #ccc;
+		list-style: none;
+		margin: 0;
+		padding: 5px 10px;
+		> li {
+			margin-bottom: 1px;
+		}
+		
+		> li:nth-child(n+1) {
+			background: lighten(@color_Black, 5%);
+		}
+		> li:nth-child(2n+1) {
+			background: lighten(@color_Black, 10%);
+		}
+		> li.selected {
+			background: lighten(@color_Black, 30%);
+		}
+	}
+	
+	
+}
